@@ -6,16 +6,20 @@ USE  DB_3P
 CREATE TABLE personas 
 (
 idpersona 		INT AUTO_INCREMENT PRIMARY KEY,
-nombres 			VARCHAR(30) 		NOT NULL,
+nombres 		VARCHAR(30) 		NOT NULL,
 apellidos 		VARCHAR(30) 		NOT NULL,
-dni				CHAR(9) 				NOT NULL,
+dni			CHAR(9) 		NOT NULL,
 correo   		VARCHAR(40) 		NOT NULL,
-genero 			CHAR(1) 				NOT NULL,
+genero 			CHAR(1) 		NOT NULL,
 
 CONSTRAINT uk_dni_per  UNIQUE (dni),
 CONSTRAINT ck_ge_per CHECK( genero IN ('M', 'F'))
 )
 ENGINE = INNODB
+
+INSERT INTO personas (nombres, apellidos , dni, correo, genero) VALUES
+		('Luis David','Cusi Gonzales',73196921,'cusiluis04@gmail.com','M');
+
 
 CREATE TABLE usuarios
 (
@@ -41,6 +45,13 @@ CONSTRAINT fk_ide_cliente FOREIGN KEY (idempresa) REFERENCES empresas (idempresa
 )
 ENGINE = INNODB;
 
+ALTER TABLE clientes ADD estado CHAR(1)NOT NULL DEFAULT '1';
+
+INSERT INTO clientes (idempresa, idpersona, direccion ,telefono) VALUES
+		(2, NULL ,'Calle Oscar R.BuenaVista' , 965476454);
+
+
+
 CREATE TABLE empresas
 (
 idempresa INT AUTO_INCREMENT PRIMARY KEY,
@@ -49,6 +60,10 @@ ruc 		CHAR(11) NOT NULL,
 
 CONSTRAINT uk_ruc_emp  UNIQUE (ruc)
 )ENGINE = INNODB;
+
+
+INSERT INTO empresas (nombre , ruc) VALUES 
+	('Grupo Cafimi', 10125436576);
 
 CREATE TABLE contratos
 (
@@ -106,6 +121,81 @@ CREATE TABLE equipos
 	CONSTRAINT uk_mol_re UNIQUE(modelo, marca),
 	CONSTRAINT ck_pre_re CHECK(precio > 0)
 )ENGINE  = INNODB;
+
+
+-- PROCEDIMIENTOS MODULO CLIENTES
+
+-- LISTAR CLIENTES PERSONAS/EMPRESAS
+
+DELIMITER $$
+CREATE PROCEDURE spu_clientes_listar()
+BEGIN 
+	SELECT
+		CLI.idcliente,
+	    COALESCE(EM.nombre, PE.nombres) AS cliente,
+	    COALESCE(EM.ruc, PE.dni) AS identidad,
+	    CLI.direccion,
+	    CLI.telefono
+	FROM clientes CLI
+	LEFT JOIN personas PE ON CLI.idpersona = PE.idpersona
+	LEFT JOIN empresas EM ON CLI.idempresa = EM.idempresa;
+
+END $$
+
+CALL spu_clientes_listar();
+
+-- REGISTRAR CLIENTES OPCION 1
+DELIMITER $$ 
+CREATE PROCEDURE spu_clientes_registrar
+(
+IN _idempresa INT,
+IN _idpersona INT,
+IN _direccion VARCHAR(60),
+IN _telefono  CHAR(9)
+)
+BEGIN 
+	IF _idempresa = '' THEN SET _idempresa = NULL;	
+	END IF;
+	
+	IF _idpersona = '' THEN SET _idpersona = NULL;	
+	END IF;
+	
+	INSERT INTO clientes (idempresa, idpersona, direccion, telefono) VALUES
+			(_idempresa, _idpersona, _direccion , _telefono);
+
+END $$
+
+CALL spu_clientes_registrar()
+
+-- ELIMINAR CLIENTE
+DELIMITER $$
+CREATE PROCEDURE spu_clientes_delete(IN _idcliente INT)
+BEGIN 
+	UPDATE clientes SET 
+	estado = 0
+	WHERE idcliente = _idcliente;
+	
+END $$
+
+CALL spu_clientes_delete();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
