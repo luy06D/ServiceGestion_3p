@@ -45,6 +45,8 @@ CONSTRAINT fk_ide_cliente FOREIGN KEY (idempresa) REFERENCES empresas (idempresa
 )
 ENGINE = INNODB;
 
+ALTER TABLE clientes ADD estado CHAR(1)NOT NULL DEFAULT '1';
+
 INSERT INTO clientes (idempresa, idpersona, direccion ,telefono) VALUES
 		(2, NULL ,'Calle Oscar R.BuenaVista' , 965476454);
 
@@ -129,6 +131,7 @@ DELIMITER $$
 CREATE PROCEDURE spu_clientes_listar()
 BEGIN 
 	SELECT
+		CLI.idcliente,
 	    COALESCE(EM.nombre, PE.nombres) AS cliente,
 	    COALESCE(EM.ruc, PE.dni) AS identidad,
 	    CLI.direccion,
@@ -141,7 +144,7 @@ END $$
 
 CALL spu_clientes_listar();
 
-
+-- REGISTRAR CLIENTES OPCION 1
 DELIMITER $$ 
 CREATE PROCEDURE spu_clientes_registrar
 (
@@ -163,6 +166,21 @@ BEGIN
 END $$
 
 CALL spu_clientes_registrar()
+
+-- ELIMINAR CLIENTE
+DELIMITER $$
+CREATE PROCEDURE spu_clientes_delete(IN _idcliente INT)
+BEGIN 
+	UPDATE clientes SET 
+	estado = 0
+	WHERE idcliente = _idcliente;
+	
+END $$
+
+CALL spu_clientes_delete();
+
+
+
 
 
 
