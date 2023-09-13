@@ -107,3 +107,32 @@ CREATE TABLE equipos
 	CONSTRAINT ck_pre_re CHECK(precio > 0)
 )ENGINE  = INNODB;
 
+
+
+DELIMITER $$
+CREATE PROCEDURE spu_servicios_listar()
+BEGIN 
+	SELECT idservicio, tiposervicio, duracionE, garantia
+	FROM servicios
+	WHERE estado = 1;
+END$$
+
+CALL spu_servicios_listar
+
+INSERT INTO servicios (tiposervicio, duracionE, garantia)VALUES
+('Mantenimiento', '3 dias', '1 año')
+
+
+DELIMITER$$
+CREATE PROCEDURE spu_servicios_registrar
+(
+IN _tiposervicio VARCHAR(100),
+IN _duracionE VARCHAR(20),
+IN _garantia VARCHAR(20)
+)
+BEGIN
+	INSERT INTO servicios(tiposervicio, duracionE, garantia)VALUES
+	(_tiposervicio, _duracionE, _garantia);
+END$$
+
+CALL spu_servicios_registrar('Reparacion', '2 dias', '2 meses')
