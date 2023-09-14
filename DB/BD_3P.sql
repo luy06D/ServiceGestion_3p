@@ -235,6 +235,63 @@ INSERT INTO desc_equipo(idequipo, iddescServicio, numSerie, precio)VALUES
 (2,2,'96532145875',200);
 
 
+-- PROCEDIMINETOS CONTRATOS >>>>>>>>>>>>>>>
+
+-- REGISTRAR PERSONAS COMO CLIENTE
+
+DELIMITER $$ 
+CREATE PROCEDURE spu_clientesPer_registrar
+(
+-- param persona
+IN _nombres VARCHAR(30),
+IN _apellidos VARCHAR(30),
+IN _dni  CHAR(9),
+IN _correo VARCHAR(40),
+IN _direccion VARCHAR(60),
+IN _telefono  CHAR(9)
+)
+BEGIN 
+
+	DECLARE g_idpersona INT;
+	
+	INSERT INTO personas (nombres, apellidos, dni , correo, direccion, telefono) VALUES
+						(_nombres, _apellidos, _dni, _correo, _direccion, _telefono);
+	
+	SELECT LAST_INSERT_ID() INTO g_idpersona;
+
+	INSERT INTO clientes (idpersona) VALUES
+			(g_idpersona);
+
+END $$
+
+CALL spu_clientesPer_registrar("Lucio","Herrera", 76576825 ,"Llucio02@gmail.com","Chincha Alta", 965654565);
+
+SELECT * FROM empresas
+SELECT * FROM clientes
+
+
+-- REGISTRAR EMPRESA COMO CLIENTE
+DELIMITER $$ 
+CREATE PROCEDURE spu_clientesEmp_registrar
+(
+-- param empresa
+IN _razonsocial VARCHAR(30),
+IN _ruc    CHAR(11)
+)
+BEGIN 
+
+	DECLARE g_idempresa INT;
+	
+	INSERT INTO empresas (razonsocial, ruc) VALUES
+						(_razonsocial, _ruc);
+	
+	SELECT LAST_INSERT_ID() INTO g_idempresa;
+
+	INSERT INTO clientes (idempresa) VALUES
+			(g_idempresa);
+END $$
+
+CALL spu_clientesEmp_registrar("Avicola vania", 11323235454);
 
 
 

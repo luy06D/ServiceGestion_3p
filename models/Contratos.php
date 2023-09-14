@@ -14,14 +14,13 @@ class Contratos extends Conexion{
         "message" => ""
     ];
     try{
-        $consulta = $this->conexion->prepare("CALL spu_clientesPer_registrar(?,?,?,?,?,?,?)");
+        $consulta = $this->conexion->prepare("CALL spu_clientesPer_registrar(?,?,?,?,?,?)");
         $respuesta["status"] = $consulta->execute(array(
             
             $datos["nombres"],
             $datos["apellidos"],
             $datos["dni"],
-            $datos["correo"],
-            $datos["genero"],
+            $datos["correo"],            
             $datos["direccion"],
             $datos["telefono"]
         ));
@@ -39,13 +38,11 @@ public function clientesEmp_registrar ($datos = []){
       "message" => ""
   ];
   try{
-      $consulta = $this->conexion->prepare("CALL spu_clientesEmp_registrar(?,?,?,?)");
+      $consulta = $this->conexion->prepare("CALL spu_clientesEmp_registrar(?,?)");
       $respuesta["status"] = $consulta->execute(array(
           
-          $datos["nombre"],
+          $datos["razonsocial"],
           $datos["ruc"],
-          $datos["direccion"],
-          $datos["telefono"]
       ));
   }
   catch(Exception $e){

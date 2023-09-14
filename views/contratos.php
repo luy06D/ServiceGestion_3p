@@ -125,19 +125,19 @@
                 </div>            
                 <div class="col-md-6">
                   <label for="inputEmail5" class="form-label">Fecha inicio</label>
-                  <input type="email" class="form-control" id="inputEmail5">
+                  <input type="date" class="form-control" id="inputEmail5">
                 </div>
                 <div class="col-md-6">
                   <label for="inputPassword5" class="form-label">Fecha Cierre</label>
-                  <input type="password" class="form-control" id="inputPassword5">
+                  <input type="date" class="form-control" id="inputPassword5">
                 </div>
                 <div class="col-md-6">
                   <label for="inputPassword5" class="form-label">Observación</label>
-                  <input type="password" class="form-control" id="inputPassword5">
+                  <input type="text" class="form-control" id="inputPassword5">
                 </div>
                 <div class="col-md-6">
                   <label for="inputPassword5" class="form-label">Garantia</label>
-                  <input type="password" class="form-control" id="inputPassword5">
+                  <input type="number" class="form-control" id="inputPassword5">
                 </div>
                 <h5 class="card-title">Detalles </h5>
                 <div class="col-md-6">
@@ -149,11 +149,11 @@
                 </div> 
                 <div class="col-md-6">
                   <label for="inputPassword5" class="form-label">Precio</label>
-                  <input type="password" class="form-control" id="inputPassword5">
+                  <input type="number" class="form-control" id="inputPassword5">
                 </div>
                 <div class="col-md-6">
                   <label for="inputPassword5" class="form-label">Cantidad</label>
-                  <input type="password" class="form-control" id="inputPassword5">
+                  <input type="number" class="form-control" id="inputPassword5">
                 </div>
                 <div class="">
                   <button type="submit" class="btn btn-primary shadow-lg">Registrar</button>
