@@ -17,7 +17,8 @@ if(isset($_POST['op'])){
             "telefono"  => $_POST['telefono'],
         ];
 
-        $contrato->clientesPer_registrar($data);
+        $respuesta = $contrato->clientesPer_registrar($data);
+        echo json_encode($respuesta);
     }
 
     if($_POST['op'] == 'registrarEmp_clientes'){
@@ -27,8 +28,23 @@ if(isset($_POST['op'])){
             "ruc"       => $_POST['ruc'],
         ];
 
-        $contrato->clientesEmp_registrar($data);
+        $respuesta = $contrato->clientesEmp_registrar($data);
+        echo json_encode($respuesta);
     }
+
+    
+    if($_POST['op'] == 'getCliente'){
+
+        echo json_encode($contrato->getClientes());
+
+    }
+}
+
+if(isset($_GET['op'])){
+    
+    $contrato = new Contratos();
+
+
 }
 
 

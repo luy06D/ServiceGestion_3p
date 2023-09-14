@@ -293,6 +293,46 @@ END $$
 CALL spu_clientesEmp_registrar("Avicola vania", 11323235454);
 
 
+-- GET CLIENTES
+DELIMITER $$
+CREATE PROCEDURE spu_getClientes()
+BEGIN 
+
+	SELECT
+		CLI.idcliente,
+	    COALESCE(EM.razonsocial, PE.nombres) AS clientes
+	FROM clientes CLI
+	LEFT JOIN personas PE ON CLI.idpersona = PE.idpersona
+	LEFT JOIN empresas EM ON CLI.idempresa = EM.idempresa;
+
+
+END $$
+
+CALL spu_getClientes();
+
+-- REGISTRAR CONTRATO
+DELIMITER $$
+CREATE PROCEDURE spu_contrato_registrar
+(
+-- params contratos
+IN _idusuario INT,
+IN _idcliente INT,
+IN _fechainicio DATE,
+IN _fechacierre DATE,
+IN _observacion VARCHAR,
+IN _garantia VARCHAR
+
+-- 
+
+)
+BEGIN 
+
+END $$
+
+
+
+
+
 
 
 
