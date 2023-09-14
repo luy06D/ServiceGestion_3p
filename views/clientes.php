@@ -19,67 +19,32 @@
             <div class="card-body">
             <h4 class="text-center">CLIENTES</h4>
             <hr>
+            <button type="button" id="abrir-modal-registro" class="btn btn-primary btn-md mb-3" data-bs-toggle="modal" data-bs-target="#modal-registrar">
+            <i class="bi bi-plus-circle"></i>  Nuevo
+            </button>
              
               <!-- Table with stripped rows -->
-              <table class="table datatable">
+              <table class="table datatable" id="tabla-cliente"  >
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Start Date</th>
+                    <th scope="col">Item</th>
+                    <th scope="col">Persona/Empresa</th>
+                    <th scope="col">DNI/RUC</th>
+                    <th scope="col">Dirección</th>
+                    <th spoce= "col">Teléfono</th>
+                    <th  spoce= "col">Operación</th>                    
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Brandon Jacob</td>
-                    <td>Designer</td>
-                    <td>28</td>
-                    <td>2016-05-25</td>
-                  </tr>
+              
                 </tbody>
               </table>
-              <!-- End Table with stripped rows -->
-
             </div>
           </div>
 
         </div>
       </div>
     </section>
-
-
- <!-- Tabla-Clientes -->
- <div class="container-lg table-responsive ">
-        <h4 class="text-center">CLIENTES</h4>
-        <hr>
-        <button type="button" id="abrir-modal-registro" class="btn btn-primary btn-md mb-3" data-bs-toggle="modal" data-bs-target="#modal-registrar">
-        <i class="bi bi-plus-circle"></i>  Nuevo
-        </button>
-        <div class="row">
-            <div class="col-lg-12">
-                <table id="tabla-cliente" class="table table-sm table-striped" >
-                                
-                    <thead class="table-secondary">
-                        <tr>
-                        <th>Código</th>
-                        <th>Persona/Empresa</th>
-                        <th>DNI/RUC</th>
-                        <th>Dirección</th>
-                        <th>Teléfono</th>
-                        <th>Operación</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                    </tbody>
-                </table>
-            </div>
-        </div> 
-    </div>
 </main>
 
 
@@ -107,21 +72,22 @@
         type: 'GET',
         data: {'op' : 'listar_clientes'},
         success: function (result){
+          console.log(result)
 
           var table = $("#tabla-cliente").DataTable();
           table.destroy();
           $("#tabla-cliente tbody").html(result);
           $("#tabla-cliente").DataTable({
             responsive: true,
-            lengthMenu:[15,10,5],
-            language: {
-            url: '../js/Spanish.json'
+            lengthMenu: [10,5],
+            language:{
+              url: '../js/Spanish.json'
             }
-          })
+          });
+          
         }
-      })
+      });
     }
-
 
     mostrarClientes();
 

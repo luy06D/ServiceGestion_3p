@@ -48,11 +48,15 @@ ENGINE = INNODB;
 ALTER TABLE clientes ADD estado CHAR(1)NOT NULL DEFAULT '1';
 
 INSERT INTO clientes (idempresa, idpersona, direccion ,telefono) VALUES
-		(2, NULL ,'Calle Oscar R.BuenaVista' , 965476454);
+		(1, NULL ,'Calle Oscar R.BuenaVista' , 965476454);
+		
+INSERT INTO clientes (idempresa, idpersona, direccion ,telefono) VALUES
+		(NULL, 1 ,'Calle Oscar R.Benavides' , 965476254);
+		
 
 
 
-CREATE TABLE empresas
+DROP TABLE empresas
 (
 idempresa INT AUTO_INCREMENT PRIMARY KEY,
 nombre	VARCHAR(30) NOT NULL,
@@ -144,30 +148,73 @@ END $$
 
 CALL spu_clientes_listar();
 
--- REGISTRAR CLIENTES OPCION 1
+-- REGISTRAR PERSONAS COMO CLIENTE
 DELIMITER $$ 
-CREATE PROCEDURE spu_clientes_registrar
+CREATE PROCEDURE spu_clientesPer_registrar
 (
-IN _idempresa INT,
-IN _idpersona INT,
+-- param persona
+IN _nombres VARCHAR(30),
+IN _apellidos VARCHAR(30),
+IN _dni  CHAR(9),
+IN _correo VARCHAR(40),
+IN _genero CHAR(1),
+
+-- param cliente
 IN _direccion VARCHAR(60),
 IN _telefono  CHAR(9)
 )
 BEGIN 
-	IF _idempresa = '' THEN SET _idempresa = NULL;	
-	END IF;
+
+	DECLARE g_idpersona INT;
 	
-	IF _idpersona = '' THEN SET _idpersona = NULL;	
-	END IF;
+	INSERT INTO personas (nombres, apellidos, dni , correo, genero) VALUES
+						(_nombres, _apellidos, _dni, _correo, _genero);
 	
-	INSERT INTO clientes (idempresa, idpersona, direccion, telefono) VALUES
-			(_idempresa, _idpersona, _direccion , _telefono);
+	SELECT LAST_INSERT_ID() INTO g_idpersona;
+
+	INSERT INTO clientes (idpersona, direccion, telefono) VALUES
+			(g_idpersona, _direccion , _telefono);
 
 END $$
 
-CALL spu_clientes_registrar()
+CALL spu_clientesPer_registrar("Lucio","Herrera", 76576825 ,"Llucio02@gmail.com","M","Chincha Alta", 965654565);
+
+SELECT * FROM empresas
+SELECT * FROM clientes
+
+
+
+-- REGISTRAR EMPRESA COMO CLIENTE
+DELIMITER $$ 
+CREATE PROCEDURE spu_clientesEmp_registrar
+(
+-- param empresa
+IN _nombre VARCHAR(30),
+IN _ruc    CHAR(11),
+
+-- param cliente
+IN _direccion VARCHAR(60),
+IN _telefono  CHAR(9)
+)
+BEGIN 
+
+	DECLARE g_idempresa INT;
+	
+	INSERT INTO empresas (nombre, ruc) VALUES
+						(_nombre, _ruc);
+	
+	SELECT LAST_INSERT_ID() INTO g_idempresa;
+
+	INSERT INTO clientes (idempresa, direccion, telefono) VALUES
+			(g_idempresa, _direccion , _telefono);
+END $$
+
+CALL spu_clientesEmp_registrar("Avicola vania", 11323235454, "Av.centenario", 943425435);
+
+
 
 -- ELIMINAR CLIENTE
+
 DELIMITER $$
 CREATE PROCEDURE spu_clientes_delete(IN _idcliente INT)
 BEGIN 

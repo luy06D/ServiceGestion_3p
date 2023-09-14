@@ -21,19 +21,43 @@ class Clientes extends Conexion{
         }
     }
 
-    public function clientes_registrar ($datos = []){
+    public function clientesPer_registrar ($datos = []){
         $respuesta = [
             "status" => false,
             "message" => ""
         ];
         try{
-            $consulta = $this->conexion->prepare("CALL spu_clientes_registrar(?,?,?,?)");
+            $consulta = $this->conexion->prepare("CALL spu_clientesPer_registrar(?,?,?,?,?,?,?)");
             $respuesta["status"] = $consulta->execute(array(
                 
-                $datos["idempresa"],
-                $datos["idpersona"],
+                $datos["nombres"],
+                $datos["apellidos"],
+                $datos["dni"],
+                $datos["correo"],
+                $datos["genero"],
                 $datos["direccion"],
-                $datos["telefono"],
+                $datos["telefono"]
+            ));
+        }
+        catch(Exception $e){
+            $respuesta["message"] = "No se pudo completar la operacion Codigo error: " .$e->getCode();
+        }
+        return $respuesta;
+    }
+
+    public function clientesEmp_registrar ($datos = []){
+        $respuesta = [
+            "status" => false,
+            "message" => ""
+        ];
+        try{
+            $consulta = $this->conexion->prepare("CALL spu_clientesEmp_registrar(?,?,?,?)");
+            $respuesta["status"] = $consulta->execute(array(
+                
+                $datos["nombre"],
+                $datos["ruc"],
+                $datos["direccion"],
+                $datos["telefono"]
             ));
         }
         catch(Exception $e){
