@@ -282,6 +282,7 @@
       <i class="bi bi-wrench"></i>
       <span>Equipos</span>
     </a>
+
   </li><!-- End Dashboard Nav -->
 
   <li class="nav-item">
@@ -290,6 +291,15 @@
       <span>Garantía</span>
     </a>
   </li><!-- End Dashboard Nav -->
+
+  </li>
+  <li class="nav-item">
+    <a class="nav-link " href="../views/contratos.php">
+    <i class="bi bi-file-earmark-text"></i>
+      <span>Contratos</span>
+    </a>
+  </li>
+
 
   <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
