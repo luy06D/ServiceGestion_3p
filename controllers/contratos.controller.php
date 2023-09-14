@@ -32,6 +32,21 @@ if(isset($_POST['op'])){
         echo json_encode($respuesta);
     }
 
+
+// faltaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    if($_POST['op'] == 'registrar_contrato'){
+
+        $data = [
+            "idusuario"   => $_POST['idusuario'],
+            "idcliente" => $_POST['idcliente'],
+            "fechainicio"       => $_POST['fechainicio'],
+          
+        ];
+
+        $respuesta = $contrato->clientesPer_registrar($data);
+        echo json_encode($respuesta);
+    }
+
     
     if($_POST['op'] == 'getCliente'){
 

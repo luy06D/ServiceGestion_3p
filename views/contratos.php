@@ -157,17 +157,26 @@
                   <label for="inputPassword5" class="form-label">Cantidad</label>
                   <input type="number" class="form-control" id="inputPassword5">
                 </div>
+                <div class="col-md-6">
+                  <label for="inputState" class="form-label">Estado</label>
+                  <select id="inputState" class="form-select">
+                    <option>Seleccione</option>
+                    <option value="N">No iniciado</option>
+                    <option value="P">Proceso</option>
+                    <option value="F">Finalizado</option>
+                    
+                  </select>
+              </div> 
                 <div class="">
                   <button type="submit" class="btn btn-primary shadow-lg">Registrar</button>
                   <button type="reset" class="btn btn-secondary shadow-lg">Limpiar</button>
                 </div>
+         
               </form>
 
             </div>
           </div>
-
         </div>
-
 
 </main>
  

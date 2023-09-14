@@ -319,15 +319,30 @@ IN _idusuario INT,
 IN _idcliente INT,
 IN _fechainicio DATE,
 IN _fechacierre DATE,
-IN _observacion VARCHAR,
-IN _garantia VARCHAR
+IN _observacion VARCHAR(150),
+IN _garantia VARCHAR(20),
 
--- 
-
+-- params desc_servicio
+IN _idservicio INT,
+IN _precioservicio DECIMAL(7,2),
+IN _cantidad SMALLINT,
+IN _estadoservicio CHAR(1)
 )
 BEGIN 
-
+	
+	DECLARE g_idcontrato INT;
+	
+	INSERT INTO contratos (idusuario, idcliente , fechainicio, fechacierre, observacion, garantia) VALUES
+						(_idusuario, _idcliente, _fechainicio, _fechacierre, _observacion, _garantia);
+	
+	SELECT LAST_INSERT_ID() INTO g_idcontrato;
+	
+	INSERT INTO desc_servicio (idcontrato, idservicio, precioservicio, cantidad, estadoservicio) VALUES
+								(g_idcontrato, _idservicio, _precioservicio, _cantidad, _estadoservicio);
+				
 END $$
+
+CALL spu_contrato_registrar(1, 2, "2023-09-14", NULL, "Prueba de procedimiento", "2 meses", 3 , 300, 3, "P");
 
 
 

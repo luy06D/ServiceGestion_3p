@@ -52,6 +52,34 @@ public function clientesEmp_registrar ($datos = []){
 }
 
 
+public function contrato_registrar ($datos = []){
+    $respuesta = [
+        "status" => false,
+        "message" => ""
+    ];
+    try{
+        $consulta = $this->conexion->prepare("CALL spu_contrato_registrar(?,?,?,?,?,?,?,?,?,?)");
+        $respuesta["status"] = $consulta->execute(array(
+            
+            $datos["idusuario"],
+            $datos["idcliente"],
+            $datos["fechainicio"],
+            $datos["fechacierre"],
+            $datos["observacion"],
+            $datos["garantia"],
+            $datos["idservicio"],
+            $datos["precioservicio"],
+            $datos["cantidad"],
+            $datos["estadoservicio"]
+        ));
+    }
+    catch(Exception $e){
+        $respuesta["message"] = "No se pudo completar la operacion Codigo error:" .$e->getCode();
+    }
+    return $respuesta;
+  }
+
+
 public function getClientes(){
 
     try{
