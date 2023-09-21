@@ -259,7 +259,7 @@ if(!isset($_SESSION['segurity']) || $_SESSION['segurity']['login'] == false){
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="../controllers/usuario.controller.php?operation=destroy">
+              <a class="dropdown-item d-flex align-items-center" href="../controllers/usuarios.controller.php?operation=destroy">
                 <i class="bi bi-box-arrow-right"></i>
                 <span >Cerrar sesión</span>
               </a>
