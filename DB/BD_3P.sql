@@ -138,6 +138,10 @@ CONSTRAINT fk6	FOREIGN KEY (idcontrato) REFERENCES contratos(idcontrato),
 CONSTRAINT fk7	FOREIGN KEY (idservicio) REFERENCES servicios(idservicio)
 )ENGINE=INNODB;
 
+-- El estado de servicio iniciado es NO INICIADO
+ALTER TABLE desc_servicio MODIFY COLUMN 
+estadoservicio CHAR(1) NOT NULL DEFAULT 'N';
+
 
 INSERT INTO desc_servicio(idcontrato, idservicio, precioservicio, cantidad, estadoservicio)VALUES
 (1, 1, 6000, 2, 'P'),
@@ -300,7 +304,7 @@ BEGIN
 
 	SELECT
 		CLI.idcliente,
-	    COALESCE(EM.razonsocial, PE.nombres) AS clientes
+	    COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) AS clientes
 	FROM clientes CLI
 	LEFT JOIN personas PE ON CLI.idpersona = PE.idpersona
 	LEFT JOIN empresas EM ON CLI.idempresa = EM.idempresa;
@@ -309,6 +313,18 @@ BEGIN
 END $$
 
 CALL spu_getClientes();
+
+
+-- GET SERVICIOS 
+DELIMITER $$
+CREATE PROCEDURE spu_getServicios()
+BEGIN 
+	SELECT idservicio, nombreservicio
+	FROM servicios;
+
+END $$ 
+
+	
 
 -- REGISTRAR CONTRATO
 DELIMITER $$
@@ -325,8 +341,7 @@ IN _garantia VARCHAR(20),
 -- params desc_servicio
 IN _idservicio INT,
 IN _precioservicio DECIMAL(7,2),
-IN _cantidad SMALLINT,
-IN _estadoservicio CHAR(1)
+IN _cantidad SMALLINT
 )
 BEGIN 
 	
@@ -337,17 +352,13 @@ BEGIN
 	
 	SELECT LAST_INSERT_ID() INTO g_idcontrato;
 	
-	INSERT INTO desc_servicio (idcontrato, idservicio, precioservicio, cantidad, estadoservicio) VALUES
-								(g_idcontrato, _idservicio, _precioservicio, _cantidad, _estadoservicio);
+	INSERT INTO desc_servicio (idcontrato, idservicio, precioservicio, cantidad) VALUES
+								(g_idcontrato, _idservicio, _precioservicio, _cantidad);
 				
 END $$
 
-CALL spu_contrato_registrar(1, 2, "2023-09-14", NULL, "Prueba de procedimiento", "2 meses", 3 , 300, 3, "P");
+CALL spu_contrato_registrar(1, 2, "2023-09-14", NULL, "Prueba2 de procedimiento", "1 meses", 3 , 300, 5);
 
 
-
-
-
-
-
+SELECT * FROM desc_servicio
 

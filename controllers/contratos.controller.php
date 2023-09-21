@@ -33,17 +33,22 @@ if(isset($_POST['op'])){
     }
 
 
-// faltaaaaaaaaaaaaaaaaaaaaaaaaaaa
     if($_POST['op'] == 'registrar_contrato'){
 
         $data = [
-            "idusuario"   => $_POST['idusuario'],
-            "idcliente" => $_POST['idcliente'],
-            "fechainicio"       => $_POST['fechainicio'],
-          
+            "idusuario"     => $_POST['idusuario'],
+            "idcliente"     => $_POST['idcliente'],
+            "fechainicio"   => $_POST['fechainicio'],
+            "fechacierre"   => $_POST['fechacierre'],
+            "observacion"   => $_POST['observacion'],
+            "garantia"      => $_POST['garantia'],
+            "idservicio"     => $_POST['idservicio'],
+            "precioservicio" => $_POST['precioservicio'],
+            "cantidad"      => $_POST['cantidad'],
+                                
         ];
 
-        $respuesta = $contrato->clientesPer_registrar($data);
+        $respuesta = $contrato->contrato_registrar($data);
         echo json_encode($respuesta);
     }
 
@@ -51,9 +56,23 @@ if(isset($_POST['op'])){
     if($_POST['op'] == 'getCliente'){
 
         echo json_encode($contrato->getClientes());
-
     }
+
+        
+    if($_POST['op'] == 'getServicios'){
+
+        echo json_encode($contrato->getServicios());
+    }
+
+
+
+
+
 }
+
+
+
+
 
 if(isset($_GET['op'])){
     

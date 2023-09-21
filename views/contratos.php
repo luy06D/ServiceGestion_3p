@@ -35,13 +35,13 @@
                     <legend class="col-form-label">Entidad Cliente</legend>
                     <div class="col-sm-10">
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gridRadios" id="rbPersona" value="option1" checked>
+                        <input class="form-check-input" type="radio" name="gridRadios" id="rbPersona" value="option1" checked onchange="cambioInput()">
                         <label class="form-check-label" for="gridRadios1">
                           Persona
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gridRadios" id="rbEmpresa" value="option2">
+                        <input class="form-check-input" type="radio" name="gridRadios" id="rbEmpresa" value="option2" onchange="cambioInput()">
                         <label class="form-check-label" for="gridRadios2">
                           Empresa
                         </label>
@@ -52,7 +52,7 @@
                     
                       <div class="mb-3 col-lg-6 mt-3" >
                         <div class="input-group mb-3">
-                          <span class="input-group-text" id="basic-addon1"><i class='bx bx-user' ></i></span>
+                          <span class="input-group-text" id="basic-addon1"><i id="icon-emp" class='bx bx-user' ></i></span>
                           <input type="text" class="form-control" placeholder="Nombres" maxlength="50" id="nombres">
                           <input type="hidden" class="form-control" placeholder="rsocial" maxlength="50" id="rsocial">
                         </div>
@@ -60,7 +60,7 @@
 
                       <div class="mb-3 col-lg-6">
                         <div class="input-group mb-3">
-                          <span class="input-group-text" id="basic-addon1"><i class='bx bx-user' ></i></span>
+                          <span class="input-group-text" id="basic-addon1"><i id="icon-ruc" class='bx bx-user' ></i></span>
                           <input type="text" class="form-control" placeholder="Apellidos" maxlength="50" id="apellidos">
                           <input type="hidden" class="form-control" placeholder="ruc" maxlength="50" id="ruc">                          
                         </div>
@@ -68,27 +68,27 @@
 
                       <div class="mb-3 col-lg-6">
                         <div class="input-group mb-3">
-                          <span class="input-group-text" id="basic-addon1"><i class='bx bx-id-card'></i></span>
+                          <span class="input-group-text" id="span-dni"><i class='bx bx-id-card'></i></span>
                           <input type="number" class="form-control" placeholder="Número DNI" maxlength="8" id="dni">
                         </div>  
                       </div>
 
                       <div class="mb-3 col-lg-6">
                         <div class="input-group mb-3">
-                          <span class="input-group-text" id="basic-addon1"><i class="bi bi-envelope"></i></span>
+                          <span class="input-group-text" id="span-correo"><i class="bi bi-envelope"></i></span>
                           <input type="email" class="form-control" placeholder="Correo" maxlength="50" id="correo">
                         </div>
                       </div>
 
                       <div class="mb-3 col-lg-6">
                         <div class="input-group mb-3">
-                          <span class="input-group-text" id="basic-addon1"><i class="bi bi-geo-alt"></i></span>
+                          <span class="input-group-text" id="span-direccion"><i class="bi bi-geo-alt"></i></span>
                           <input type="text" class="form-control" placeholder="Dirección" maxlength="50" id="direccion">
                         </div>
                       </div>
                       <div class="mb-3 col-lg-6">
                         <div class="input-group mb-3">
-                          <span class="input-group-text" id="basic-addon1"><i class='bx bx-phone' ></i></span>
+                          <span class="input-group-text" id="span-telefono"><i class='bx bx-phone' ></i></span>
                           <input type="tel" class="form-control" placeholder="900-000-000" maxlength="9" id="telefono">
                         </div>  
                       </div>
@@ -127,48 +127,48 @@
                 </div>            
                 <div class="col-md-6">
                   <label for="inputEmail5" class="form-label">Fecha inicio</label>
-                  <input type="date" class="form-control" id="inputEmail5">
+                  <input type="date" class="form-control" id="fechainicio">
                 </div>
                 <div class="col-md-6">
                   <label for="inputPassword5" class="form-label">Fecha Cierre</label>
-                  <input type="date" class="form-control" id="inputPassword5">
+                  <input type="date" class="form-control" id="fechacierre">
                 </div>
                 <div class="col-md-6">
                   <label for="inputPassword5" class="form-label">Observación</label>
-                  <input type="text" class="form-control" id="inputPassword5">
+                  <input type="text" class="form-control" id="observacion">
                 </div>
                 <div class="col-md-6">
                   <label for="inputPassword5" class="form-label">Garantia</label>
-                  <input type="number" class="form-control" id="inputPassword5">
+                  <input type="number" class="form-control" id="garantia">
                 </div>
                 <h5 class="card-title">Detalles </h5>
                 <div class="col-md-6">
                     <label for="inputState" class="form-label">Servicio</label>
-                    <select id="inputState" class="form-select">
+                    <select id="lsServicios" class="form-select">
                       <option>Seleccione</option>
                       
                     </select>
                 </div> 
                 <div class="col-md-6">
                   <label for="inputPassword5" class="form-label">Precio</label>
-                  <input type="number" class="form-control" id="inputPassword5">
+                  <input type="number" class="form-control" id="precio">
                 </div>
                 <div class="col-md-6">
                   <label for="inputPassword5" class="form-label">Cantidad</label>
-                  <input type="number" class="form-control" id="inputPassword5">
+                  <input type="number" class="form-control" id="cantidad">
                 </div>
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                   <label for="inputState" class="form-label">Estado</label>
-                  <select id="inputState" class="form-select">
+                  <select id="estado" class="form-select">
                     <option>Seleccione</option>
                     <option value="N">No iniciado</option>
                     <option value="P">Proceso</option>
                     <option value="F">Finalizado</option>
                     
                   </select>
-              </div> 
+              </div>  -->
                 <div class="">
-                  <button type="submit" class="btn btn-primary shadow-lg">Registrar</button>
+                  <button type="button" id="btnContrato" class="btn btn-primary shadow-lg">Registrar</button>
                   <button type="reset" class="btn btn-secondary shadow-lg">Limpiar</button>
                 </div>
          
@@ -195,19 +195,28 @@
 <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 
 <script src="../js/getSelects.js"></script>
+<script src="../js/cambioInput.js"></script>
 
 
 <script>
   $(document).ready(function (){
 
-    const nombres = document.querySelector("#nombres").value.trim();
-    const apellidos = document.querySelector("#apellidos").value.trim();
-    const dni = document.querySelector("#dni").value.trim();
-    const correo = document.querySelector("#correo").value.trim();
-    const direccion = document.querySelector("#direccion").value.trim();
-    const telefono = document.querySelector("#telefono").value.trim();
+    // const nombres = document.querySelector("#nombres").value.trim();
+    // const apellidos = document.querySelector("#apellidos").value.trim();
+    // const dni = document.querySelector("#dni").value.trim();
+    // const correo = document.querySelector("#correo").value.trim();
+    // const direccion = document.querySelector("#direccion").value.trim();
+    // const telefono = document.querySelector("#telefono").value.trim();
+
 
     function registrarPerCliente(){
+
+      const nombres = $("#nombres").val().trim();
+      const apellidos = $("#apellidos").val().trim();
+      const dni = $("#dni").val().trim();
+      const correo = $("#correo").val().trim();
+      const direccion = $("#direccion").val().trim();
+      const telefono = $("#telefono").val().trim();
 
       let sendData = {
 
@@ -259,6 +268,9 @@
                   $("#form-clientes")[0].reset();
 
                   $("#modal-registrar").modal('hide');
+                  // Recargar la página actual
+                    window.location.reload();
+
                 }
               });
 
@@ -268,7 +280,151 @@
      });
     }
 
+
+    function registrarEmpCliente(){
+
+      const rsocial = $("#rsocial").val().trim();
+      const ruc = $("#ruc").val().trim();
+    
+
+      let sendData = {
+
+        'op'            : 'registrarEmp_clientes',
+        'razonsocial'   : $("#rsocial").val(),
+        'ruc'           : $("#ruc").val()
+      };
+
+      Swal.fire({
+        title: '¿Está seguro de realizar la operación?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Sí',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#3F974F',
+        cancelButtonColor: '	#0d6efd'
+
+      }).then((result) => {
+      if(result.isConfirmed){
+        if(rsocial === '' || ruc === '' ){
+
+            Swal.fire({
+              title: "Por favor, complete los campos",
+              icon: "warning",
+              confirmButtonColor: "#E43D2C",
+          });
+
+
+          }else{
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Operación exitosa',
+              showConfirmButton: false,
+              timer: 1500
+              })
+
+              $.ajax({
+                url:'../controllers/contratos.controller.php',
+                type: 'POST',
+                data: sendData,
+                success: function(result){
+
+                  $("#form-clientes")[0].reset();
+
+                  $("#modal-registrar").modal('hide');
+                  // Recargar la página actual
+                  window.location.reload();
+
+                }
+              });
+
+          }
+      }
+
+      });
+}
+
+    function registrarContrato(){
+
+        const cliente = $("#idcliente").val().trim();
+        const fechaI = $("#fechainicio").val().trim();
+        const fechaC = $("#fechacierre").val().trim();
+        const observacion = $("#observacion").val().trim();
+        const garantia = $("#garantia").val().trim();
+        const servicio = $("#lsServicios").val().trim();
+        const precio = $("#precio").val().trim();
+        const cantidad = $("#cantidad").val().trim();
+        
+
+
+
+        let sendData = {
+          'op'              : 'registrar_contrato',
+          'idusuario'       : $("#idusuario").val(),
+          'idcliente'       : $("#idcliente").val(),
+          'fechainicio'     : $("#fechainicio").val(),
+          'fechacierre'     : $("#fechacierre").val(),
+          'observacion'     : $("#observacion").val(),
+          'garantia'        : $("#garantia").val(),
+          'idservicio'      : $("#idservicio").val(),
+          'precioservicio'  : $("#precio").val(),
+          'cantidad'        : $("#cantidad").val(),          
+
+        };
+
+        Swal.fire({
+          title: '¿Está seguro de realizar la operación?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonText: 'Sí',
+          cancelButtonText: 'Cancelar',
+          confirmButtonColor: '#3F974F',
+          cancelButtonColor: '	#0d6efd'
+
+        }).then((result) => {
+        if(result.isConfirmed){
+          if(cliente === '' || fechaI === '' || fechaC === '' || observacion === ''
+          || garantia === '' || servicio === '' || precio === '' || cantidad === '' ){
+
+              Swal.fire({
+                title: "Por favor, complete los campos",
+                icon: "warning",
+                confirmButtonColor: "#E43D2C",
+            });
+
+
+            }else{
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Operación exitosa',
+                showConfirmButton: false,
+                timer: 1500
+                })
+
+                $.ajax({
+                  url:'../controllers/contratos.controller.php',
+                  type: 'POST',
+                  data: sendData,
+                  success: function(result){
+
+                    $("#form-clientes")[0].reset();
+
+                    $("#modal-registrar").modal('hide');
+
+                  }
+                });
+
+            }
+        }
+
+        });
+    }
+
     $("#btcliente").click(registrarPerCliente);
+    $("#btcliente").click(registrarEmpCliente);
+
+    $("#btnContrato").click(registrarContrato);
 
   });
 

@@ -58,7 +58,7 @@ public function contrato_registrar ($datos = []){
         "message" => ""
     ];
     try{
-        $consulta = $this->conexion->prepare("CALL spu_contrato_registrar(?,?,?,?,?,?,?,?,?,?)");
+        $consulta = $this->conexion->prepare("CALL spu_contrato_registrar(?,?,?,?,?,?,?,?,?)");
         $respuesta["status"] = $consulta->execute(array(
             
             $datos["idusuario"],
@@ -69,8 +69,8 @@ public function contrato_registrar ($datos = []){
             $datos["garantia"],
             $datos["idservicio"],
             $datos["precioservicio"],
-            $datos["cantidad"],
-            $datos["estadoservicio"]
+            $datos["cantidad"]
+            
         ));
     }
     catch(Exception $e){
@@ -84,6 +84,21 @@ public function getClientes(){
 
     try{
         $query = $this->conexion->prepare("CALL spu_getClientes()");
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+    catch(Exception $e){
+        die($e->getMessage());
+    }
+
+}
+
+
+public function getServicios(){
+
+    try{
+        $query = $this->conexion->prepare("CALL spu_getServicios()");
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);
 
