@@ -233,6 +233,7 @@ CONSTRAINT uk7 UNIQUE (numSerie)
 
 INSERT INTO desc_equipo(idequipo, iddescServicio, numSerie, precio)VALUES
 (1,2,'84565214253',350),
+<<<<<<< HEAD
 (2,2,'96532145875',200)
 
 SELECT * FROM marcas
@@ -530,3 +531,120 @@ SELECT * FROM equipos
 DELETE FROM tipoequipo
 ALTER TABLE tipoequipo AUTO_INCREMENT = 1
 SELECT * FROM marcas
+=======
+(2,2,'96532145875',200);
+
+
+-- PROCEDIMINETOS CONTRATOS >>>>>>>>>>>>>>>
+
+-- REGISTRAR PERSONAS COMO CLIENTE
+
+DELIMITER $$ 
+CREATE PROCEDURE spu_clientesPer_registrar
+(
+-- param persona
+IN _nombres VARCHAR(30),
+IN _apellidos VARCHAR(30),
+IN _dni  CHAR(9),
+IN _correo VARCHAR(40),
+IN _direccion VARCHAR(60),
+IN _telefono  CHAR(9)
+)
+BEGIN 
+
+	DECLARE g_idpersona INT;
+	
+	INSERT INTO personas (nombres, apellidos, dni , correo, direccion, telefono) VALUES
+						(_nombres, _apellidos, _dni, _correo, _direccion, _telefono);
+	
+	SELECT LAST_INSERT_ID() INTO g_idpersona;
+
+	INSERT INTO clientes (idpersona) VALUES
+			(g_idpersona);
+
+END $$
+
+CALL spu_clientesPer_registrar("Lucio","Herrera", 76576825 ,"Llucio02@gmail.com","Chincha Alta", 965654565);
+
+SELECT * FROM empresas
+SELECT * FROM clientes
+
+
+-- REGISTRAR EMPRESA COMO CLIENTE
+DELIMITER $$ 
+CREATE PROCEDURE spu_clientesEmp_registrar
+(
+-- param empresa
+IN _razonsocial VARCHAR(30),
+IN _ruc    CHAR(11)
+)
+BEGIN 
+
+	DECLARE g_idempresa INT;
+	
+	INSERT INTO empresas (razonsocial, ruc) VALUES
+						(_razonsocial, _ruc);
+	
+	SELECT LAST_INSERT_ID() INTO g_idempresa;
+
+	INSERT INTO clientes (idempresa) VALUES
+			(g_idempresa);
+END $$
+
+CALL spu_clientesEmp_registrar("Avicola vania", 11323235454);
+
+
+-- GET CLIENTES
+DELIMITER $$
+CREATE PROCEDURE spu_getClientes()
+BEGIN 
+
+	SELECT
+		CLI.idcliente,
+	    COALESCE(EM.razonsocial, PE.nombres) AS clientes
+	FROM clientes CLI
+	LEFT JOIN personas PE ON CLI.idpersona = PE.idpersona
+	LEFT JOIN empresas EM ON CLI.idempresa = EM.idempresa;
+
+
+END $$
+
+CALL spu_getClientes();
+
+-- REGISTRAR CONTRATO
+DELIMITER $$
+CREATE PROCEDURE spu_contrato_registrar
+(
+-- params contratos
+IN _idusuario INT,
+IN _idcliente INT,
+IN _fechainicio DATE,
+IN _fechacierre DATE,
+IN _observacion VARCHAR(150),
+IN _garantia VARCHAR(20),
+
+-- params desc_servicio
+IN _idservicio INT,
+IN _precioservicio DECIMAL(7,2),
+IN _cantidad SMALLINT,
+IN _estadoservicio CHAR(1)
+)
+BEGIN 
+	
+	DECLARE g_idcontrato INT;
+	
+	INSERT INTO contratos (idusuario, idcliente , fechainicio, fechacierre, observacion, garantia) VALUES
+						(_idusuario, _idcliente, _fechainicio, _fechacierre, _observacion, _garantia);
+	
+	SELECT LAST_INSERT_ID() INTO g_idcontrato;
+	
+	INSERT INTO desc_servicio (idcontrato, idservicio, precioservicio, cantidad, estadoservicio) VALUES
+								(g_idcontrato, _idservicio, _precioservicio, _cantidad, _estadoservicio);
+				
+END $$
+
+CALL spu_contrato_registrar(1, 2, "2023-09-14", NULL, "Prueba de procedimiento", "2 meses", 3 , 300, 3, "P");
+
+
+
+
