@@ -1,6 +1,6 @@
-CREATE DATABASE DB_3P
+CREATE DATABASE DB_3P;
 
-USE DB_3P
+USE DB_3P;
 
 
 CREATE TABLE personas
@@ -99,7 +99,7 @@ CONSTRAINT fk5	FOREIGN KEY (idusuario) REFERENCES usuarios(idusuario)
 )ENGINE = INNODB;
 
 INSERT INTO contratos(idusuario, idcliente, fechainicio, observacion, garantia)VALUES
-(1, 2, '15-09-2023', 'nada que decir', '1 mes'),
+(1, 3, '15-09-2023', 'nada que decir', '1 mes')
 (2,1,'18-09-2023', 'nada que decir', '2 semanas')
 
 
@@ -138,9 +138,9 @@ CONSTRAINT fk6	FOREIGN KEY (idcontrato) REFERENCES contratos(idcontrato),
 CONSTRAINT fk7	FOREIGN KEY (idservicio) REFERENCES servicios(idservicio)
 )ENGINE=INNODB;
 
-
+SELECT * FROM desc_servicio
 INSERT INTO desc_servicio(idcontrato, idservicio, precioservicio, cantidad, estadoservicio)VALUES
-(1, 1, 6000, 2, 'P'),
+(7, 1, 6000, 2, 'P')
 (2,2,8000,3,'N')
 ()
 
@@ -161,7 +161,7 @@ CONSTRAINT fk9	FOREIGN KEY (idSoporteTecnico) REFERENCES usuarios(idusuario)
 )ENGINE = INNODB;
 
 INSERT INTO garantia(iddescServicio, idSoporteTecnico, fechaAveria, fechaEjecucion, estadogarantia, inSitu)VALUES
-(1, 2, '10-09-2023', '16-09-2023', 'P', 'Local del cliente'),
+(7, 2, '10-09-2023', '16-09-2023', 'P', 'Local del cliente'),
 (2,1,'10-09-2023', '16-09-2023', 'P', 'Local del cliente')
 
 
@@ -199,6 +199,7 @@ INSERT INTO marcas(marca)VALUES
 ('Dell'),
 ('HP')
 
+SELECT * FROM equipos
 
 CREATE TABLE equipos
 (
@@ -206,7 +207,9 @@ idequipo		INT AUTO_INCREMENT PRIMARY KEY,
 idtipoequipo	INT NOT NULL,
 idmarca			INT NOT NULL,
 descripcion		VARCHAR(100) NOT NULL,
-
+create_at		DATETIME	NOT NULL DEFAULT NOW(),
+update_at		DATETIME	NULL,
+inactive_at		DATETIME NULL,
 CONSTRAINT fk10	FOREIGN KEY (idtipoequipo) REFERENCES tipoequipo(idtipoequipo),
 CONSTRAINT fk11	FOREIGN KEY (idmarca) REFERENCES marcas(idmarca)
 )ENGINE = INNODB;
@@ -216,7 +219,6 @@ INSERT INTO equipos(idtipoequipo, idmarca, descripcion)VALUES
 (2,3,'nada que decir')
 
 
-CREATE TABLE desc_equipo
 (
 iddescEquipo INT AUTO_INCREMENT PRIMARY KEY,
 idequipo	INT NOT NULL,
@@ -232,3 +234,299 @@ CONSTRAINT uk7 UNIQUE (numSerie)
 INSERT INTO desc_equipo(idequipo, iddescServicio, numSerie, precio)VALUES
 (1,2,'84565214253',350),
 (2,2,'96532145875',200)
+
+SELECT * FROM marcas
+
+
+-- SPU USUARIO --
+DELIMITER$$ 
+CREATE PROCEDURE spu_user_login(IN _usuario VARCHAR(30))
+BEGIN 
+
+	SELECT 	usuarios.idusuario, 
+		personas.apellidos, personas.nombres,
+		usuarios.usuario, usuarios.claveacceso
+
+	FROM usuarios
+	INNER JOIN personas ON personas.idpersona = usuarios.idpersona
+	WHERE usuario = _usuario;
+END$$
+
+SELECT * FROM personas
+
+DELIMITER $$
+CREATE PROCEDURE spu_usuario_registrar 
+(
+
+IN _nombres 	VARCHAR(30),
+IN _apellidos 	VARCHAR(30),
+IN _dni		CHAR(8),
+IN _correo 		VARCHAR(40),
+IN _direccion	VARCHAR(50),
+IN _telefono	CHAR(9),
+IN _usuario VARCHAR(40),
+IN _claveacceso	  VARCHAR(100),
+IN _nivelacceso CHAR(1)
+)
+BEGIN 
+	DECLARE g_idpersona INT;
+	
+	
+	INSERT INTO personas (nombres, apellidos, dni, correo, direccion,telefono ) VALUES 
+			(_nombres, _apellidos, _dni, _correo,_direccion, _telefono );
+	
+	SELECT LAST_INSERT_ID() INTO g_idpersona;
+	
+	INSERT INTO usuarios (idpersona , usuario, claveacceso, nivelacceso) VALUES
+			(g_idpersona, _usuario, _claveacceso, _nivelacceso);	
+
+END$$
+
+CALL spu_usuario_registrar ('Antonio','Torres Feijo','79461340','antonio@gmail.com','Chincha','987654321','anton10','123456','E');
+
+SELECT * FROM usuarios
+-- SPU  REGISTRAR EQUIPOS --
+
+DELIMITER $$
+CREATE PROCEDURE spu_equipo_registrar
+(
+	IN _idtipoequipo	INT,
+	IN _idmarca		INT,
+	IN _descripcion		VARCHAR(100)
+)
+BEGIN
+	INSERT INTO equipos (idtipoequipo, idmarca, descripcion)
+		VALUES (_idtipoequipo, _idmarca, _descripcion);
+END$$
+	
+CALL spu_equipo_registrar('1', '2', '8 canales full HD');
+
+-- ACTUALIZAR EQUIPOS
+
+DELIMITER $$
+CREATE PROCEDURE spu_equipos_actualizar
+(
+	IN _idequipo	INT,
+	IN _idtipoequipo INT,
+	IN _idmarca	INT,
+	IN _descripción	VARCHAR(100)
+)
+BEGIN 
+	UPDATE equipos SET
+		idtipoequipo = _idtipoequipo,
+		idmarca  = _idmarca
+	WHERE idequipo = _idequipo;
+END $$
+CALL spu_equipos_actualizar(2,1,6,'Teclado completo')
+				-- RECUPERAR EQUIPOS --
+DELIMITER $$ 
+CREATE PROCEDURE spu_equipos_listar()
+BEGIN
+	SELECT idequipo , tipoequipo, marca ,descripcion
+	FROM  equipos
+	INNER JOIN tipoequipo ON tipoequipo.`idtipoequipo` = equipos.`idtipoequipo`
+	INNER JOIN marcas ON marcas.`idmarca` = equipos.`idmarca`
+	WHERE equipos.inactive_at IS NULL
+	ORDER BY idequipo ASC;
+END $$
+
+CALL spu_equipos_listar()
+
+
+
+-- RECUERAR TIPOS EQUIPOS
+
+DELIMITER $$
+CREATE PROCEDURE spu_tipoequip_recuperar()
+BEGIN
+	SELECT idtipoequipo, tipoequipo
+	FROM tipoequipo
+	WHERE inactive_at IS NULL;
+END $$
+
+CALL spu_tipoequip_recuperar()
+
+-- REGISTRAR TIPOS E
+DELIMITER $$
+CREATE PROCEDURE spu_tipoequipo_registrar
+(
+	IN _tipoequipo 	VARCHAR(30)
+)
+BEGIN
+INSERT INTO tipoequipo (tipoequipo)VALUES
+	(_tipoequipo);
+END $$
+
+-- ACTUALIZAR TIPOS E
+DELIMITER $$
+CREATE PROCEDURE spu_tipoequip_actualizar
+(
+	IN _idtipoequipo INT,
+	IN _tipoequipo	VARCHAR(30)
+)
+BEGIN
+	UPDATE tipoequipo SET
+		tipoequipo = _tipoequipo
+	WHERE idtipoequipo = _idtipoequipo;
+END $$
+
+CALL spu_tipoequip_actualizar(1,'Teclado Génerico');
+
+-- OBTENER TIPOS E
+DELIMITER $$
+CREATE PROCEDURE spu_tipoequip_obtener
+(
+	IN _idtipoequipo INT
+)
+BEGIN
+	SELECT * FROM tipoequipo WHERE idtipoequipo = _idtipoequipo;
+END$$
+
+-- ELIMINAR TIPO E
+
+DELIMITER $$
+CREATE PROCEDURE spu_tipoequip_eliminar
+(
+	IN _idtipoequipo INT
+)
+BEGIN
+	UPDATE tipoequipo SET inactive_at = NOW()
+	WHERE idtipoequipo = _idtipoequipo;
+END $$
+
+
+-- RECUPERAR MARCAS
+DELIMITER $$
+CREATE PROCEDURE spu_marcas_recuperar()
+BEGIN
+	SELECT idmarca, marca
+	FROM marcas
+	WHERE inactive_at IS NULL;
+END $$
+
+CALL spu_marcas_recuperar();
+
+-- REGISTRAR MARCA
+DELIMITER $$
+CREATE PROCEDURE spu_marca_registrar
+(
+	IN _marca	VARCHAR(20)
+)
+BEGIN
+	INSERT INTO marcas (marca) VALUES
+		(_marca);
+END $$
+
+
+DELETE FROM marcas 
+ALTER TABLE marcas AUTO_INCREMENT = 1
+CALL spu_marca_registrar('Dahua')
+
+-- ACTUALIZAR MARCA 
+DELIMITER $$
+CREATE PROCEDURE spu_marca_actualizar
+(	
+	IN _idmarca	INT,
+	IN _marca	VARCHAR(20)
+)
+BEGIN
+	UPDATE marcas SET
+		marca = _marca
+	WHERE idmarca = _idmarca;
+END $$
+
+-- OBTENER MARCA
+DELIMITER $$
+CREATE PROCEDURE spu_marca_obtener
+(
+	IN _idmarca INT
+)
+BEGIN
+	SELECT * FROM marcas WHERE idmarca = _idmarca;
+END $$
+
+CALL spu_marca_obtener(1)
+
+-- ELIMINAR MARCA
+DELIMITER $$
+CREATE PROCEDURE spu_marca_eliminar
+(
+	IN _idmarca INT
+)
+BEGIN
+	UPDATE marcas SET inactive_at = NOW()
+	WHERE idmarca = _idmarca;
+END $$
+
+
+-- LISTAR EQUIPOS
+DELIMITER $$
+DROP PROCEDURE spu_equipo_listar()
+BEGIN
+SELECT idequipo,
+	tipoequipo,
+	marca,
+	descripcion
+FROM equipos
+	INNER JOIN tipoequipo ON tipoequipo.idtipoequipo = equipos.idtipoequipo
+	INNER JOIN marcas ON marcas.idmarca = equipos.idmarca
+	ORDER BY idequipo DESC;
+END $$
+
+CALL spu_equipo_listar()
+DELIMITER $$
+CREATE PROCEDURE spu_descripcionequipo_listar()
+BEGIN
+SELECT 	iddescEquipo,
+	e
+
+CALL spu_equipo_listar();
+SELECT * FROM tipoequipo
+SELECT * FROM marcas
+
+
+END $$
+INSERT INTO desc_equipo (idequipo,idDescServicio, numSerie,precio) VALUES
+	(1,7,'89562317',105)
+SELECT * FROM desc_equipo
+DELIMITER $$
+CREATE PROCEDURE ListarDescEquipo()
+BEGIN
+    SELECT
+        de.iddescEquipo AS idDesc_Equipo,
+        s.nombreservicio AS nombreServicio,
+        te.tipoequipo AS tipoequipo,
+        m.marca AS marca,
+        e.descripcion AS descripcion,
+        de.numSerie AS numSerie,
+        de.precio AS precio
+    FROM
+        desc_equipo de
+    INNER JOIN
+        equipos e ON de.idequipo = e.idequipo
+    INNER JOIN
+        tipoequipo te ON e.idtipoequipo = te.idtipoequipo
+    INNER JOIN
+        marcas m ON e.idmarca = m.idmarca
+    INNER JOIN
+        desc_servicio ds ON de.iddescServicio = ds.iddescServicio
+    INNER JOIN
+        servicios s ON ds.idservicio = s.idservicio;
+END $$
+CALL ListarDescEquipo();
+
+DELIMITER $$
+CREATE PROCEDURE spu_equipos_recuperar()
+BEGIN
+	SELECT idequipo, tipoequipo
+	FROM equipos
+	INNER JOIN tipoequipo ON tipoequipo.idtipoequipo = equipos.idtipoequipo
+	WHERE equipos.inactive_at IS NULL;
+END $$
+
+CALL spu_equipos_recuperar()
+
+SELECT * FROM equipos
+DELETE FROM tipoequipo
+ALTER TABLE tipoequipo AUTO_INCREMENT = 1
+SELECT * FROM marcas

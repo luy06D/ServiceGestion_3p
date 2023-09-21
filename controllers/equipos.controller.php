@@ -11,24 +11,23 @@ if(isset($_GET['op'])){
 
     if($data){
       foreach($data as $registro){
-          echo "
-          <tr>
-              <td>{$registro['idequipo']}</td>
-              <td>{$registro['idtipoequipo']}</td>
-              <td>{$registro['idmarca']}</td>
-              <td>{$registro['descripcion']}</td>                    
-              <td>
-                  <a href='#' class='editar btn btn-outline-warning btn-sm' data-bs-toggle='modal' data-bs-target='#modal-registrar' data-idequipo ='{$registro['idequipo']}'><i class='bi bi-pencil-square'></i></a>
-                  <a href='#' class='eliminar btn btn-outline-danger btn-sm' data-idEquipo='{$registro['idequipo']}'><i class='bi bi-trash'></i></a> 
-              </td>
-          </tr>
-      ";
+        echo "
+        <tr>
+          <td>{$registro['idequipo']}</td>
+          <td>{$registro['tipoequipo']}</td>
+          <td>{$registro['marca']}</td>
+          <td>{$registro['descripcion']}</td>                    
+          
+        </tr>
+        ";
 
 
       }
     }
   }
 
+  
+
 }
 
 
@@ -36,33 +35,56 @@ if(isset($_POST['op'])){
     
   $equipos = new Equipos();
 
+  // if($_POST['op'] == 'listarequipos'){
+  //   $data = $equipos->equipos_listar();
+  //   if($data){
+  //     echo json_encode($data);
+  //   }
+  // }
+
   if($_POST['op'] == 'registrar_equipos'){
 
     $data = [
-        "tipoequipo"  => $_POST['tipoequipo'],
-        "marca"       => $_POST['marca'],
-        "descripcion" => $_POST['descripcion'],     
+      "idtipoequipo"  => $_POST['idtipoequipo'],
+      "idmarca"       => $_POST['idmarca'],
+      "descripcion" => $_POST['descripcion']    
+    ];
+
+    $equipos->equipo_registrar($data);
+  }
+  
+
+  if($_POST['op'] == 'actualizar_equipos'){
+
+    $data = [
+      "idequipo"    => $_POST['idequipo'],
+      "idtipoequipo"  => $_POST['idtipoequipo'],
+      "idmarca"       => $_POST['idmarca'],
+      "descripcion" => $_POST['descripcion']    
     ];
 
     $equipos->equipo_registrar($data);
   }
 
-}
-
-if(isset($_POST['op'])){
-    
-  $equipos = new Equipos();
 
   if($_POST['op'] == 'registrar_descbrequipos'){
 
     $data = [
-        "idEquipo"        => $_POST['idequipo'],
-        "iddescServicio"  => $_POST['iddescServicio'],
-        "numSerie"        => $_POST['numServicio'],  
-        "precio"          => $_POST['precio']   
+      "idEquipo"        => $_POST['idequipo'],
+      "iddescServicio"  => $_POST['iddescServicio'],
+      "numSerie"        => $_POST['numServicio'],  
+      "precio"          => $_POST['precio']   
     ];
 
     $equipos->equipo_registrar($data);
+  }
+
+  if($_POST['op'] == 'recuperarTipoEquipo'){
+    echo json_encode($equipos->recuperarTipoEquipos());
+  }
+
+  if($_POST['op'] == 'recuperarMarca'){
+    echo json_encode($equipos->recuperarMarcas());
   }
 
 }

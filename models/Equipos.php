@@ -30,8 +30,27 @@ require_once 'Conexion.php';
         $consulta = $this->conexion->prepare("CALL spu_equipo_registrar(?,?,?)");
         $respuesta["status"] = $consulta->execute(array(
             
-          $datos["tipoequipo"],
-          $datos["marca"],
+          $datos["idtipoequipo"],
+          $datos["idmarca"],
+          $datos["descripcion"],
+        ));
+      }
+      catch(Exception $e){
+        $respuesta["message"] = "No se pudo completar la operacion Codigo error: " .$e->getCode();
+      }
+      return $respuesta;
+    }
+    public function actualizar_equipos($datos = []){
+      $respuesta = [
+        "status"  => false,
+        "message" => ""
+      ];
+      try{
+        $consulta = $this->conexion->prepare(("CALL spu_equipos_actualizar(?,?,?,?)"));
+        $respuesta["status"] = $consulta->execute(array(
+          $datos['idequipo'],
+          $datos["idtipoequipo"],
+          $datos["idmarca"],
           $datos["descripcion"],
         ));
       }
@@ -61,7 +80,32 @@ require_once 'Conexion.php';
       }
       return $respuesta;
     }
-  }
 
+    public function recuperarTipoEquipos(){
+      try{
+        $query = $this->conexion->prepare("CALL spu_tipoequip_recuperar()");
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+
+      }
+      catch(Exception $err){
+        die($err->getMessage());
+      }
+    }
+
+    public function recuperarMarcas(){
+      try{
+        $query = $this->conexion->prepare("CALL spu_marcas_recuperar()");
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+
+      }
+      catch(Exception $err){
+        die($err->getMessage());
+      }
+    }
+
+
+  }
 
 ?>

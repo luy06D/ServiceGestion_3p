@@ -1,7 +1,15 @@
+<?php
+session_start();
+
+if(!isset($_SESSION['segurity']) || $_SESSION['segurity']['login'] == false){
+  header('Location:../login.php');
+}
+
+?>
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="utf-8">
@@ -273,17 +281,17 @@
   <li class="nav-item">
     <a class="nav-link " href="../views/index.php">
       <i class="bi bi-grid"></i>
-      <span>Dashboard</span>
+      <span>Inicio</span>
     </a>
   </li><!-- End Dashboard Nav -->
 
-  <li class="nav-item">
+  <!-- <li class="nav-item">
     <a class="nav-link " href="../views/equipos.php">
       <i class="bi bi-wrench"></i>
       <span>Equipos</span>
     </a>
 
-  </li><!-- End Dashboard Nav -->
+  </li>End Dashboard Nav -->
 
   <li class="nav-item">
     <a class="nav-link " href="../views/garantia.php">
@@ -376,6 +384,32 @@
           <i class="bi bi-circle"></i><span>Tooltips</span>
         </a>
       </li>
+    </ul>
+  </li><!-- End Components Nav -->
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" data-bs-target="#components-nav-equipos" data-bs-toggle="collapse" href="#">
+      <i class="bi bi-wrench"></i></i><span>Equipos</span><i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul id="components-nav-equipos" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+      <li>
+          <a class="nav-link " href="../views/equipos.php">
+            <i class="bi bi-plus-circle"></i>
+            <span>Equipos</span>
+          </a>
+      </li>
+      <li>
+          <a class="nav-link " href="../views/marcas.php">
+            <i class="bi bi-plus-circle"></i>
+            <span>Marcas</span>
+          </a>
+      </li>
+      <li>
+        <a class="nav-link " href="../views/tipoequipos.php">
+          <i class="bi bi-circle"></i><span>Tipos</span>
+        </a>
+      </li>
+      
     </ul>
   </li><!-- End Components Nav -->
 
