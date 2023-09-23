@@ -47,4 +47,26 @@ class Usuarios extends Conexion{
     }
     return $response;
   }
+
+  public function usuariosID_registrar($data = []){
+
+    $response = [
+      "status"  => false,
+      "message" => ""
+    ];
+
+    try{
+      $query = $this->conexion->prepare("CALL spu_register_userid(?,?,?,?)");
+      $response["status"] = $query->execute(array(
+          $data['idpersona'],
+          $data['usuario'],
+          $data['claveacceso'],
+          $data['nivelacceso']
+      ));
+    }
+    catch(Exception $err){
+      $response["message"] = "No se completo el proceso. Codigo error: " . $err->getCode();
+    }
+    return $response;
+  }
 }

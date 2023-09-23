@@ -22,7 +22,7 @@
       <div class="row">
         
 
-        <div class="col-lg-8">
+        <div class="col-lg-12">
           <button type="button" id="abrir-modal-registro-Tequipos" class="btn btn-success btn-md mb-3" data-bs-toggle="modal" data-bs-target="#modal-Tequipos">
             <i class="bi bi-plus-circle"></i> Agregar
           </button>
@@ -30,7 +30,7 @@
 
         <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Lista de Marcas</h5>
+              <h5 class="card-title">Lista</h5>
 
               <!-- Multi Columns Form -->
               <form class="row g-3" id="">

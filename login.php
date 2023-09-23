@@ -79,7 +79,7 @@ if(isset($_SESSION['segurity']) && $_SESSION['segurity']['login']){
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Usuario</label>
                       <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend">@</span>
+                        <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-person"></i></span>
                         <input type="text" name="username" class="form-control" id="usuario" required>
                         <div class="invalid-feedback">Por favor, ingrese su nombre de usuario.</div>
                       </div>
@@ -87,8 +87,11 @@ if(isset($_SESSION['segurity']) && $_SESSION['segurity']['login']){
 
                     <div class="col-12">
                       <label for="yourPassword" class="form-label">Contraseña</label>
-                      <input type="password" name="password" class="form-control" id="password" required>
-                      <div class="invalid-feedback">¡Por favor, introduzca su contraseña!</div>
+                      <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-key"></i></span>
+                        <input type="password" name="password" class="form-control" id="password" required>
+                        <div class="invalid-feedback">¡Por favor, introduzca su contraseña!</div>
+                      </div>
                     </div>
 
                     <div class="col-12">
