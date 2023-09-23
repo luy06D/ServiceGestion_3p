@@ -1,5 +1,5 @@
 CREATE DATABASE DB_3P;
-
+USE DB_3P;
 
 
 
@@ -44,8 +44,7 @@ CONSTRAINT uk2 UNIQUE(usuario, idpersona)
 
 INSERT INTO usuarios(idpersona, usuario, claveacceso, nivelacceso)VALUES
 (3, 'eduqcc08', '123456', 'A'),
-(1, 'gonzalo','123456', 'E')
-()
+(1, 'gonzalo','123456', 'E');
 
 CREATE TABLE empresas
 (
@@ -99,8 +98,9 @@ CONSTRAINT fk5	FOREIGN KEY (idusuario) REFERENCES usuarios(idusuario)
 )ENGINE = INNODB;
 
 INSERT INTO contratos(idusuario, idcliente, fechainicio, observacion, garantia)VALUES
-(1, 3, '15-09-2023', 'nada que decir', '1 mes')
-(2,1,'18-09-2023', 'nada que decir', '2 semanas')
+(1, 1, '15-09-2023', 'nada que decir', '1 mes'),
+(2,1,'18-09-2023', 'nada que decir', '2 semanas');
+
 
 
 CREATE TABLE servicios
@@ -143,12 +143,11 @@ ALTER TABLE desc_servicio MODIFY COLUMN
 estadoservicio CHAR(1) NOT NULL DEFAULT 'N';
 
 
-
-
 INSERT INTO desc_servicio(idcontrato, idservicio, precioservicio, cantidad, estadoservicio)VALUES
-(7, 1, 6000, 2, 'P')
-(2,2,8000,3,'N')
-()
+					(5, 1, 6000, 2, 'P'),
+					(6,2,8000,3,'N');
+
+
 
 CREATE TABLE garantia
 (
@@ -167,8 +166,10 @@ CONSTRAINT fk9	FOREIGN KEY (idSoporteTecnico) REFERENCES usuarios(idusuario)
 )ENGINE = INNODB;
 
 INSERT INTO garantia(iddescServicio, idSoporteTecnico, fechaAveria, fechaEjecucion, estadogarantia, inSitu)VALUES
-(7, 2, '10-09-2023', '16-09-2023', 'P', 'Local del cliente'),
-(2,1,'10-09-2023', '16-09-2023', 'P', 'Local del cliente')
+(3, 2, '10-09-2023', '16-09-2023', 'P', 'Local del cliente'),
+(4,1,'10-09-2023', '16-09-2023', 'P', 'Local del cliente')
+
+
 
 
 CREATE TABLE tipoequipo
@@ -225,6 +226,7 @@ INSERT INTO equipos(idtipoequipo, idmarca, descripcion)VALUES
 (2,3,'nada que decir')
 
 
+CREATE TABLE desc_equipo
 (
 iddescEquipo INT AUTO_INCREMENT PRIMARY KEY,
 idequipo	INT NOT NULL,
@@ -238,10 +240,8 @@ CONSTRAINT uk7 UNIQUE (numSerie)
 )ENGINE = INNODB;
 
 INSERT INTO desc_equipo(idequipo, iddescServicio, numSerie, precio)VALUES
-(1,2,'84565214253',350),
-(2,2,'96532145875',200)
-
-SELECT * FROM marcas
+(1,3,'84565214253',350),
+(2,4,'96532145875',200)
 
 
 -- SPU USUARIO --
@@ -325,6 +325,7 @@ BEGIN
 		idmarca  = _idmarca
 	WHERE idequipo = _idequipo;
 END $$
+
 CALL spu_equipos_actualizar(2,1,6,'Teclado completo')
 				-- RECUPERAR EQUIPOS --
 DELIMITER $$ 
@@ -482,11 +483,13 @@ END $$
 
 CALL spu_equipo_listar()
 
+-- XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+
 DELIMITER $$
 CREATE PROCEDURE spu_descripcionequipo_listar()
 BEGIN
 SELECT 	iddescEquipo,
-	e
+END $$
 
 CALL spu_equipo_listar();
 
@@ -642,7 +645,6 @@ CREATE PROCEDURE spu_contrato_registrar
 IN _idusuario INT,
 IN _idcliente INT,
 IN _fechainicio DATE,
-IN _fechacierre DATE,
 IN _observacion VARCHAR(150),
 IN _garantia VARCHAR(20),
 
@@ -655,8 +657,8 @@ BEGIN
 	
 	DECLARE g_idcontrato INT;
 	
-	INSERT INTO contratos (idusuario, idcliente , fechainicio, fechacierre, observacion, garantia) VALUES
-						(_idusuario, _idcliente, _fechainicio, _fechacierre, _observacion, _garantia);
+	INSERT INTO contratos (idusuario, idcliente , fechainicio, observacion, garantia) VALUES
+						(_idusuario, _idcliente, _fechainicio, _observacion, _garantia);
 	
 	SELECT LAST_INSERT_ID() INTO g_idcontrato;
 	
@@ -666,7 +668,7 @@ BEGIN
 END $$
 
 
-CALL spu_contrato_registrar(1, 2, "2023-09-14", NULL, "Prueba2 de procedimiento", "1 meses", 3 , 300, 5);
+CALL spu_contrato_registrar(1, 2, "2023-09-14", "Prueba2 de procedimiento", "1 meses", 3 , 300, 5);
 
 
 DELIMITER $$
@@ -676,7 +678,7 @@ BEGIN
 	SELECT CO.idcontrato,
 	 COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) AS clientes,
 	 DATE(CO.fechacontrato) AS fechacontrato,
-	 DS.precioservicio, CO.fechainicio, CO.garantia, DS.estadoservicio
+	 CO.fechainicio,CO.fechacierre, CO.garantia, DS.estadoservicio
 	FROM desc_servicio DS
 	INNER JOIN contratos CO ON CO.idcontrato = DS.idcontrato
 	INNER JOIN clientes CLI ON CLI.idcliente = CO.idcliente
@@ -706,9 +708,29 @@ BEGIN
 
 END$$
 
-CALL spu_detalleContratos_listar(1)
+CALL spu_detalleContratos_listar(5);
+
+DELIMITER $$
+CREATE PROCEDURE spu_finalizarContrato
+(
+IN _idcontrato INT,
+IN _fechacierre DATE
+)
+BEGIN
+		UPDATE contratos SET fechacierre = _fechacierre
+		WHERE idcontrato = _idcontrato;
+		
+		UPDATE desc_servicio SET estadoservicio = 'F'
+		WHERE idcontrato = _idcontrato;
+		
+END $$
+
+CALL spu_finalizarContrato(5, '2023-09-23');
 
 
+DELIMITER $$
+CREATE TRIGGER actualizar_estadoProceso 
+AFTER INSERT
 
 
 

@@ -52,7 +52,7 @@
                   </fieldset>
                     <hr>
                     
-                      <div class="mb-3 col-lg-6 mt-3" >
+                      <div class="mb-3 col-lg-6" >
                         <div class="input-group mb-3">
                           <span class="input-group-text" id="basic-addon1"><i id="icon-emp" class='bx bx-user' ></i></span>
                           <input type="text" class="form-control" placeholder="Nombres" maxlength="50" id="nombres">
@@ -191,7 +191,7 @@
                             <th>#</th>
                             <th>Clientes</th>
                             <th>Fecha Contrato</th>
-                            <th>Precio</th>
+                            <th id="cierre_fecha">Fecha Cierre</th>
                             <th>Fecha Inicio</th>
                             <th>Garantia</th> 
                             <th>Estado</th>
@@ -211,8 +211,7 @@
 </section>
 
 
-  <!-- Modal para finalizar contrato -->
-        <!-- Modal-Registrar Cliente  -->
+  <!-- Modal para finalizar contrato -->        
         <div class="modal fade" id="modal-finalizar" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
@@ -236,19 +235,45 @@
                             <input type="date" class="form-control" id="finalizada">
                       </div>               
                   </div>
-              </div>
-
-                    <form action="" id="form-clientes">
-             
-                    </form>    
-                </div>
+              </div>          
                 <div class="modal-footer">           
-                    <button type="button" class="btn btn-primary shadow-lg" id="btcliente">Cerrar contrato</button>
+                    <button type="button" class="btn btn-primary shadow-lg" id="btnFinalizar">Cerrar contrato</button>
                     <button type="button" class="btn btn-secondary shadow-lg" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
     </div>
+
+      <!-- Modal para contrato final -->        
+      <!-- <div class="modal fade" id="modal-final" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header" id="modal-registro-header" >
+                    <h5 class="modal-title card-title" id="modal-titulo">Finalizar Contrato</h5>
+                </div>
+                <div class="modal-body">
+                <div class="card">
+                  <div class="card-body">
+                      <h4 class="card-title">Detalles del contrato</h4>
+                      <div class="row">
+                        <div id="detallesIfinal" class="col-6">
+                                          
+                        </div>  
+                        <div id="detallesDfinal" class="col-6">
+                          
+                        </div>                         
+                      </div>                           
+                  </div>
+              </div>
+
+         
+                <div class="modal-footer">           
+                    <button type="button" class="btn btn-primary shadow-lg" id="btnFinalizar">Iniciar garantia</button>
+                    <button type="button" class="btn btn-secondary shadow-lg" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+              </div>
+        </div>
+    </div> -->
 
 
 
@@ -276,6 +301,8 @@
 <script>
   $(document).ready(function (){
 
+    let idcontrato = 0;
+
     // const nombres = document.querySelector("#nombres").value.trim();
     // const apellidos = document.querySelector("#apellidos").value.trim();
     // const dni = document.querySelector("#dni").value.trim();
@@ -300,7 +327,7 @@
 
 
     function detalleContrato(id){
-      console.log(id);
+      
       $.ajax({
         url: '../controllers/contratos.controller.php',
         type: 'GET',
@@ -311,7 +338,7 @@
         dataType: 'JSON',
         success: function (result){                  
             var contrato = result[0];      
-                  var detalleC = "<p><label style='color: #263E7C;'>Cliente:</label> " + contrato.clientes + "</p>" +
+                  var detalleC = "<p><strong style='color: #263E7C;'>Cliente:</strong> " + contrato.clientes + "</p>" +
                          "<p><strong style='color: #263E7C;'>Tipo Servicio:</strong> " + contrato.tiposervicio + "</p>" +
                          "<p><strong style='color: #263E7C;'>Nombre Servicio:</strong> " + contrato.nombreservicio + "</p>" +
                          "<p><strong style='color: #263E7C;'>Observacion:</strong> " + contrato.observacion + "</p>"; 
@@ -324,6 +351,36 @@
                          "<p><strong style='color: #263E7C;'>Garantia:</strong> " + contrato.garantia + "</p>" ;       
           $("#detallesI").html(detalleC);
           $("#detallesD").html(detalleC2);
+
+        }
+      });
+    }
+
+    function detalleContratoFinal(id){
+      console.log(id);
+      $.ajax({
+        url: '../controllers/contratos.controller.php',
+        type: 'GET',
+        data: {
+          'op'          : 'detalleContrato_listar',
+          'idcontrato'  : id
+        },
+        dataType: 'JSON',
+        success: function (result){                  
+            var contrato = result[0];      
+                  var detalleCfinal = "<p><strong style='color: #263E7C;'>Cliente:</strong> " + contrato.clientes + "</p>" +
+                         "<p><strong style='color: #263E7C;'>Tipo Servicio:</strong> " + contrato.tiposervicio + "</p>" +
+                         "<p><strong style='color: #263E7C;'>Nombre Servicio:</strong> " + contrato.nombreservicio + "</p>" +
+                         "<p><strong style='color: #263E7C;'>Observacion:</strong> " + contrato.observacion + "</p>"; 
+                    
+                       
+
+                  var detalleC2final = "<p><strong style='color: #263E7C;'>Fecha Contrato:</strong> " + contrato.fechacontrato + "</p>" +
+                         "<p><strong style='color: #263E7C;'>Fecha Inicio:</strong> " + contrato.fechainicio + "</p>" +
+                         "<p><strong style='color: #263E7C;'>Precio:</strong> " + contrato.precioservicio + "</p>" +
+                         "<p><strong style='color: #263E7C;'>Garantia:</strong> " + contrato.garantia + "</p>" ;       
+          $("#detallesIfinal").html(detalleCfinal);
+          $("#detallesDfinal").html(detalleC2final);
 
         }
       });
@@ -507,7 +564,7 @@
 
         const cliente = $("#idcliente").val().trim();
         const fechaI = $("#fechainicio").val().trim();
-        const fechaC = $("#fechacierre").val().trim();
+        // const fechaC = $("#fechacierre").val().trim();
         const observacion = $("#observacion").val().trim();
         const garantia = $("#garantia").val().trim();
         const servicio = $("#lsServicios").val().trim();
@@ -521,7 +578,7 @@
           'idusuario'       : idUsuario,
           'idcliente'       : $("#idcliente").val(),
           'fechainicio'     : $("#fechainicio").val(),
-          'fechacierre'     : $("#fechacierre").val(),
+          // 'fechacierre'     : $("#fechacierre").val(),
           'observacion'     : $("#observacion").val(),
           'garantia'        : $("#garantia").val(),
           'idservicio'      : $("#lsServicios").val(),
@@ -561,16 +618,73 @@
         });
     }
 
+    function finalizarContrato(){
+
+      let sendData = {
+        'op'  : 'finalizar_contrato',
+        'idcontrato' : idcontrato,
+        'fechacierre' : $("#finalizada").val(),
+      };
+
+      toastFinalizar("Contrato finalizado");
+      
+      $.ajax({
+        url:'../controllers/contratos.controller.php',
+        type: 'POST',
+        data: sendData,
+        success: function(result){
+          contratosListar();
+          $("#modal-finalizar").modal('hide');
+
+        }
+      });
+
+    }
+
+
 
     $("#tabla-contrato tbody").on("click", ".finalizar", function(){
-      idcontrato = $(this).data("idcontrato");
+      
+      const ElementfechaC = document.getElementById("cierre_fecha");
+      
+      ElementfechaC.forEach(function(elemetFecha){
+        var fechaC = elementFecha.textContent;
+      })
+
+      console.log(fechaC)
+
+      if(fechaC.trim() === ''){
+        idcontrato = $(this).data("idcontrato");
       detalleContrato(idcontrato);
+
+      }else{
+        console.log("otro modal")
+      }
+      
+
     })
 
-    $("#btcliente").click(registrarPerCliente);
-    $("#btcliente").click(registrarEmpCliente);
+
+
+    $("#btcliente").click(function(){
+
+      const rbPersona = document.querySelector("#rbPersona");
+      const rbEmpresa = document.querySelector("#rbEmpresa");
+
+      if(rbPersona.checked){
+        registrarPerCliente();
+      }else{
+        registrarEmpCliente();
+      }
+
+
+    });
+
+    $("#btnFinalizar").click(finalizarContrato);
+    
 
     $("#btnContrato").click(registrarContrato);
+    
 
     contratosListar();
 

@@ -38,8 +38,7 @@ if(isset($_POST['op'])){
         $data = [
             "idusuario"     => $_POST['idusuario'],
             "idcliente"     => $_POST['idcliente'],
-            "fechainicio"   => $_POST['fechainicio'],
-            "fechacierre"   => $_POST['fechacierre'],
+            "fechainicio"   => $_POST['fechainicio'],            
             "observacion"   => $_POST['observacion'],
             "garantia"      => $_POST['garantia'],
             "idservicio"     => $_POST['idservicio'],
@@ -49,6 +48,17 @@ if(isset($_POST['op'])){
         ];
 
         $respuesta = $contrato->contrato_registrar($data);
+        echo json_encode($respuesta);
+    }
+
+    if($_POST['op'] == 'finalizar_contrato'){
+
+        $data = [
+            "idcontrato"     => $_POST['idcontrato'],
+            "fechacierre"     => $_POST['fechacierre'],                            
+        ];
+
+        $respuesta = $contrato->contrato_finalizar($data);
         echo json_encode($respuesta);
     }
 
@@ -81,7 +91,7 @@ if(isset($_GET['op'])){
                 <td>{$registro['idcontrato']}</td>
                 <td>{$registro['clientes']}</td>
                 <td>{$registro['fechacontrato']}</td>
-                <td>{$registro['precioservicio']}</td>
+                <td>{$registro['fechacierre']}</td>
                 <td>{$registro['fechainicio']}</td>                    
                 <td>{$registro['garantia']}</td>   
                 <td>{$registro['estadoservicio']}</td>    
