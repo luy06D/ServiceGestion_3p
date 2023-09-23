@@ -234,50 +234,50 @@
           }
 
           function registrarEquipo(){
-              const tipoequip = $("#tipoequipo").val().trim();
-              const marca = $("#idmarca").val().trim();
-              const descripcion = $("#descripcion").val().trim();
+            const tipoequip = $("#tipoequipo").val().trim();
+            const marca = $("#idmarca").val().trim();
+            const descripcion = $("#descripcion").val().trim();
 
-              let datosEnviar ={
-                  'op'            :   'registrar_equipos',
-                  'idtipoequipo'  :   tipoequip,
-                  'idmarca'       :   marca,
-                  'descripcion'   :   descripcion
-              };
+            let datosEnviar ={
+                'op'            :   'registrar_equipos',
+                'idtipoequipo'  :   tipoequip,
+                'idmarca'       :   marca,
+                'descripcion'   :   descripcion
+            };
 
-              if(!datosNuevos){
-                  datosEnviar['op'] = 'actualizar_equipos';
-                  datosEnviar['idequipo'] = idequipo;
-              }
+            if(!datosNuevos){
+                datosEnviar['op'] = 'actualizar_equipos';
+                datosEnviar['idequipo'] = idequipo;
+            }
 
-              Swal.fire({
-                  title: '¿Está seguro de realizar la operación?',
-                  icon: 'question',
-                  showCancelButton: true,
-                  confirmButtonText: 'Sí',
-                  cancelButtonText: 'Cancelar',
-                  confirmButtonColor: '#3F974F',
-                  cancelButtonColor: '#3085d6',
-              }).then((result) => {
-                  if (result.isConfirmed){
-                      if(tipoequip === '' || marca ==='' || descripcion===''){
-                          mostrarSweetAlert("Por favor, complete los campos","warning");
-                      }else{
-                          mostrarSweetAlert("Operación exitosa","success");
-                          $.ajax({
-                              url: '../controllers/equipos.controller.php',
-                              type: 'POST',
-                              data: datosEnviar,
-                              success: function(result){
-                                  $("#form-equipos")[0].reset();
-                                  datosNuevos = true;
-                                  idequipo = 0;
-                                  mostrardatostabla();
-                              }
-                          })
+            Swal.fire({
+              title: '¿Está seguro de realizar la operación?',
+              icon: 'question',
+              showCancelButton: true,
+              confirmButtonText: 'Sí',
+              cancelButtonText: 'Cancelar',
+              confirmButtonColor: '#3F974F',
+              cancelButtonColor: '#3085d6',
+            }).then((result) => {
+              if (result.isConfirmed){
+                if(tipoequip === '' || marca ==='' || descripcion===''){
+                  mostrarSweetAlert("Por favor, complete los campos","warning");
+                }else{
+                    mostrarSweetAlert("Operación exitosa","success");
+                    $.ajax({
+                      url: '../controllers/equipos.controller.php',
+                      type: 'POST',
+                      data: datosEnviar,
+                      success: function(result){
+                        $("#form-equipos")[0].reset();
+                        datosNuevos = true;
+                        idequipo = 0;
+                        mostrardatostabla();
                       }
+                    })
                   }
-              })
+              }
+            })
           }
 
           $("#guardarequipo").click(registrarEquipo);

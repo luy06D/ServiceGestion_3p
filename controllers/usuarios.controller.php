@@ -23,7 +23,8 @@ if(isset($_GET['operation'])){
             "apellidos"     => "",
             "nombres"       => "",
             "usuario"       => "",
-            "idusuario"     => "",         
+            "idusuario"     => "", 
+            "idpersona"     => "",  
             "mensaje"       => ""
         ];
 
@@ -39,13 +40,18 @@ if(isset($_GET['operation'])){
                 $access["apellidos"] = $data["apellidos"];
                 $access["usuario"] = $data["usuario"];
                 $access["idusuario"] = $data["idusuario"];
-
+                $access["correo"] = $data["correo"];
+                $access["dni"] = $data["dni"];
+                $access["direccion"] = $data["direccion"];
+                $access["telefono"] = $data["telefono"];
+                $access["idpersona"] = $data["idpersona"];
             }else{
                 $access["mensaje"] = "Contraseña";
             }
         }else{
             $access["mensaje"] = "Usuario";
         }
+      
 
         $_SESSION['segurity'] = $access;
 
@@ -76,6 +82,21 @@ if(isset($_POST['operation'])){
         echo json_encode($response);
     }
 
+    if($_POST['operation'] == 'UsuariosRegistrarID'){
+
+        $dataSave = [
+            "idpersona"       => $_POST['idpersona'],
+            "usuario"       => $_POST['usuario'],
+            "claveacceso"   => password_hash($_POST['claveacceso'], PASSWORD_BCRYPT),
+            "nivelacceso"   => $_POST['nivelacceso']
+        ];
+
+        $response = $user->usuariosID_registrar($dataSave);
+        echo json_encode($response);
+    }
+
 }
+
+
 
 ?>
