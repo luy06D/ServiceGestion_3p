@@ -35,8 +35,8 @@ class Servicios extends Conexion{
             $respuesta["status"] = $consulta->execute(array(
 
                 $data["tiposervicio"],
-                $data["duracionE"],
-                $data["garantia"]
+                $data["nombreservicio"],
+                $data["precioestimado"]
             ));
         }
         catch (Exception $e) {
@@ -44,5 +44,43 @@ class Servicios extends Conexion{
         }
 
         return $respuesta;
+    }
+
+    public function ObtenerServicio($idservicio = 0){
+        try{
+            $consulta = $this->access->prepare("CALL spu_servicios_obtener(?)");
+            $consulta->execute(array($idservicio));
+            return $consulta->fetch(PDO::FETCH_ASSOC);
+        }
+        catch(Exception $e){
+            die($e->getMessage());
+        }
+
+
+    }
+
+    public function ActualizarServicio($data = []){
+        try{
+            $consulta = $this->access->prepare("CALL spu_servicios_update(?,?,?,?)");
+            $consulta->execute(array(
+                $data['idservicio'],
+                $data['tiposervicio'],
+                $data['nombreservicio'],
+                $data['precioestimado']
+                
+            ));
+        }
+        catch(Exception $e){
+            die($e->getMEssage());
+        }
+    }
+
+    public function EliminarServicio($idservicio = 0){
+        try{
+            $consulta = $this->access->prepare("CALL spu_servicios_eliminar(?)");
+            $consulta->execute(array($idservicio));
+    }catch(Exception $e){
+        die($e->getMessage());
+       }
     }
 }

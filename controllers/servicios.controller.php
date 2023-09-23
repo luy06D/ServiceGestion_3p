@@ -14,10 +14,13 @@ if(isset($_GET['operacion'])){
                 <tr>
                     <td>{$registro['idservicio']}</td>
                     <td>{$registro['tiposervicio']}</td>
-                    <td>{$registro['duracionE']}</td>
-                    <td>{$registro['garantia']}</td>                    
+                    <td>{$registro['nombreservicio']}</td>
+                    <td>{$registro['precioestimado']}</td>                    
 
-                
+                    <td>
+                    <a href='#' class='editar btn btn-outline-warning btn-sm' data-bs-toggle='modal' data-bs-target='#modal-registrar' data-idservicio ='{$registro['idservicio']}'><i class='bi bi-pencil-square'></i></a>
+                    <a href='#' class='eliminar btn btn-outline-danger btn-sm' data-idservicio='{$registro['idservicio']}'><i class='bi bi-trash'></i></a> 
+                </td>
                     
                     
                 </tr>
@@ -25,21 +28,39 @@ if(isset($_GET['operacion'])){
             }
         }
     }
-}
+    if($_GET['operacion'] == 'Obtener'){
 
-if(isset($_POST['operacion'])){
+        $data = $servicios->ObtenerServicio($_GET['idservicio']);
 
-    $servicios = new Servicios();
+        echo json_encode($data);
+    }
 
-    if($_POST['operacion'] == 'RegistrarServicio'){
+    if($_GET['operacion'] == 'RegistrarServicio'){
 
-        $saveData = [
-            "tiposervicio"        => $_POST['tiposervicio'], 
-            "duracionE"        => $_POST['duracionE'],   
-            "garantia"      => $_POST['garantia']
+        $datos = [
+            "tiposervicio"        => $_GET['tiposervicio'], 
+            "nombreservicio"        => $_GET['nombreservicio'],   
+            "precioestimado"      => $_GET['precioestimado']
         ];
 
-        $respuesta = $servicios->Servicios_Registrar($saveData);
-        echo json_encode($respuesta);
+            $servicios->Servicios_Registrar($datos);
+
     }
+
+    if($_GET['operacion'] == 'Update'){
+        $datos = [
+            "idservicio"  => $_GET['idservicio'],
+            "tiposervicio"  => $_GET['tiposervicio'],
+            "nombreservicio"  => $_GET['nombreservicio'],
+            "precioestimado"  => $_GET['precioestimado']
+
+        ];
+        $servicios->ActualizarServicio($datos);
+    }
+
+    if ($_GET['operacion'] == 'eliminar'){
+        $servicios->EliminarServicio($_GET['idservicio']);
+    }
+
+
 }
