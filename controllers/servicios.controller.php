@@ -43,8 +43,12 @@ if(isset($_GET['operacion'])){
             "precioestimado"      => $_GET['precioestimado']
         ];
 
+<<<<<<< HEAD
             $respuesta = $servicios->Servicios_Registrar($datos);
             echo json_encode($respuesta);
+=======
+            $servicios->Servicios_Registrar($datos);
+>>>>>>> fe233f570b2983049fb6150ee77ed1e607cd37b4
 
     }
 

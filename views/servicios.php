@@ -8,7 +8,11 @@
 <main id="main" class="main">
   <section class="section">
     <div class="row">
+<<<<<<< HEAD
       <div class="col-lg-8">
+=======
+      <div class="col-lg-12">
+>>>>>>> fe233f570b2983049fb6150ee77ed1e607cd37b4
         <div class="card">
           <div class="card-body mt-3">
             <h4 class="text-center">Registro de Servicios</h4>
@@ -17,6 +21,7 @@
             <button type="button" class="btn btn-success mt-4 mb-4" data-bs-toggle="modal" data-bs-target="#modal-registrar">
               <i class="bi bi-plus-circle"></i> Nuevo
             </button>
+<<<<<<< HEAD
             <form action="">
               <table class="table table-striped nowrap" id="tabla-servicio">
                 <thead>
@@ -43,6 +48,31 @@
   </section>
 </main>
 
+=======
+            <!-- Table with stripped rows -->
+            <table class="table datatable" id="tabla-servicio">
+              <thead>
+                <tr>
+                  <th scope="col">Codigo</th>
+                  <th scope="col">Tipo de servicio</th>
+                  <th scope="col">Nombre de Servicio</th>
+                  <th scope="col">Precio Estimado</th>
+                  <th scope="col">operacion</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Aquí se llenará la tabla con los datos -->
+              </tbody>
+            </table>
+            <!-- End Table with stripped rows -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+>>>>>>> fe233f570b2983049fb6150ee77ed1e607cd37b4
 <!-- Modal -->
 <div class="modal fade" id="modal-registrar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -95,7 +125,10 @@
 <!-- select2 -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+<<<<<<< HEAD
 <script src="../js/funcionAlertSweet.js"></script>
+=======
+>>>>>>> fe233f570b2983049fb6150ee77ed1e607cd37b4
 <script>
   $(document).ready(function () {
     let datosNuevos = true;
@@ -153,6 +186,7 @@
   }).then((result) => {
     if (result.isConfirmed) {
       if (TipoS === '' || NombreS === '' || PrecioE === '') {
+<<<<<<< HEAD
         mostrarSweetAlert("Complete los campos por favor", "warning");
       } else {
         mostrarSweetAlert("Servicio registrado correctamente", "success");
@@ -173,6 +207,33 @@
             }
           }
         });
+=======
+        Swal.fire({
+          title: "Por favor, complete los campos",
+          icon: "warning",
+          confirmButtonColor: "#E43D2C",
+        });
+      } else {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Operación exitosa',
+          showConfirmButton: false,
+          timer: 1500
+        })
+
+        $.ajax({
+          url: '../controllers/servicios.controller.php',
+          type: 'GET',
+          data: datosEnviar,
+          success: function (result) {
+            $("#form-servicios")[0].reset();
+            ListarServicio();
+            $("#modal-registrar").modal('hide');
+            datosNuevos = true; // Restablecer datosNuevos a true después de una operación exitosa
+          }
+        });
+>>>>>>> fe233f570b2983049fb6150ee77ed1e607cd37b4
       }
     }
   });
@@ -245,4 +306,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
 </body>
 
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> fe233f570b2983049fb6150ee77ed1e607cd37b4

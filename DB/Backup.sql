@@ -251,14 +251,18 @@ CREATE TABLE `servicios` (
   `inactive_at` datetime DEFAULT NULL,
   PRIMARY KEY (`idservicio`),
   UNIQUE KEY `uk4` (`tiposervicio`,`nombreservicio`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `servicios` */
 
 insert  into `servicios`(`idservicio`,`tiposervicio`,`nombreservicio`,`precioestimado`,`create_at`,`update_at`,`inactive_at`) values 
 (1,'instalaciones','instalacion de camaras',5000.00,'2023-09-14 11:13:31',NULL,NULL),
 (2,'instalacion','instalacion de servidores',6000.00,'2023-09-14 11:13:31',NULL,NULL),
-(3,'Mantenimiento','mantenimiento de servidores',7000.00,'2023-09-14 11:13:31',NULL,NULL);
+(3,'Mantenimiento','mantenimiento de servidores',7000.00,'2023-09-14 11:13:31',NULL,NULL),
+(4,'Mantenimiento','Reparacion de computadora',40.00,'2023-09-14 12:44:55',NULL,NULL),
+(6,'Reparacion','Reparacion de Laptop',30.00,'2023-09-14 12:48:54',NULL,NULL),
+(7,'Reparacion','Reparacion de impresoras',500.00,'2023-09-14 12:54:13',NULL,NULL),
+(8,'312123','instalacion de camaras',5000.00,'2023-09-14 16:10:33',NULL,NULL);
 
 /*Table structure for table `tipoequipo` */
 
@@ -307,6 +311,73 @@ CREATE TABLE `usuarios` (
 insert  into `usuarios`(`idusuario`,`idpersona`,`usuario`,`claveacceso`,`nivelacceso`,`create_at`,`update_at`,`inactive_at`) values 
 (1,3,'eduqcc08','123456','A','2023-09-14 11:00:40',NULL,NULL),
 (2,1,'gonzalo','123456','E','2023-09-14 11:00:40',NULL,NULL);
+
+/* Procedure structure for procedure `spu_servicios_listar` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `spu_servicios_listar` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_servicios_listar`()
+begin
+select idservicio, tiposervicio, nombreservicio, precioestimado
+ from servicios
+ where inactive_at is NULL;
+ end */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `spu_servicios_obtener` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `spu_servicios_obtener` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_servicios_obtener`(in _idservicio int)
+begin 
+select tiposervicio, nombreservicio, precioestimado
+from servicios
+where idservicio = _idservicio;
+end */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `spu_servicios_registrar` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `spu_servicios_registrar` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_servicios_registrar`(
+in _tiposervicio varchar(50),
+in _nombreservicio varchar(50),
+in _precioestimado decimal(7,2)
+)
+begin 
+	insert into servicios (tiposervicio, nombreservicio, precioestimado)values
+	(_tiposervicio, _nombreservicio, _precioestimado);
+	end */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `spu_servicios_update` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `spu_servicios_update` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_servicios_update`(
+in _idservicio int,
+IN _tiposervicio VARCHAR(50),
+IN _nombreservicio VARCHAR(50),
+IN _precioestimado DECIMAL(7,2)
+)
+begin
+	update servicios set
+	tiposervicio = _tiposervicio,
+	nombreservicio = _nombreservicio,
+	precioestimado = _precioestimado
+	
+	where idservicio = _idservicio;
+	end */$$
+DELIMITER ;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
