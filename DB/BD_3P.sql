@@ -706,9 +706,74 @@ BEGIN
 
 END$$
 
+
+
 CALL spu_detalleContratos_listar(1)
 
 
+DELIMITER $$
+CREATE PROCEDURE spu_servicios_listar()
+BEGIN
+SELECT idservicio, tiposervicio, nombreservicio, precioestimado
+ FROM servicios
+ WHERE inactive_at IS NULL;
+ END$$
+
+CALL spu_servicios_listar
+
+
+DELIMITER $$
+CREATE PROCEDURE spu_servicios_registrar
+(
+IN _tiposervicio VARCHAR(50),
+IN _nombreservicio VARCHAR(50),
+IN _precioestimado DECIMAL(7,2)
+)
+BEGIN 
+	INSERT INTO servicios (tiposervicio, nombreservicio, precioestimado)VALUES
+	(_tiposervicio, _nombreservicio, _precioestimado);
+	END$$
+	
+	CALL spu_servicios_registrar('Reparacion', 'reparacion de pc', 50)
+	
+	
+DELIMITER$$
+CREATE PROCEDURE spu_servicios_obtener
+(IN _idservicio INT)
+BEGIN 
+SELECT tiposervicio, nombreservicio, precioestimado
+FROM servicios
+WHERE idservicio = _idservicio;
+END$$
+
+CALL spu_servicios_obtener(4)
+
+DELIMITER $$
+CREATE PROCEDURE spu_servicios_update
+(
+IN _idservicio INT,
+IN _tiposervicio VARCHAR(50),
+IN _nombreservicio VARCHAR(50),
+IN _precioestimado DECIMAL(7,2)
+)
+BEGIN
+	UPDATE servicios SET
+	tiposervicio = _tiposervicio,
+	nombreservicio = _nombreservicio,
+	precioestimado = _precioestimado
+	
+	WHERE idservicio = _idservicio;
+	END$$
+
+
+DELIMITER $$
+	CREATE PROCEDURE spu_servicios_eliminar (IN _idservicio INT)
+	BEGIN 
+			UPDATE servicios SET
+			inactive_at = NOW()
+			WHERE idservicio = _idservicio;
+			END$$
+USE DB_3P
 
 
 
@@ -717,3 +782,5 @@ CALL spu_detalleContratos_listar(1)
 
 
 
+
+SELECT * FROM servicios

@@ -1,214 +1,248 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<?php include '../principal/cabezera.php' ?>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <!-- DataTable -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+  <link href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css" rel="stylesheet">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-</head>
-<body>
-    <main class="opacity-85 mb-5">
-        <div class="container mt-5 col-12">
-            <div class="card">
-                <div class="card-header text-white" style="background-color: #9ACD32;" >
-                    <h4 class="text-center">REGISTRO DE SERVICIOS</h4>
-                </div>
-                <button type="button" class=" d-grid btn btn-primary btn-lg col-12" data-bs-toggle="modal" data-bs-target="#modalId">
-                  Registrar
-                </button>
+<main id="main" class="main">
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body mt-3">
+            <h4 class="text-center">Registro de Servicios</h4>
+            <hr>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-success mt-4 mb-4" data-bs-toggle="modal" data-bs-target="#modal-registrar">
+              <i class="bi bi-plus-circle"></i> Nuevo
+            </button>
+            <form action="">
+              <table class="table table-striped nowrap" id="tabla-servicio">
+                <thead>
+                  <tr>
+                    <th>Codigo</th>
+                    <th>Tipo de servicio</th>
+                    <th>Nombre de Servicio</th>
+                    <th>Precio Estimado</th>
+                    <th>operacion</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Aquí se llenará la tabla con los datos -->
+                </tbody>
+              </table>
 
-           </div>
+            </form>
+            <!-- Table with stripped rows -->
+            <!-- End Table with stripped rows -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
 
-           <div class="row">
-            <div class="col-lg-12 mt-5">
-                <table id="tabla-servicio" class="table table-sm table-striped" >
-                                
-                    <thead class="table-secondary">
-                        <tr>
-                        <th>Codigo</th>
-                        <th>Tipo de servicio</th>
-                            <th>Duracion estimada</th>
-                            <th>Garantia</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                    </tbody>
-                </table>
+<!-- Modal -->
+<div class="modal fade" id="modal-registrar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Registro de Servicios</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="" id="form-servicios">
+          <div class="col-lg-12">
+            <div class="input-group mt-4">
+              <label class="input-group-text" for="inputGroupSelect02"><i class='bx bx-cart-add'></i></label>
+              <input type="text" placeholder="Tipo de Servicio" class="form-control" id="tipos">
             </div>
-        </div> 
-        
-    
-  
+          </div>
+          <div class="col-lg-12">
+            <div class="input-group mt-4">
+              <label class="input-group-text" for="inputGroupSelect02"><i class='bx bx-cart-add'></i></label>
+              <input type="text" placeholder="Nombre de Servicio" class="form-control" id="nombres">
+            </div>
+          </div>
+          <div class="col-lg-12 d-grid ">
+            <div class="input-group mt-4">
+              <label class="input-group-text" for="inputGroupSelect02"><i class='bx bx-cart-add'></i></label>
+              <input type="text" placeholder="Precio Estimado" class="form-control" id="precioe">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" id="Registrar" class="btn btn-success">Registrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- AJAX = JavaScript asincrónico-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
+  <!-- datatable-->
+  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
 
+<!-- select2 -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-                  <!-- Modal trigger button -->
-                  
-                  <!-- Modal Body -->
-                  <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
-                  <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalTitleId">Registro de servicio</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="col-lg-12">
-                                    <div class=" input-group mt-4">   
-                                      <label class="input-group-text" for="inputGroupSelect02"><i class='bx bx-cart-add' ></i></label>
-                                        <input type="text" placeholder="Tipo de Servicio" class="form-control" id="tipos" >         
-                                    </div>
-                                  </div>
-                  
-                                <div class="col-lg-12">
-                                <div class="input-group mt-4">
-                             
-                                  <label class="input-group-text" for="inputGroupSelect02"><i class='bx bx-cart-add' ></i></label>
-                                  <input type="text" placeholder="Duracion Estimada" class="form-control" id="duracion" >
-                                </div>  
-                                </div>
-              
-                  
-                                  <div class="col-lg-12 d-grid ">
-                                      <div class="input-group mt-4">
-                                          <label class="input-group-text" for="inputGroupSelect02"><i class='bx bx-cart-add' ></i></label>
-                                        <input type="text" placeholder="Garantia" class="form-control" id="garantia">
-                                      </div>
-                                      
-                                  </div> 
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+<script src="../js/funcionAlertSweet.js"></script>
+<script>
+  $(document).ready(function () {
+    let datosNuevos = true;
+    let idservicio = 0;
 
-                                    <button  type="button" class="btn btn text-white  " style="background-color:#9ACD32;" id="Registrar">Registrar</button>
+    const btnAgregar = document.querySelector('#Registrar');
 
-                            </div>
-                        </div>
-                    </div>
-                  </div>
+    function ListarServicio() {
+      $.ajax({
+        url: '../controllers/servicios.controller.php',
+        type: 'GET',
+        data: { 'operacion': 'ListarServicios' },
+        success: function (result) {
+          var table = $("#tabla-servicio").DataTable();
+          table.destroy();
+          $("#tabla-servicio tbody").html(result);
+          $("#tabla-servicio").DataTable({
+            responsive: true,
+            lengthMenu: [10, 5],
+            language: {
+              url: '../js/Spanish.json'
+            },
+            order: [[0, 'desc']]
+          });
+        }
+      })
+    }
 
-                  
-                  
-                  
-                  <!-- Optional: Place to the bottom of scripts -->
-                  <script>
-                    const myModal = new bootstrap.Modal(document.getElementById('modalId'), options)
-                  
-                  </script>
+    function registrarServicios() {
+  const TipoS = document.querySelector("#tipos").value.trim();
+  const NombreS = document.querySelector("#nombres").value.trim();
+  const PrecioE = document.querySelector("#precioe").value.trim();
 
-                  <!-- sweetalert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+  let datosEnviar = {
+    'tiposervicio': $("#tipos").val(),
+    'nombreservicio': $("#nombres").val(),
+    'precioestimado': $("#precioe").val(),
+  };
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  if (!datosNuevos) {
+    datosEnviar['operacion'] = "Update";
+    datosEnviar['idservicio'] = idservicio;
+  } else {
+    datosEnviar['operacion'] = 'RegistrarServicio';
+  }
 
-<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+  Swal.fire({
+    title: '¿Está seguro de realizar la operación?',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Sí',
+    cancelButtonText: 'Cancelar',
+    confirmButtonColor: '#3F974F',
+    cancelButtonColor: '#3085d6',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      if (TipoS === '' || NombreS === '' || PrecioE === '') {
+        mostrarSweetAlert("Complete los campos por favor", "warning");
+      } else {
+        mostrarSweetAlert("Servicio registrado correctamente", "success");
 
-    <!-- opcional-->
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
-    <!-- <script src="../js/addstock.js"></script> -->
+        $.ajax({
+          url: '../controllers/servicios.controller.php',
+          type: 'GET',
+          data: datosEnviar,
+          success: function (result) {
+            $("#form-servicios")[0].reset();
+            ListarServicio();
+            $("#modal-registrar").modal('hide');
+            datosNuevos = true; // Restablecer datosNuevos a true después de una operación exitosa
+            let resultados = JSON.parse(result);
 
-    <script>
-        $(document).ready(function(){
-
-            const btnAgregar = document.querySelector('#Registrar');           
-
-            function ListarServicio(){
-                $.ajax({
-                    url: '../controllers/servicios.controller.php',
-                    type: 'GET',
-                    data:{'operacion' : 'ListarServicios'},
-                    success: function(result){
-                        var table = $("#tabla-servicio").DataTable();
-                        table.destroy();
-                        $("#tabla-servicio tbody").html(result);
-                        $("#tabla-servicio").DataTable({
-                            responsive: true,
-                            lengthMenu: [10, 5],
-                            language:{
-                                url: '../js/Spanish.json'
-                            }
-                        });
-                    }
-                })
+            if(resultados.status === false){
+              mostrarSweetAlert("Este servicio ya a sido registrado", "warning");
             }
-
-            function servicioRegister(){
-        const Servicio = document.querySelector("#tipos").value.trim();
-        const Duracion = document.querySelector("#duracion").value.trim();
-        const Garantia = document.querySelector("#garantia").value.trim();
-
-        Swal.fire({
-            title: "¿Desea registrar una nueva formula?",
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonText: "Sí",
-            cancelButtonText: "Cancelar",
-            cancelButtonColor: '#3085d6',
-            confirmButtonColor: '#368E5B',
-
-        }).then((result)=>{
-            if(result.isConfirmed){
-                if(Servicio === '' || Duracion === '' || Garantia === '' ){
-                    Swal.fire({
-                          title: "Por favor, complete el campo formula",
-                          icon: "warning",
-                          confirmButtonColor: "#E43D2C",
-                      });
-
-                }else{
-                    const parameter = new URLSearchParams();
-                    parameter.append("operacion", "RegistrarServicio");
-                    parameter.append("tiposervicio", document.querySelector("#tipos").value);
-                    parameter.append("duracionE", document.querySelector("#duracion").value);
-                    parameter.append("garantia", document.querySelector("#garantia").value);
-
-
-                    fetch("../controllers/servicios.controller.php",{
-                        method: 'POST',
-                        body: parameter
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if(data.status){
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'La formula se registro correctamente',
-                                showConfirmButton: false,
-                                timer: 1500
-                                })
-
-                                ListarServicio();
-                        }else{
-                            Swal.fire({
-                          title: "La formula ya fue registrada",
-                          icon: "warning",
-                          confirmButtonColor: "#E43D2C",
-                      });
-                            
-                        }
-                    });
-
-                }
-
-            }
+          }
         });
-
       }
-      ListarServicio();
-            
-      btnAgregar.addEventListener("click", servicioRegister);
-        });
-    </script>                  
+    }
+  });
+}
+
+
+  function mostrarDatos(id) {
+  $("#form-servicios")[0].reset();
+  idservicio = id;
+
+  $.ajax({
+    url: '../controllers/servicios.controller.php',
+    type: 'GET',
+    data: {
+      'operacion': 'Obtener',
+      'idservicio': id
+    },
+    dataType: 'JSON',
+    success: function (result) {
+      $("#tipos").val(result.tiposervicio);
+      $("#nombres").val(result.nombreservicio);
+      $("#precioe").val(result.precioestimado);
+      datosNuevos = false; // Cambiar a false para habilitar la edición
+    }
+  });
+}
+
+    function eliminar(id) {
+      Swal.fire({
+        title: '¿Está seguro de eliminar el registro?',
+        text: "Esta acción no se puede deshacer.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            url: '../controllers/servicios.controller.php',
+            type: 'GET',
+            data: {
+              'operacion': 'eliminar',
+              'idservicio': id
+            },
+            success: function () {
+              ListarServicio();
+            }
+          });
+        }
+      });
+    }
+
+    $("#tabla-servicio tbody").on("click", ".editar", function () {
+      idservicio = $(this).data("idservicio");
+      mostrarDatos(idservicio);
+    });
+
+    $("#tabla-servicio tbody").on("click", ".eliminar", function () {
+      idservicio = $(this).data("idservicio");
+      eliminar(idservicio);
+    });
+
+    ListarServicio();
+    $("#Registrar").click(registrarServicios);
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
 </body>
+
 </html>

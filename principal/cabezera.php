@@ -309,6 +309,13 @@ $idusuario = $_SESSION['segurity']['idusuario'];
       <span>Contratos</span>
     </a>
   </li>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link " href="../views/servicios.php">
+    <i class="bi bi-file-earmark-text"></i>
+      <span>Servicios</span>
+    </a>
+  </li>
 
 
   <li class="nav-item">
