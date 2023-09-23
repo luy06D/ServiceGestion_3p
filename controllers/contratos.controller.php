@@ -64,19 +64,45 @@ if(isset($_POST['op'])){
         echo json_encode($contrato->getServicios());
     }
 
-
-
-
-
 }
-
-
-
 
 
 if(isset($_GET['op'])){
     
     $contrato = new Contratos();
+
+    if($_GET['op'] == 'contratos_listar'){
+        $data = $contrato->contratos_listar();
+
+        if($data){
+            foreach($data as $registro){
+                echo "
+            <tr>
+                <td>{$registro['idcontrato']}</td>
+                <td>{$registro['clientes']}</td>
+                <td>{$registro['fechacontrato']}</td>
+                <td>{$registro['precioservicio']}</td>
+                <td>{$registro['fechainicio']}</td>                    
+                <td>{$registro['garantia']}</td>   
+                <td>{$registro['estadoservicio']}</td>    
+                <td>
+                <a href='#' class='finalizar btn btn-outline-primary btn-sm' data-bs-toggle='modal' data-bs-target='#modal-finalizar' data-idcontrato ='{$registro['idcontrato']}'><i class='bi bi-box-arrow-in-left'></i></a>                
+                </td>
+        </tr>                
+                
+            </tr>
+                
+                ";
+            }
+
+        }    
+    }
+
+    if($_GET['op'] == 'detalleContrato_listar'){
+        $data = $contrato->detalleContratos_listar($_GET['idcontrato']);
+
+        echo json_encode($data);
+    }
 
 
 }

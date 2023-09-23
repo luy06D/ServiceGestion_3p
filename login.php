@@ -151,11 +151,11 @@ if(isset($_SESSION['segurity']) && $_SESSION['segurity']['login']){
             const data = {
                "operation" : "log_in",
                "usuario"   : $("#usuario").val(),
-               "clave"     : $("#password").val(),
+               "claveacceso"     : $("#password").val(),
             };
 
             $.ajax({
-               url:'./controllers/usuario.controller.php',
+               url:'./controllers/usuarios.controller.php',
                type: 'GET',
                data: data,
                dataType: 'JSON',

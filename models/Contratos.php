@@ -109,6 +109,31 @@ public function getServicios(){
 
 }
 
+public function contratos_listar(){
+    try{
+        $query = $this->conexion->prepare("CALL spu_contratos_listar()");
+        $query->execute();
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+
+    }catch(Exception $err){
+        die($err->getMessage());
+    }
+}
+
+
+public function detalleContratos_listar($idcontrato = 0){
+    try{
+        $query = $this->conexion->prepare("CALL spu_detalleContratos_listar(?)");
+        $query->execute(array($idcontrato));
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+        
+    }
+    catch(Exception $err){
+        die($err->getMessage());
+    }
+}
+
 
 
 }

@@ -1,6 +1,8 @@
 
   <?php include '../principal/cabezera.php' ?>
 
+
+
 <!-- DataTable -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
 <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
@@ -110,73 +112,145 @@
 
     <section class="section">
       <div class="row">
-        <div class="col-lg-6">
+          <div class="col-lg-6 col-md-12 col-sm-12"> <!-- Primera columna -->
+              <div class="card">
+                  <div class="card-body">
+                      <h5 class="card-title">Registro de contrato</h5>
+                      <!-- Formulario Registrar contratos -->
+                      <form class="row g-3" id="form-contratos">
+                          <!-- Contenido del formulario -->
+                          <div class="col-md-6">
+                          <label for="inputState" class="form-label">Cliente</label>
+                          <select id="idcliente" class="form-select">
+                            <option>Seleccione</option>
+                            
+                          </select>
+                          </div>            
+                          <div class="col-md-6">
+                            <label for="fechainicio" class="form-label">Fecha inicio</label>
+                            <input type="date" class="form-control" id="fechainicio">
+                          </div>
+                          <div class="col-md-6">
+                            <label for="fechacierre" class="form-label">Fecha Cierre</label>
+                            <input type="date" class="form-control" id="fechacierre">
+                          </div>
+                          <div class="col-md-6">
+                            <label for="inputPassword5" class="form-label">Garantia</label>
+                            <input type="text" class="form-control" id="garantia">
+                          </div>
+                          <div class="col-md-6">
+                            <label for="observacion" class="form-label">Observación</label>
+                            <textarea class="form-control" id="observacion" rows="3"></textarea>
+                          </div>
+                         
+                          <h5 class="card-title">Detalles </h5>
+                          <div class="col-md-6">
+                              <label for="lsServicios" class="form-label">Servicio</label>
+                              <select id="lsServicios" class="form-select">
+                                <option>Seleccione</option>
+                                
+                              </select>
+                          </div> 
+                          <div class="col-md-6">
+                            <label for="precio" class="form-label">Precio</label>
+                            <input type="number" class="form-control" id="precio">
+                          </div>
+                          <div class="col-md-6">
+                            <label for="cantidad" class="form-label">Cantidad</label>
+                            <input type="number" class="form-control" id="cantidad">
+                          </div>
+                          <!-- <div class="col-md-6">
+                            <label for="inputState" class="form-label">Estado</label>
+                            <select id="estado" class="form-select">
+                              <option>Seleccione</option>
+                              <option value="N">No iniciado</option>
+                              <option value="P">Proceso</option>
+                              <option value="F">Finalizado</option>
+                              
+                            </select>
+                        </div>  -->
+                          <div class="">
+                            <button type="button" id="btnContrato" class="btn btn-primary shadow-lg">Registrar</button>
+                            <button type="reset" class="btn btn-secondary shadow-lg">Limpiar</button>
+                          </div>
 
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title"  >Registro de contrato</h5>
-
-              <!-- Formlario Registrar contratos -->
-              <form class="row g-3">
-                <div class="col-md-6">
-                    <label for="inputState" class="form-label">Cliente</label>
-                    <select id="idcliente" class="form-select">
-                      <option>Seleccione</option>
-                      
-                    </select>
-                </div>            
-                <div class="col-md-6">
-                  <label for="inputEmail5" class="form-label">Fecha inicio</label>
-                  <input type="date" class="form-control" id="fechainicio">
-                </div>
-                <div class="col-md-6">
-                  <label for="inputPassword5" class="form-label">Fecha Cierre</label>
-                  <input type="date" class="form-control" id="fechacierre">
-                </div>
-                <div class="col-md-6">
-                  <label for="inputPassword5" class="form-label">Observación</label>
-                  <input type="text" class="form-control" id="observacion">
-                </div>
-                <div class="col-md-6">
-                  <label for="inputPassword5" class="form-label">Garantia</label>
-                  <input type="number" class="form-control" id="garantia">
-                </div>
-                <h5 class="card-title">Detalles </h5>
-                <div class="col-md-6">
-                    <label for="inputState" class="form-label">Servicio</label>
-                    <select id="lsServicios" class="form-select">
-                      <option>Seleccione</option>
-                      
-                    </select>
-                </div> 
-                <div class="col-md-6">
-                  <label for="inputPassword5" class="form-label">Precio</label>
-                  <input type="number" class="form-control" id="precio">
-                </div>
-                <div class="col-md-6">
-                  <label for="inputPassword5" class="form-label">Cantidad</label>
-                  <input type="number" class="form-control" id="cantidad">
-                </div>
-                <!-- <div class="col-md-6">
-                  <label for="inputState" class="form-label">Estado</label>
-                  <select id="estado" class="form-select">
-                    <option>Seleccione</option>
-                    <option value="N">No iniciado</option>
-                    <option value="P">Proceso</option>
-                    <option value="F">Finalizado</option>
-                    
-                  </select>
-              </div>  -->
-                <div class="">
-                  <button type="button" id="btnContrato" class="btn btn-primary shadow-lg">Registrar</button>
-                  <button type="reset" class="btn btn-secondary shadow-lg">Limpiar</button>
-                </div>
-         
-              </form>
-
-            </div>
+                      </form>
+                  </div>
+              </div>
           </div>
+          <div class="col-lg-6 col-md-12 col-sm-12"> <!-- Segunda columna -->
+              <div class="card">
+                  <div class="card-body">
+                      <h5 class="card-title">Lista de Contratos</h5>
+                      <!-- Tabla contratos -->
+                      <form class="row g-3">
+                          <!-- Contenido de la tabla -->
+                          <table id="tabla-contrato" class="table table-hover" style="width:100%">
+                        <thead class="table-light">
+                          <tr>
+                            <th>#</th>
+                            <th>Clientes</th>
+                            <th>Fecha Contrato</th>
+                            <th>Precio</th>
+                            <th>Fecha Inicio</th>
+                            <th>Garantia</th> 
+                            <th>Estado</th>
+                            <th>Finalizar</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+
+                        </tbody>
+                      </table>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+</section>
+
+
+  <!-- Modal para finalizar contrato -->
+        <!-- Modal-Registrar Cliente  -->
+        <div class="modal fade" id="modal-finalizar" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header" id="modal-registro-header" >
+                    <h5 class="modal-title card-title" id="modal-titulo">Finalizar Contrato</h5>
+                </div>
+                <div class="modal-body">
+                <div class="card">
+                  <div class="card-body">
+                      <h4 class="card-title">Detalles del contrato</h4>
+                      <div class="row">
+                        <div id="detallesI" class="col-6">
+                        <!-- datos asincronos -->                       
+                        </div>  
+                        <div id="detallesD" class="col-6">
+                          <!-- datos asincronos -->
+                        </div>                         
+                      </div> 
+                      <div class="col-6 col-md-6 col-lg-5">
+                            <label for="finalizada" class="form-label">Fecha Cierre</label>
+                            <input type="date" class="form-control" id="finalizada">
+                      </div>               
+                  </div>
+              </div>
+
+                    <form action="" id="form-clientes">
+             
+                    </form>    
+                </div>
+                <div class="modal-footer">           
+                    <button type="button" class="btn btn-primary shadow-lg" id="btcliente">Cerrar contrato</button>
+                    <button type="button" class="btn btn-secondary shadow-lg" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
         </div>
+    </div>
+
+
 
 </main>
  
@@ -195,6 +269,7 @@
 <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 
 <script src="../js/getSelects.js"></script>
+<script src="../js/funcionAlertSweet.js"></script>
 <script src="../js/cambioInput.js"></script>
 
 
@@ -207,6 +282,90 @@
     // const correo = document.querySelector("#correo").value.trim();
     // const direccion = document.querySelector("#direccion").value.trim();
     // const telefono = document.querySelector("#telefono").value.trim();
+
+    // Obtener la fecha actual en formato YYYY-MM-DD
+    function obtenerFechaActual() {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0'); // Agrega 1 porque los meses comienzan desde 0
+        const day = String(today.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    // Establecer la fecha actual como valor predeterminado para el input
+    $(document).ready(function() {
+        const fechaActual = obtenerFechaActual();
+        $("#finalizada").val(fechaActual);
+    });
+
+
+    function detalleContrato(id){
+      console.log(id);
+      $.ajax({
+        url: '../controllers/contratos.controller.php',
+        type: 'GET',
+        data: {
+          'op'          : 'detalleContrato_listar',
+          'idcontrato'  : id
+        },
+        dataType: 'JSON',
+        success: function (result){                  
+            var contrato = result[0];      
+                  var detalleC = "<p><label style='color: #263E7C;'>Cliente:</label> " + contrato.clientes + "</p>" +
+                         "<p><strong style='color: #263E7C;'>Tipo Servicio:</strong> " + contrato.tiposervicio + "</p>" +
+                         "<p><strong style='color: #263E7C;'>Nombre Servicio:</strong> " + contrato.nombreservicio + "</p>" +
+                         "<p><strong style='color: #263E7C;'>Observacion:</strong> " + contrato.observacion + "</p>"; 
+                    
+                       
+
+                  var detalleC2 = "<p><strong style='color: #263E7C;'>Fecha Contrato:</strong> " + contrato.fechacontrato + "</p>" +
+                         "<p><strong style='color: #263E7C;'>Fecha Inicio:</strong> " + contrato.fechainicio + "</p>" +
+                         "<p><strong style='color: #263E7C;'>Precio:</strong> " + contrato.precioservicio + "</p>" +
+                         "<p><strong style='color: #263E7C;'>Garantia:</strong> " + contrato.garantia + "</p>" ;       
+          $("#detallesI").html(detalleC);
+          $("#detallesD").html(detalleC2);
+
+        }
+      });
+    }
+
+    function contratosListar(){
+      $.ajax({
+        url: '../controllers/contratos.controller.php',
+        type: 'GET',
+        data: {'op': 'contratos_listar'},
+        success: function (result){
+          var table = $("#tabla-contrato").DataTable();
+          table.destroy();
+          $("#tabla-contrato tbody").html(result);
+          $("#tabla-contrato").DataTable({
+            responsive: true,
+            lengthMenu: [5,10],
+            language:{
+              url: '../js/Spanish.json'
+            },
+            columnDefs:[
+                {
+                  responsivePriority: 1, // Ajusta la prioridad según tus necesidades
+                  targets: [6], // Índice de la columna estado
+                  render: function (data, type, row) {
+                    if (type === 'display') {
+                      if (data === "N") {
+                        return '<span class="badge bg-danger text-white">No iniciado</span>';
+                      } else if (data === "P") {
+                        return '<span class="badge bg-warning text-white">En proceso</span>';
+                      } else {
+                        return '<span class="badge bg-success text-white">Finalizado</span>';
+                      }
+                    }
+                    return data;
+                  }
+                }
+            ]
+          });
+        }
+      })
+    }
 
 
     function registrarPerCliente(){
@@ -354,53 +513,33 @@
         const servicio = $("#lsServicios").val().trim();
         const precio = $("#precio").val().trim();
         const cantidad = $("#cantidad").val().trim();
-        
-
+        let idUsuario = <?php echo json_encode($idusuario)?>              
 
 
         let sendData = {
           'op'              : 'registrar_contrato',
-          'idusuario'       : $("#idusuario").val(),
+          'idusuario'       : idUsuario,
           'idcliente'       : $("#idcliente").val(),
           'fechainicio'     : $("#fechainicio").val(),
           'fechacierre'     : $("#fechacierre").val(),
           'observacion'     : $("#observacion").val(),
           'garantia'        : $("#garantia").val(),
-          'idservicio'      : $("#idservicio").val(),
+          'idservicio'      : $("#lsServicios").val(),
           'precioservicio'  : $("#precio").val(),
           'cantidad'        : $("#cantidad").val(),          
 
         };
 
-        Swal.fire({
-          title: '¿Está seguro de realizar la operación?',
-          icon: 'question',
-          showCancelButton: true,
-          confirmButtonText: 'Sí',
-          cancelButtonText: 'Cancelar',
-          confirmButtonColor: '#3F974F',
-          cancelButtonColor: '	#0d6efd'
-
-        }).then((result) => {
+        mostrarPregunta('Contratos','¿Está seguro de realizar la operación?')
+        .then((result) => {
         if(result.isConfirmed){
-          if(cliente === '' || fechaI === '' || fechaC === '' || observacion === ''
+          if(cliente === '' || fechaI === '' || observacion === ''
           || garantia === '' || servicio === '' || precio === '' || cantidad === '' ){
 
-              Swal.fire({
-                title: "Por favor, complete los campos",
-                icon: "warning",
-                confirmButtonColor: "#E43D2C",
-            });
-
+            completeCampos();
 
             }else{
-              Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Operación exitosa',
-                showConfirmButton: false,
-                timer: 1500
-                })
+              MsjRegistro();
 
                 $.ajax({
                   url:'../controllers/contratos.controller.php',
@@ -408,9 +547,10 @@
                   data: sendData,
                   success: function(result){
 
-                    $("#form-clientes")[0].reset();
-
+                    $("#form-contratos")[0].reset();
+                    contratosListar();
                     $("#modal-registrar").modal('hide');
+
 
                   }
                 });
@@ -421,10 +561,18 @@
         });
     }
 
+
+    $("#tabla-contrato tbody").on("click", ".finalizar", function(){
+      idcontrato = $(this).data("idcontrato");
+      detalleContrato(idcontrato);
+    })
+
     $("#btcliente").click(registrarPerCliente);
     $("#btcliente").click(registrarEmpCliente);
 
     $("#btnContrato").click(registrarContrato);
+
+    contratosListar();
 
   });
 

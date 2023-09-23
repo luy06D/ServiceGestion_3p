@@ -1,7 +1,17 @@
+<?php
+session_start();
+
+if(!isset($_SESSION['segurity']) || $_SESSION['segurity']['login'] == false){
+  header('Location:../login.php');
+}
+
+$idusuario = $_SESSION['segurity']['idusuario'];
+
+?>
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="utf-8">
@@ -41,7 +51,7 @@
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
-        <img src="./img/logo.png" alt="">
+        <img src="" alt="">
         <span class="d-none d-lg-block">3p tecnologia</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -156,7 +166,7 @@
 
             <li class="message-item">
               <a href="#">
-                <img src="./img/messages-1.jpg" alt="" class="rounded-circle">
+                <img src="" alt="" class="rounded-circle">
                 <div>
                   <h4>Maria Hudson</h4>
                   <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
@@ -170,7 +180,7 @@
 
             <li class="message-item">
               <a href="#">
-                <img src="./img/messages-2.jpg" alt="" class="rounded-circle">
+                <img src="" alt="" class="rounded-circle">
                 <div>
                   <h4>Anna Nelson</h4>
                   <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
@@ -184,7 +194,7 @@
 
             <li class="message-item">
               <a href="#">
-                <img src="./img/messages-3.jpg" alt="" class="rounded-circle">
+                <img src="" alt="" class="rounded-circle">
                 <div>
                   <h4>David Muldon</h4>
                   <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
@@ -207,8 +217,8 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="../img/3p.png" alt="Perfil" class="rounded-circle">
-            <!-- <span class="d-none d-md-block dropdown-toggle ps-2"><?= $_SESSION['segurity']['nombres']?> </span> -->
+            <!-- <img src="" alt="Perfil" class="rounded-circle"> -->
+            <i class="bi bi-person" style="font-size: medium;"></i>            <!-- <span class="d-none d-md-block dropdown-toggle ps-2"><?= $_SESSION['segurity']['nombres']?> </span> -->
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -251,7 +261,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="../controllers/usuario.controller.php?operation=destroy">
+              <a class="dropdown-item d-flex align-items-center" href="../controllers/usuarios.controller.php?operation=destroy">
                 <i class="bi bi-box-arrow-right"></i>
                 <span >Cerrar sesión</span>
               </a>
@@ -273,17 +283,17 @@
   <li class="nav-item">
     <a class="nav-link " href="../views/index.php">
       <i class="bi bi-grid"></i>
-      <span>Dashboard</span>
+      <span>Inicio</span>
     </a>
   </li><!-- End Dashboard Nav -->
 
-  <li class="nav-item">
+  <!-- <li class="nav-item">
     <a class="nav-link " href="../views/equipos.php">
       <i class="bi bi-wrench"></i>
       <span>Equipos</span>
     </a>
 
-  </li><!-- End Dashboard Nav -->
+  </li>End Dashboard Nav -->
 
   <li class="nav-item">
     <a class="nav-link " href="../views/garantia.php">
@@ -376,6 +386,32 @@
           <i class="bi bi-circle"></i><span>Tooltips</span>
         </a>
       </li>
+    </ul>
+  </li><!-- End Components Nav -->
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" data-bs-target="#components-nav-equipos" data-bs-toggle="collapse" href="#">
+      <i class="bi bi-wrench"></i></i><span>Equipos</span><i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul id="components-nav-equipos" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+      <li>
+          <a class="nav-link " href="../views/equipos.php">
+            <i class="bi bi-plus-circle"></i>
+            <span>Equipos</span>
+          </a>
+      </li>
+      <li>
+          <a class="nav-link " href="../views/marcas.php">
+            <i class="bi bi-plus-circle"></i>
+            <span>Marcas</span>
+          </a>
+      </li>
+      <li>
+        <a class="nav-link " href="../views/tipoequipos.php">
+          <i class="bi bi-circle"></i><span>Tipos</span>
+        </a>
+      </li>
+      
     </ul>
   </li><!-- End Components Nav -->
 
