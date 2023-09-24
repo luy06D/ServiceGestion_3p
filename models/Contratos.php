@@ -58,18 +58,37 @@ public function contrato_registrar ($datos = []){
         "message" => ""
     ];
     try{
-        $consulta = $this->conexion->prepare("CALL spu_contrato_registrar(?,?,?,?,?,?,?,?,?)");
+        $consulta = $this->conexion->prepare("CALL spu_contrato_registrar(?,?,?,?,?,?,?,?)");
         $respuesta["status"] = $consulta->execute(array(
             
             $datos["idusuario"],
             $datos["idcliente"],
-            $datos["fechainicio"],
-            $datos["fechacierre"],
+            $datos["fechainicio"],            
             $datos["observacion"],
             $datos["garantia"],
             $datos["idservicio"],
             $datos["precioservicio"],
             $datos["cantidad"]
+            
+        ));
+    }
+    catch(Exception $e){
+        $respuesta["message"] = "No se pudo completar la operacion Codigo error:" .$e->getCode();
+    }
+    return $respuesta;
+  }
+
+  public function contrato_finalizar ($datos = []){
+    $respuesta = [
+        "status" => false,
+        "message" => ""
+    ];
+    try{
+        $consulta = $this->conexion->prepare("CALL spu_finalizarContrato(?,?)");
+        $respuesta["status"] = $consulta->execute(array(
+            
+            $datos["idcontrato"],
+            $datos["fechacierre"],
             
         ));
     }

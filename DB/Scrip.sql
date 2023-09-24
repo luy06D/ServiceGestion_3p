@@ -1,6 +1,5 @@
-CREATE DATABASE DB_3P
-
-USE DB_3P
+CREATE DATABASE DB_3P;
+USE DB_3P;
 
 
 
@@ -701,7 +700,6 @@ BEGIN
 
 END $$ 
 
-	
 
 -- REGISTRAR CONTRATO
 DELIMITER $$
@@ -711,7 +709,6 @@ CREATE PROCEDURE spu_contrato_registrar
 IN _idusuario INT,
 IN _idcliente INT,
 IN _fechainicio DATE,
-IN _fechacierre DATE,
 IN _observacion VARCHAR(150),
 IN _garantia VARCHAR(20),
 
@@ -724,8 +721,8 @@ BEGIN
 	
 	DECLARE g_idcontrato INT;
 	
-	INSERT INTO contratos (idusuario, idcliente , fechainicio, fechacierre, observacion, garantia) VALUES
-						(_idusuario, _idcliente, _fechainicio, _fechacierre, _observacion, _garantia);
+	INSERT INTO contratos (idusuario, idcliente , fechainicio, observacion, garantia) VALUES
+						(_idusuario, _idcliente, _fechainicio, _observacion, _garantia);
 	
 	SELECT LAST_INSERT_ID() INTO g_idcontrato;
 	
@@ -735,7 +732,7 @@ BEGIN
 END $$
 
 
-CALL spu_contrato_registrar(1, 2, "2023-09-14", NULL, "Prueba2 de procedimiento", "1 meses", 3 , 300, 5);
+CALL spu_contrato_registrar(1, 2, "2023-09-14", "Prueba2 de procedimiento", "1 meses", 3 , 300, 5);
 
 
 DELIMITER $$
@@ -745,7 +742,7 @@ BEGIN
 	SELECT CO.idcontrato,
 	 COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) AS clientes,
 	 DATE(CO.fechacontrato) AS fechacontrato,
-	 DS.precioservicio, CO.fechainicio, CO.garantia, DS.estadoservicio
+	 CO.fechainicio,CO.fechacierre, CO.garantia, DS.estadoservicio
 	FROM desc_servicio DS
 	INNER JOIN contratos CO ON CO.idcontrato = DS.idcontrato
 	INNER JOIN clientes CLI ON CLI.idcliente = CO.idcliente
@@ -775,8 +772,50 @@ BEGIN
 
 END$$
 
-CALL spu_detalleContratos_listar(1)
+CALL spu_detalleContratos_listar(5);
+
+DELIMITER $$
+CREATE PROCEDURE spu_finalizarContrato
+(
+IN _idcontrato INT,
+IN _fechacierre DATE
+)
+BEGIN
+		UPDATE contratos SET fechacierre = _fechacierre
+		WHERE idcontrato = _idcontrato;
+		
+		UPDATE desc_servicio SET estadoservicio = 'F'
+		WHERE idcontrato = _idcontrato;
+		
+END $$
+
+CALL spu_finalizarContrato(1, '2023-09-24');
+
+-- EVENTO PARA ACTUALIZAR ESTADO A PROCESO
+-- AUTOMATICO
+
+DELIMITER $$
+CREATE EVENT actualizarEstadoProceso
+ON SCHEDULE EVERY 1 DAY
+STARTS CURRENT_TIMESTAMP
+DO
+BEGIN 
+	UPDATE desc_servicio DS
+	INNER JOIN contratos CO ON DS.idcontrato = CO.idcontrato	
+	SET DS.estadoservicio = 'P'
+	WHERE CO.fechainicio = CURDATE();
+
+END $$
 
 
+SELECT * FROM desc_servicio
 
+-- Habilita el programador de eventos
+SHOW VARIABLES LIKE 'event_scheduler';
 
+SET GLOBAL event_scheduler = ON;
+
+SELECT * FROM desc_servicio
+SELECT * FROM contratos
+
+-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
