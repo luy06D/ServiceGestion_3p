@@ -12,6 +12,8 @@
 
 <main id="main" class="main">
 
+    
+
 <div class="pagetitle">
       <h1>Módulo contratos</h1>
       <nav>
@@ -109,6 +111,8 @@
     <button type="button" id="abrir-modal-registro" class="btn btn-primary btn-md mb-3 shadow-lg" data-bs-toggle="modal" data-bs-target="#modal-registrar">
         <i class="bi bi-plus-circle"></i>  Nuevo cliente
     </button>
+
+
 
     <section class="section">
       <div class="row">
@@ -210,9 +214,54 @@
       </div>
 </section>
 
+ 
 
-  <!-- Modal para finalizar contrato -->        
-        <div class="modal fade" id="modal-finalizar" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+
+
+
+         <!-- Modal para contrato final -->        
+    <div class="modal fade" id="modal-final2" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header" id="" >
+                    <h5 class="modal-title card-title" id="">Contrato finalizado</h5>
+                </div>
+                <div class="modal-body">
+                <div class="card">
+                  <div class="card-body">
+                      <h4 class="card-title">Detalles del contrato</h4>
+                      <div class="row">
+                        <div id="detallesIfinal" class="col-6">
+                                          
+                        </div>  
+                        <div id="detallesDfinal" class="col-6">
+                          
+                        </div>                         
+                      </div>                           
+                  </div>
+              </div>
+
+         
+                <div class="modal-footer">           
+                    <button type="button" class="btn btn-primary shadow-lg" id="">Iniciar garantia</button>
+                    <button type="button" class="btn btn-secondary shadow-lg" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+              </div>
+        </div>
+    </div>
+
+
+ 
+
+
+
+
+
+</main>
+
+
+       <!-- Modal para finalizar contrato -->        
+      <div class="modal fade" id="modal-final1" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header" id="modal-registro-header" >
@@ -244,40 +293,7 @@
         </div>
     </div>
 
-      <!-- Modal para contrato final -->        
-      <!-- <div class="modal fade" id="modal-final" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header" id="modal-registro-header" >
-                    <h5 class="modal-title card-title" id="modal-titulo">Finalizar Contrato</h5>
-                </div>
-                <div class="modal-body">
-                <div class="card">
-                  <div class="card-body">
-                      <h4 class="card-title">Detalles del contrato</h4>
-                      <div class="row">
-                        <div id="detallesIfinal" class="col-6">
-                                          
-                        </div>  
-                        <div id="detallesDfinal" class="col-6">
-                          
-                        </div>                         
-                      </div>                           
-                  </div>
-              </div>
-
-         
-                <div class="modal-footer">           
-                    <button type="button" class="btn btn-primary shadow-lg" id="btnFinalizar">Iniciar garantia</button>
-                    <button type="button" class="btn btn-secondary shadow-lg" data-bs-dismiss="modal">Cerrar</button>
-                </div>
-              </div>
-        </div>
-    </div> -->
-
-
-
-</main>
+    
  
 <!-- sweetalert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -357,7 +373,7 @@
     }
 
     function detalleContratoFinal(id){
-      console.log(id);
+
       $.ajax({
         url: '../controllers/contratos.controller.php',
         type: 'GET',
@@ -620,11 +636,14 @@
 
     function finalizarContrato(){
 
+      console.log(idcontrato)
       let sendData = {
         'op'  : 'finalizar_contrato',
         'idcontrato' : idcontrato,
         'fechacierre' : $("#finalizada").val(),
       };
+
+
 
       toastFinalizar("Contrato finalizado");
       
@@ -634,7 +653,7 @@
         data: sendData,
         success: function(result){
           contratosListar();
-          $("#modal-finalizar").modal('hide');
+          $("#modal-final1").modal('hide');
 
         }
       });
@@ -643,24 +662,27 @@
 
 
 
-    $("#tabla-contrato tbody").on("click", ".finalizar", function(){
-      
-      const ElementfechaC = document.getElementById("cierre_fecha");
-      
-      ElementfechaC.forEach(function(elemetFecha){
-        var fechaC = elementFecha.textContent;
-      })
+    // $("#tabla-contrato tbody").on("click", ".finalizar", function(){            
+    //     idcontrato = $(this).data("idcontrato");
+    //     detalleContrato(idcontrato);
+    // })
 
-      console.log(fechaC)
+    $("#tabla-contrato tbody").on("click", ".finalizar2", function(){            
+        
+        fechaC = $(this).data("fechacierre");
 
-      if(fechaC.trim() === ''){
-        idcontrato = $(this).data("idcontrato");
-      detalleContrato(idcontrato);
+        if(fechaC === ''){
+          idcontrato = $(this).data("idcontrato");
+          $("#modal-final1").modal('show');
+          detalleContrato(idcontrato);
 
-      }else{
-        console.log("otro modal")
-      }
-      
+        }else{
+          idcontrato = $(this).data("idcontrato");
+          $("#modal-final2").modal('show');
+          detalleContratoFinal(idcontrato);
+        }
+        
+
 
     })
 

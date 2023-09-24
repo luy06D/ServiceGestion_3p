@@ -95,8 +95,9 @@ if(isset($_GET['op'])){
                 <td>{$registro['fechainicio']}</td>                    
                 <td>{$registro['garantia']}</td>   
                 <td>{$registro['estadoservicio']}</td>    
-                <td>
-                <a href='#' class='finalizar btn btn-outline-primary btn-sm' data-bs-toggle='modal' data-bs-target='#modal-finalizar' data-idcontrato ='{$registro['idcontrato']}'><i class='bi bi-box-arrow-in-left'></i></a>                
+                <td>                
+                 <a href='#' class='finalizar2 btn btn-outline-primary btn-sm' data-fechacierre ='{$registro['fechacierre']}'
+                 data-idcontrato ='{$registro['idcontrato']}'><i class='bi bi-box-arrow-in-left'></i></a>                  
                 </td>
         </tr>                
                 

@@ -725,17 +725,34 @@ BEGIN
 		
 END $$
 
-CALL spu_finalizarContrato(5, '2023-09-23');
+CALL spu_finalizarContrato(1, '2023-09-24');
 
 
 DELIMITER $$
-CREATE TRIGGER actualizar_estadoProceso 
-AFTER INSERT
+CREATE EVENT actualizarEstadoProceso
+ON SCHEDULE EVERY 1 DAY
+STARTS CURRENT_TIMESTAMP
+DO
+BEGIN 
+	UPDATE desc_servicio DS
+	INNER JOIN contratos CO ON DS.idcontrato = CO.idcontrato	
+	SET DS.estadoservicio = 'P'
+	WHERE CO.fechainicio = CURDATE();
+
+END $$
 
 
+SELECT * FROM desc_servicio
 
+-- Habilita el programador de eventos
+SHOW VARIABLES LIKE 'event_scheduler';
 
+SET GLOBAL event_scheduler = ON;
 
+SELECT * FROM desc_servicio
+SELECT * FROM contratos
+
+-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
 
