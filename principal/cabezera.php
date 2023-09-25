@@ -21,13 +21,6 @@ $idusuario = $_SESSION['segurity']['idusuario'];
   <meta content="" name="description">
   <meta content="" name="keywords">
 
-  <!-- BOOTSTRAP -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-  <!-- DataTable -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-  <link href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css" rel="stylesheet">
-
   <!-- Favicons -->
   <link href="./img/favicon.png" rel="icon">
   <link href="./img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -316,16 +309,10 @@ $idusuario = $_SESSION['segurity']['idusuario'];
       <span>Contratos</span>
     </a>
   </li>
-<<<<<<< HEAD
-  </li>
-  <li class="nav-item">
-    <a class="nav-link " href="../views/servicios.php">
-    <i class="bi bi-file-earmark-text"></i>
-=======
+
   <li class="nav-item">
     <a class="nav-link " href="../views/servicios.php">
     <i class="bi bi-person-lines-fill"></i>
->>>>>>> fe233f570b2983049fb6150ee77ed1e607cd37b4
       <span>Servicios</span>
     </a>
   </li>

@@ -141,8 +141,7 @@ CONSTRAINT fk7	FOREIGN KEY (idservicio) REFERENCES servicios(idservicio)
 
 INSERT INTO desc_servicio(idcontrato, idservicio, precioservicio, cantidad, estadoservicio)VALUES
 (1, 1, 6000, 2, 'P'),
-(2,2,8000,3,'N')
-()
+(2,2,8000,3,'N');
 
 CREATE TABLE garantia
 (
@@ -213,7 +212,10 @@ CONSTRAINT fk11	FOREIGN KEY (idmarca) REFERENCES marcas(idmarca)
 
 INSERT INTO equipos(idtipoequipo, idmarca, descripcion)VALUES
 (1,2,'nada que decir'),
-(2,3,'nada que decir')
+(2,3,'nada que decir');
+
+ALTER TABLE equipos ADD numSerie VARCHAR(50) NOT NULL;
+
 
 
 CREATE TABLE desc_equipo
@@ -228,6 +230,8 @@ CONSTRAINT fk12	FOREIGN KEY (iddescServicio) REFERENCES desc_servicio(iddescServ
 CONSTRAINT fk13	FOREIGN KEY (idequipo) REFERENCES equipos(idequipo),
 CONSTRAINT uk7 UNIQUE (numSerie)
 )ENGINE = INNODB;
+
+ALTER TABLE desc_equipo DROP numSerie;
 
 INSERT INTO desc_equipo(idequipo, iddescServicio, numSerie, precio)VALUES
 (1,2,'84565214253',350),
@@ -258,7 +262,7 @@ IN _precioestimado DECIMAL(7,2)
 BEGIN 
 	INSERT INTO servicios (tiposervicio, nombreservicio, precioestimado)VALUES
 	(_tiposervicio, _nombreservicio, _precioestimado);
-	END$$
+END$$
 	
 	CALL spu_servicios_registrar('Reparacion', 'reparacion de pc', 50)
 	
@@ -293,23 +297,15 @@ BEGIN
 
 
 	DELIMITER $$
-	create procedure spu_servicios_eliminar (in _idservicio int)
-	begin 
-			update servicios SET
-			inactive_at = now()
-			where idservicio = _idservicio;
-			end$$
+	CREATE PROCEDURE spu_servicios_eliminar (IN _idservicio INT)
+	BEGIN 
+			UPDATE servicios SET
+			inactive_at = NOW()
+			WHERE idservicio = _idservicio;
+END$$
 
 	
-	CALL spu_servicios_update(6, 'Reparacion', 'Reparacion de Laptop', 30)
-DELETE FROM servicios
-USE DB_3P
-
-DELETE FROM desc_servicio
-
-
-
-
+CALL spu_servicios_update(6, 'Reparacion', 'Reparacion de Laptop', 30)
 
 
 -- SPU USUARIO --
@@ -325,8 +321,6 @@ BEGIN
 	INNER JOIN personas ON personas.idpersona = usuarios.idpersona
 	WHERE usuario = _usuario;
 END$$
-
-
 
 
 
@@ -550,24 +544,6 @@ END $$
 
 CALL spu_equipo_listar()
 
-DELIMITER $$
-CREATE PROCEDURE spu_descripcionequipo_listar()
-BEGIN
-SELECT 	iddescEquipo,
-	e
-
-CALL spu_equipo_listar();
-
-SELECT * FROM tipoequipo
-SELECT * FROM marcas
-
-
-END $$
-
-INSERT INTO desc_equipo (idequipo,idDescServicio, numSerie,precio) VALUES
-	(1,7,'89562317',105)
-SELECT * FROM desc_equipo
-
 
 DELIMITER $$
 CREATE PROCEDURE ListarDescEquipo()
@@ -593,6 +569,7 @@ BEGIN
     INNER JOIN
         servicios s ON ds.idservicio = s.idservicio;
 END $$
+
 CALL ListarDescEquipo();
 
 DELIMITER $$
@@ -605,13 +582,6 @@ BEGIN
 END $$
 
 CALL spu_equipos_recuperar()
-
-SELECT * FROM equipos
-DELETE FROM tipoequipo
-ALTER TABLE tipoequipo AUTO_INCREMENT = 1
-SELECT * FROM marcas
-
-(2,2,'96532145875',200);
 
 
 -- PROCEDIMINETOS CONTRATOS >>>>>>>>>>>>>>>
@@ -808,14 +778,10 @@ BEGIN
 END $$
 
 
-SELECT * FROM desc_servicio
-
 -- Habilita el programador de eventos
 SHOW VARIABLES LIKE 'event_scheduler';
 
 SET GLOBAL event_scheduler = ON;
 
-SELECT * FROM desc_servicio
-SELECT * FROM contratos
 
 -- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
