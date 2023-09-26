@@ -154,6 +154,19 @@ public function detalleContratos_listar($idcontrato = 0){
 }
 
 
+public function clientes_buscar($search = ""){
+    try{
+        $query = $this->conexion->prepare("CALL spu_clientes_buscar(?)");
+        $query->execute(array($search));
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+        
+    }
+    catch(Exception $err){
+        die($err->getMessage());
+    }
+}
+
+
 
 }
 

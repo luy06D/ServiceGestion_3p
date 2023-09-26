@@ -744,6 +744,8 @@ END$$
 
 CALL spu_detalleContratos_listar(5);
 
+-- FINALIZAR EL CONTRATO
+
 DELIMITER $$
 CREATE PROCEDURE spu_finalizarContrato
 (
@@ -761,6 +763,23 @@ END $$
 
 CALL spu_finalizarContrato(1, '2023-09-24');
 
+-- BUSCAR CLIENTES
+DELIMITER $$
+CREATE PROCEDURE spu_clientes_buscar(IN _search VARCHAR(100))
+BEGIN 
+	SELECT
+		CLI.idcliente,
+	    COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) AS clientes
+	FROM clientes CLI
+	LEFT JOIN personas PE ON CLI.idpersona = PE.idpersona
+	LEFT JOIN empresas EM ON CLI.idempresa = EM.idempresa
+	WHERE COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) LIKE CONCAT('%', _search, '%');
+END$$
+
+CALL spu_clientes_buscar("fa");
+
+
+
 -- EVENTO PARA ACTUALIZAR ESTADO A PROCESO
 -- AUTOMATICO
 
@@ -777,11 +796,9 @@ BEGIN
 
 END $$
 
-
 -- Habilita el programador de eventos
 SHOW VARIABLES LIKE 'event_scheduler';
-
 SET GLOBAL event_scheduler = ON;
 
 
--- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+

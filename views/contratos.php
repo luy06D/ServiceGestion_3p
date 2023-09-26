@@ -111,6 +111,9 @@
     <button type="button" id="abrir-modal-registro" class="btn btn-primary btn-md mb-3 shadow-lg" data-bs-toggle="modal" data-bs-target="#modal-registrar">
         <i class="bi bi-plus-circle"></i>  Nuevo cliente
     </button>
+    <button type="button" id="" class="btn btn-primary btn-md mb-3 shadow-lg" data-bs-toggle="modal" data-bs-target="#modal-buscar">
+        <i class="bi bi-plus-circle"></i>  Buscar
+    </button>
 
 
 
@@ -135,13 +138,15 @@
                             <input type="date" class="form-control" id="fechainicio">
                           </div>
                           <div class="col-md-6">
-                            <label for="fechacierre" class="form-label">Fecha Cierre</label>
-                            <input type="date" class="form-control" id="fechacierre">
-                          </div>
-                          <div class="col-md-6">
                             <label for="inputPassword5" class="form-label">Garantia</label>
                             <input type="text" class="form-control" id="garantia">
                           </div>
+                          <div class="col-md-6">
+                            <label for="inputPassword5" class="form-label">prueba</label>
+                            <input type="text"  class="form-control" id="prueba">
+                          </div>
+                          <!-- Campo oculto para almacenar el ID del cliente -->
+                              <input type="hidden" id="cliente-id" name="cliente-id">
                           <div class="col-md-6">
                             <label for="observacion" class="form-label">Observación</label>
                             <textarea class="form-control" id="observacion" rows="3"></textarea>
@@ -163,16 +168,6 @@
                             <label for="cantidad" class="form-label">Cantidad</label>
                             <input type="number" class="form-control" id="cantidad">
                           </div>
-                          <!-- <div class="col-md-6">
-                            <label for="inputState" class="form-label">Estado</label>
-                            <select id="estado" class="form-select">
-                              <option>Seleccione</option>
-                              <option value="N">No iniciado</option>
-                              <option value="P">Proceso</option>
-                              <option value="F">Finalizado</option>
-                              
-                            </select>
-                        </div>  -->
                           <div class="">
                             <button type="button" id="btnContrato" class="btn btn-primary shadow-lg">Registrar</button>
                             <button type="reset" class="btn btn-secondary shadow-lg">Limpiar</button>
@@ -182,6 +177,7 @@
                   </div>
               </div>
           </div>
+       
           <div class="col-lg-6 col-md-12 col-sm-12"> <!-- Segunda columna -->
               <div class="card">
                   <div class="card-body">
@@ -212,14 +208,34 @@
               </div>
           </div>
       </div>
+         <!-- Modal buscar cliente -->        
+         <div class="modal fade" id="modal-buscar" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" id="" >
+                        <h5 class="modal-title card-title" id="">Buscar cliente</h5>
+                    </div>
+                    <div class="modal-body">
+                    <div class="input-group flex-nowrap mb-2">
+                      <span class="input-group-text" id=""><i class="bi bi-search"></i></span>
+                      <input type="text" class="form-control" id="b-cliente" placeholder="Buscar aqui......." aria-label="Username" aria-describedby="addon-wrapping" autocomplete="off">
+                    </div>
+                    <div class="list-group mt-4" id="clientes_buscados">
+
+                    </div>
+                    <div class="modal-footer">           
+                        
+                        <button type="button" class="btn btn-secondary shadow-lg" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                  </div>
+            </div>
+        </div>
 </section>
+</main>
 
- 
-
-
-
-
-         <!-- Modal para contrato final -->        
+<section>
+        <!-- seccion modales contratos   -->
+        <!-- Modal para contrato final -->        
     <div class="modal fade" id="modal-final2" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
@@ -250,15 +266,7 @@
         </div>
     </div>
 
-
- 
-
-
-
-
-
-</main>
-
+</section>
 
        <!-- Modal para finalizar contrato -->        
       <div class="modal fade" id="modal-final1" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
@@ -318,13 +326,8 @@
   $(document).ready(function (){
 
     let idcontrato = 0;
-
-    // const nombres = document.querySelector("#nombres").value.trim();
-    // const apellidos = document.querySelector("#apellidos").value.trim();
-    // const dni = document.querySelector("#dni").value.trim();
-    // const correo = document.querySelector("#correo").value.trim();
-    // const direccion = document.querySelector("#direccion").value.trim();
-    // const telefono = document.querySelector("#telefono").value.trim();
+    let searchTimer;
+    let selecCliente = "";
 
     // Obtener la fecha actual en formato YYYY-MM-DD
     function obtenerFechaActual() {
@@ -414,6 +417,7 @@
           $("#tabla-contrato").DataTable({
             responsive: true,
             lengthMenu: [5,10],
+            order: [[0, 'desc']],
             language:{
               url: '../js/Spanish.json'
             },
@@ -660,12 +664,78 @@
 
     }
 
+    function cliente_buscar(){
+
+      clearTimeout(searchTimer);
+
+      searchTimer = setTimeout(function (){
+        const searchTerm = $("#b-cliente").val();
+
+        if(searchTerm.trim() === ""){
+
+          $("#clientes_buscados").empty();
+          return;
+
+        }
+
+        $.ajax({
+        url:'../controllers/contratos.controller.php',
+        type: 'GET',
+        dataType: 'JSON',
+        data: {
+          'op': 'cliente_buscar',
+          'search': $("#b-cliente").val()
+        },
+        success: function(result){
+
+          $("#clientes_buscados").empty();
+
+          if(result.length > 0){
+
+            for(let i=0 ; i < result.length; i++){
+              const cliente = result[i];
+              const listaClientes = `
+              <button type="button" value="${cliente.idcliente}" 
+              class="list-group-item list-group-item-action cliente-btn">${cliente.clientes}</button>            
+              `;
+
+              $("#clientes_buscados").append(listaClientes);
+            }
+          }else {
+            $("#clientes_buscados").html("<p>No se encontro el cliente </p>");
+          }
+
+          $(".cliente-btn").dblclick(function(){    
+            idcliente = $(this).val();        
+            selecCliente = $(this).text();
+
+            console.log(idcliente);
+
+            $("#prueba").val(selecCliente);
+            $("#cliente-id").val(idcliente);
+            
+
+            $("#modal-buscar").modal('hide');
+
+            $("#b-cliente").val(""); 
+            $("#clientes_buscados").empty();
+             
+            
+          })
+
+        }
+
+      })
+
+      }, 500);
+  
+    }
 
 
-    // $("#tabla-contrato tbody").on("click", ".finalizar", function(){            
-    //     idcontrato = $(this).data("idcontrato");
-    //     detalleContrato(idcontrato);
-    // })
+
+
+
+
 
     $("#tabla-contrato tbody").on("click", ".finalizar2", function(){            
         
@@ -684,9 +754,12 @@
         
 
 
-    })
+    });
 
+   $("#garantia").click(function(){
+    $("#modal-buscar").modal('show');
 
+   });
 
     $("#btcliente").click(function(){
 
@@ -703,9 +776,9 @@
     });
 
     $("#btnFinalizar").click(finalizarContrato);
-    
-
     $("#btnContrato").click(registrarContrato);
+
+    $("#b-cliente").keyup(cliente_buscar);
     
 
     contratosListar();

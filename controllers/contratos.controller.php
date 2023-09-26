@@ -115,6 +115,12 @@ if(isset($_GET['op'])){
         echo json_encode($data);
     }
 
+    if($_GET['op'] == 'cliente_buscar'){
+        $data = $contrato->clientes_buscar($_GET['search']);
+
+        echo json_encode($data);
+    }
+
 
 }
 
