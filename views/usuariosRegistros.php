@@ -1,87 +1,85 @@
 <?php require_once '../principal/cabezera.php' ?>
- <!-- BOOTSTRAP -->
- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <!-- DataTable -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+  <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 
-<main id="main" class="main">
+  <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css" rel="stylesheet">
 
-    <div class="pagetitle">
-    <h1>Usuarios</h1>
-    <nav>
-        <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.php">Inicio</a></li>
-        <li class="breadcrumb-item"><a href="usuariosRegistros.php">Usuarios</a></li>
-        </ol>
-    </nav>
-    </div><!-- End Page Title -->
+
     <section class="section">
-    <div class="row">
-        
+        <div class="row">
 
-        <div class="col-lg-8">
-        <button type="button" id="abrir-modal-registro-personas" class="btn btn-success btn-md mb-3" data-bs-toggle="modal" data-bs-target="#modal-register-personas">
-            <i class="bi bi-plus-circle"></i> Nuevo
-        </button>
-        
-
-        <div class="col-lg-12">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Datos</h5>
-
-              <!-- Horizontal Form -->
-              <form id="form-usuarios">
-                <div class="row mb-3">
-                    <label for="buscador" class="col-sm-2 col-form-label">Buscar:</label>
-                      <div class="col-sm-2">
-                        <input type="search" class="form-control" id="buscador" placeholder="busqueda por DNI" maxlength="8">
-                        <input type="text"  id="idpersona" style="display: none;"> <!---->
-                    </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="nombres" class="col-sm-2 col-form-label">Nombres: </label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="nombres" placeholder="" maxlength="20" readonly>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="apellidos" class="col-sm-2 col-form-label">Apellidos:</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="apellidos" placeholder="" maxlength="20" readonly>
-                    </div>
-                </div>
-            
-                <div class="row mb-3">
-                  <label for="usuario" class="col-sm-2 col-form-label"><strong>Usuario:</strong> </label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="usuario" placeholder="escriba usuario" maxlength="30">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="clave" class="col-sm-2 col-form-label"><strong>Contraseña:</strong> </label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="clave" placeholder="escriba clave" maxlength="30">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="idservicio" class="col-sm-2 col-form-label"><strong>Nivel acceso:</strong></label>
-                  <div class="col-sm-6">
-                      <select class="form-select" id="nivelacceso">
-                        <option selected>Seleccione</option>
-                        <option value="A">Administrador</option>
-                        <option value="E">Invitado</option>
-                      </select>
-                  </div>
-                </div>
+            <div class="col-lg-6">
                 
-                <div class="text-center">
-                  <button type="button" class="btn btn-primary" id="guardarusuario">Guardar</button>
-                  <button type="reset" class="btn btn-secondary">Cancelar</button>
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Datos</h5>
+                            <button type="button" id="abrir-modal-registro-personas" class="btn btn-success btn-md mb-3" data-bs-toggle="modal" data-bs-target="#modal-register-personas">
+                                <i class="bi bi-plus-circle"></i> Nuevo
+                            </button>
+                            
+                            <!-- Horizontal Form -->
+                            <form id="form-usuarios">
+                                <div class="row mb-3">
+                                    <label for="buscador" class="col-sm-2 col-form-label">Buscar:</label>
+                                    <div class="col-sm-6">
+                                        <input type="search" class="form-control" id="buscador" placeholder="busqueda por DNI" maxlength="8">
+                                        <input type="text"  id="idpersona" style="display: none;"> <!---->
+                                    </div>
+                                </div>
+                                
+                                <div class="row mb-3">
+                                    <label for="nombres" class="col-sm-2 col-form-label">Nombres: </label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="nombres" placeholder="" maxlength="20" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="apellidos" class="col-sm-2 col-form-label">Apellidos:</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="apellidos" placeholder="" maxlength="20" readonly>
+                                    </div>
+                                </div>
+                            
+                                <div class="row mb-3">
+                                    <label for="usuario" class="col-sm-2 col-form-label"><strong>Usuario:</strong> </label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="usuario" placeholder="escriba usuario" maxlength="30">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="clave" class="col-sm-2 col-form-label"><strong>Contraseña:</strong> </label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="clave" placeholder="escriba clave" maxlength="30">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="idservicio" class="col-sm-2 col-form-label"><strong>Nivel acceso:</strong></label>
+                                    <div class="col-sm-6">
+                                        <select class="form-select" id="nivelacceso">
+                                            <option selected>Seleccione</option>
+                                            <option value="A">Administrador</option>
+                                            <option value="E">Invitado</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-center">
+                                <button type="button" class="btn btn-primary" id="guardarusuario">Guardar</button>
+                                <button type="reset" class="btn btn-secondary">Cancelar</button>
+                                </div>
+                            </form><!-- End Horizontal Form -->
+                        </div>
+                    </div>
                 </div>
-              </form><!-- End Horizontal Form -->
             </div>
-          </div>
-        <!-- </div> -->
-    </div>
+        </div>
+    </section>
 
     
     <!-- Modal Body -->
@@ -182,13 +180,7 @@
         </div>
     </div>
     
-    
-    <!-- Optional: Place to the bottom of scripts -->
-    <script>
-        const myModal = new bootstrap.Modal(document.getElementById('modalId'), options)
-    
-    </script>
-</main><!-- End #main -->
+
 <!-- CDN sweetAlert2 -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- AJAX = JavaScript asincrónico-->
@@ -291,7 +283,7 @@
                             data: datosEnviar,
                             success: function(result){
                                 $("#form-usuarios-md")[0].reset();
-                                // $("#modal-register-personas").modal('hide');
+                                $("#modal-register-personas").modal('hide');
                             }   
                         })
                     }
@@ -341,7 +333,6 @@
 
     })
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+
 
 <?php require_once '../principal/footer.php' ?>

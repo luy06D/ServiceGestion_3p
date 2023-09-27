@@ -1,40 +1,32 @@
 <?php require_once '../principal/cabezera.php' ?>
-  <!-- BOOTSTRAP -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
   <!-- DataTable -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-  <link href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+  <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
+  <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css" rel="stylesheet">
 
 
-  <main id="main" class="main">
 
-    <div class="pagetitle">
-      <h1>Equipos</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.php">Inicio</a></li>
-          <li class="breadcrumb-item"><a href="tipoequipos.php">Tipos</a></li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
     <section class="section">
       <div class="row">
         
 
-        <div class="col-lg-12">
-          <button type="button" id="abrir-modal-registro-Tequipos" class="btn btn-success btn-md mb-3" data-bs-toggle="modal" data-bs-target="#modal-Tequipos">
-            <i class="bi bi-plus-circle"></i> Agregar
-          </button>
+        <div class="col-lg-8">
           
-
-        <div class="card">
+          <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Lista</h5>
+              <h5 class="card-title">Lista de Tipos</h5>
+              <button type="button" id="abrir-modal-registro-Tequipos" class="btn btn-success btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#modal-Tequipos">
+                <i class="bi bi-plus-circle"></i> Agregar
+              </button>
+              <button type="button" id="abrir-modal-registro-Tequipos" class="btn btn-success btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#modal-RecuperarEquipos">
+                <i class="bi bi-plus-circle"></i> Recuperar
+              </button>
 
               <!-- Multi Columns Form -->
               <form class="row g-3" id="">
-                <table id="tabla-Tequipos" class="table table-striped nowrap" style="width:100%">
+                <table id="tabla-Tequipos" class="table table-hover" style="width:100%">
                   <thead>
                     <tr>
                       <th>Item</th>
@@ -51,18 +43,19 @@
             </div>
         </div>
 
-    </div>
-
-  </main><!-- End #main -->
-
+      </div>
+    </section>
 
 
-  <!-- Modal-Registrar Marca -->
+
+
+
+  <!-- Modal-Registrar tipo -->
   <div class="modal fade" id="modal-Tequipos" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
-          <div class="modal-header" id="modal-registro-header">
-            <h5 class="modal-title" id="modal-titulo"></h5>
+          <div class="modal-header" id="modal-registro-header1">
+            <h5 class="modal-title" id="modal-titulo1"></h5>
           </div>
           <div class="modal-body">
             <form action="" id="form-Tequipos">
@@ -73,30 +66,73 @@
             </form>    
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-success" id="guardar">Guardar</button>
+            <button type="button" class="btn btn-success" id="guardartipo">Guardar</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
           </div>
       </div>
     </div>
   </div>
 
-  
+  <!-- Modal-Recuperar tipo -->
+  <div class="modal fade" id="modal-RecuperarEquipos" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header" id="modal-registro-header">
+          <h5 class="modal-title" id="modal-titulo2">Activar Tipos</h5>
+        </div>
+        <div class="modal-body">
+          <!-- Multi Columns Form -->
+          <!-- Horizontal Form -->
+          <form id="form-tipoequiposR">
+            <div class="row mb-3">
+                <label for="buscador" class="col-sm-2 col-form-label">Buscar:</label>
+                  <div class="col-sm-6">
+                    <input type="search" class="form-control" id="buscartipoequipo" placeholder="nombre " maxlength="50"> 
+                  </div>    
+            </div>
+          
+            <div class="row mb-3">
+                <label for="buscador" class="col-sm-2 col-form-label">Item:</label>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" id="idtipoequipo" readonly >
+                </div>
+            </div>
+            <div class="row mb-3">
+              <label for="nombres" class="col-sm-2 col-form-label">Tipo: </label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="tipoE" placeholder="" maxlength="20" readonly>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" id="activartipo">Activar</button>
+              <button type="reset" class="btn btn-secondary">Cancelar</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+            
+          </form><!-- End Horizontal Form -->
+        </div>
+        
+      </div>
+    </div>
+  </div>
 
 
-  <!-- CDN sweetAlert2 -->
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- sweetalert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- AJAX = JavaScript asincrónico-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
   <!-- datatable-->
+  <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+
+  <!-- opcional-->
   <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
   <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
   <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
-  <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
 
-  <!-- select2 -->
-  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="../js/funcionAlertSweet.js"></script>
 
   <script>
   $(document).ready(function () {
@@ -168,6 +204,7 @@
               success: function (result) {
                 $("#form-Tequipos")[0].reset();
                 mostrartiposE();
+                $("#modal-Tequipos").modal('hide');
                 let resultado = JSON.parse(result);
                 if(resultado.status === false){
                   mostrarSweetAlert("Este tipo ya esta registrado!","warning");
@@ -177,6 +214,63 @@
           }
         }
       })
+    }
+
+    function buscartiposE(){
+      $.ajax({
+        url: '../controllers/tipose.controller.php',
+        type: 'GET',
+        dataType : 'JSON',
+        data: {
+          'op' : 'buscar_tiposE',
+          'tipoequipo' : $("#buscartipoequipo").val()
+        },
+        success: function(result){
+          console.log(result);
+          if(result.length > 0){
+            const tipoequipos = result[0];
+            
+            $("#idtipoequipo").val(tipoequipos.idtipoequipo);
+            $("#tipoE").val(tipoequipos.tipoequipo);
+
+          }else{
+            mostrarSweetAlert("No se encontró el dato requerido, vuelva intentarlo","warning");
+            $("#form-tipoequiposR")[0].reset();
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error("Error en la solicitud AJAX:", error);
+        }
+      });
+    }
+
+    function activar_tipo(){
+      Swal.fire({
+        title: '¿Está seguro de activar el registro?',
+        text: "Esta acción no se puede deshacer.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Activar',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            url: '../controllers/tipose.controller.php',
+            type: 'GET',
+            data: {
+              'op': 'activar_tiposE',
+              'idtipoequipo': $("#idtipoequipo").val()
+            },
+            success: function () {
+              $("#form-tipoequiposR")[0].reset();
+              mostrartiposE();
+              $("#modal-RecuperarEquipos").modal('hide');
+            }
+          });
+        }
+      });
     }
 
     function eliminartiposE(id) {
@@ -206,7 +300,7 @@
       });
     }
 
-    function mostrardatos(id) {
+    function mostrardatostipos(id) {
       $("#form-Tequipos")[0].reset();
 
       $.ajax({
@@ -222,26 +316,26 @@
         }
       });
 
-      $("#modal-titulo").html("Actualizar tipo");
-      $("#modal-titulo").addClass("text-black");
-      $("#modal-registro-header").removeClass("bg-success-subtle");
-      $("#modal-registro-header").addClass("bg-warning-subtle");
-      $("#guardar").addClass("btn btn-warning");
-      $("#guardar").html("Actualizar");
+      $("#modal-titulo1").html("Actualizar tipo");
+      $("#modal-titulo1").addClass("text-black");
+      $("#modal-registro-header1").removeClass("bg-success-subtle");
+      $("#modal-registro-header1").addClass("bg-warning-subtle");
+      $("#guardartipo").addClass("btn btn-warning");
+      $("#guardartipo").html("Actualizar");
 
       datosNuevos = false;
       $("#modal-Tequipos").modal("show")
     }
 
-    function abrirmodalregistro() {
+    function abrirmodalregistrotipos() {
 
-      $("#modal-titulo").html("Registro de tipo");
-      $("#modal-titulo").addClass("text-black");
-      $("#modal-registro-header").removeClass("bg-warning-subtle");
-      $("#modal-registro-header").addClass("bg-success-subtle");
+      $("#modal-titulo1").html("Nuevo Tipo");
+      $("#modal-titulo1").addClass("text-black");
+      $("#modal-registro-header1").removeClass("bg-warning-subtle");
+      $("#modal-registro-header1").addClass("bg-success-subtle");
       $("#guardar").html("Guardar");
-      $("#guardar").removeClass("btn btn-warning");
-      $("#guardar").addClass("btn btn-success");
+      $("#guardartipo").removeClass("btn btn-warning");
+      $("#guardartipo").addClass("btn btn-success");
 
       $("#form-Tequipos")[0].reset();
       datosNuevos = true;
@@ -254,18 +348,22 @@
 
     $("#tabla-Tequipos tbody").on("click", ".editar", function () {
       idtipoequipo = $(this).data("idtipoequipo");
-      mostrardatos(idtipoequipo);
+      mostrardatostipos(idtipoequipo);
     });
 
-    $("#abrir-modal-registro-Tequipos").click(abrirmodalregistro);
+    $("#buscartipoequipo").keypress(function(event){
+      if(event.keyCode === 13) {
+        buscartiposE();
+      }
+    });
 
-    $("#guardar").click(registrartiposE);
+    $("#abrir-modal-registro-Tequipos").click(abrirmodalregistrotipos);
+
+    $("#guardartipo").click(registrartiposE);
+    $("#activartipo").click(activar_tipo);
     mostrartiposE();
   })
 
   </script>
 
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
-
-<?php require_once '../principal/footer.php'?>
+  <?php require_once '../principal/footer.php' ?>

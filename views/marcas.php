@@ -1,58 +1,47 @@
 <?php require_once '../principal/cabezera.php' ?>
-  <!-- BOOTSTRAP -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
   <!-- DataTable -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-  <link href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+  <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 
-  <main id="main" class="main">
+  <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css" rel="stylesheet">
 
-    <div class="pagetitle">
-      <h1>Equipos</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.php">Inicio</a></li>
-          <li class="breadcrumb-item"><a href="marcas.php">Marcas</a></li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
-    <section class="section">
-      <div class="row">
-        
 
-        <div class="col-lg-8">
-          <button type="button" id="abrir-modal-registro-marca" class="btn btn-success btn-md mb-3" data-bs-toggle="modal" data-bs-target="#modal-marca">
+
+  <div class="row">
+    
+    <div class="col-lg-8">
+      
+      
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Lista de Marcas</h5>
+          
+          <button type="button" id="abrir-modal-registro-marca" class="btn btn-success btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#modal-marca">
             <i class="bi bi-plus-circle"></i> Agregar
           </button>
-          
+          <!-- Multi Columns Form -->
+          <form class="row g-3" id="">
+            <table id="tabla-marcas" class="table table-hover" style="width:100%">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Marca</th>
+                  <th>Operación</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+              </tbody>
+            </table>
+          </form><!-- End Multi Columns Form -->
 
-        <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Lista de Marcas</h5>
-
-              <!-- Multi Columns Form -->
-              <form class="row g-3" id="">
-                <table id="tabla-marcas" class="table table-striped nowrap" style="width:100%">
-                  <thead>
-                    <tr>
-                      <th>Item</th>
-                      <th>Marca</th>
-                      <th>Operación</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                     
-                  </tbody>
-                </table>
-              </form><!-- End Multi Columns Form -->
-
-            </div>
         </div>
-
+      </div>
     </div>
+  </div>
 
-  </main><!-- End #main -->
+
 
 
 
@@ -72,7 +61,7 @@
             </form>    
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-success" id="guardar">Guardar</button>
+            <button type="button" class="btn btn-success" id="guardarmarca">Guardar</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
           </div>
       </div>
@@ -82,21 +71,22 @@
   
 
 
-  <!-- CDN sweetAlert2 -->
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!-- AJAX = JavaScript asincrónico-->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<!-- sweetalert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- AJAX = JavaScript asincrónico-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
-  <!-- datatable-->
-  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-  <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
-  <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+<!-- datatable-->
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
 
-<!-- select2 -->
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-  <script src="../js/funcionAlertSweet.js"></script>
+<!-- opcional-->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+
+<script src="../js/funcionAlertSweet.js"></script>
+
   <script>
   $(document).ready(function () {
     let datosNuevos = true;
@@ -150,7 +140,7 @@
           if (marca === '') {
             mostrarSweetAlert("Por favor, complete los campos", "warning");
           } else {
-            mostrarSweetAlert("Operación exitosa", "success");
+            toastFinalizar("Operación exitosa", "success");
             $.ajax({
               url: '../controllers/marcas.controller.php',
               type: 'GET',
@@ -217,22 +207,22 @@
       $("#modal-titulo").addClass("text-black");
       $("#modal-registro-header").removeClass("bg-success-subtle");
       $("#modal-registro-header").addClass("bg-warning-subtle");
-      $("#guardar").addClass("btn btn-warning");
-      $("#guardar").html("Actualizar");
+      $("#guardarmarca").addClass("btn btn-warning");
+      $("#guardarmarca").html("Actualizar");
 
       datosNuevos = false;
       $("#modal-marca").modal("show")
     }
 
-    function abrirmodalregistro() {
+    function abrirmodalregistromarcas() {
 
-      $("#modal-titulo").html("Registro de marca");
+      $("#modal-titulo").html("Nueva Marca");
       $("#modal-titulo").addClass("text-black");
       $("#modal-registro-header").removeClass("bg-warning-subtle");
       $("#modal-registro-header").addClass("bg-success-subtle");
-      $("#guardar").html("Guardar");
-      $("#guardar").removeClass("btn btn-warning");
-      $("#guardar").addClass("btn btn-success");
+      $("#guardarmarca").html("Guardar");
+      $("#guardarmarca").removeClass("btn btn-warning");
+      $("#guardarmarca").addClass("btn btn-success");
 
       $("#form-marcas")[0].reset();
       datosNuevos = true;
@@ -248,14 +238,13 @@
       mostrardatos(idmarca);
     });
 
-    $("#abrir-modal-registro-marca").click(abrirmodalregistro);
+    $("#abrir-modal-registro-marca").click(abrirmodalregistromarcas);
 
-    $("#guardar").click(registrarmarcas);
+    $("#guardarmarca").click(registrarmarcas);
     mostrarmarcas();
   })
 
   </script>
 
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+  <?php require_once '../principal/footer.php'; ?>
 

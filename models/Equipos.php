@@ -27,12 +27,13 @@ require_once 'Conexion.php';
         "message" => ""
       ];
       try{
-        $consulta = $this->conexion->prepare("CALL spu_equipo_registrar(?,?,?)");
+        $consulta = $this->conexion->prepare("CALL spu_equipo_registrar(?,?,?,?)");
         $respuesta["status"] = $consulta->execute(array(
             
           $datos["idtipoequipo"],
           $datos["idmarca"],
           $datos["descripcion"],
+          $datos["numSerie"]
         ));
       }
       catch(Exception $e){

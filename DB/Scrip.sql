@@ -308,22 +308,44 @@ END$$
 CALL spu_servicios_update(6, 'Reparacion', 'Reparacion de Laptop', 30)
 
 
+-- SPU BUSCAR PERSONAS --
+DELIMITER $$
+CREATE PROCEDURE spu_buscar_persona(IN _dni CHAR(8))
+BEGIN
+SELECT
+	idpersona,
+	nombres,
+	apellidos
+	
+FROM personas
+WHERE dni = _dni;
+END $$
+CALL spu_buscar_persona('97643128');
+
+
+
 -- SPU USUARIO --
-DELIMITER$$ 
+DELIMITER$$
 CREATE PROCEDURE spu_user_login(IN _usuario VARCHAR(30))
-BEGIN 
-
-	SELECT 	usuarios.idusuario, 
-		personas.apellidos, personas.nombres,
-		usuarios.usuario, usuarios.claveacceso
-
-	FROM usuarios
-	INNER JOIN personas ON personas.idpersona = usuarios.idpersona
-	WHERE usuario = _usuario;
+BEGIN
+  SELECT
+    usuarios.idusuario,
+    personas.apellidos,
+    personas.nombres,
+    usuarios.usuario,
+    usuarios.claveacceso,
+    personas.correo,
+    personas.dni,
+    personas.direccion,
+    personas.telefono,
+    personas.idpersona
+  FROM usuarios
+  INNER JOIN personas ON personas.idpersona = usuarios.idpersona
+  WHERE usuario = _usuario;
 END$$
 
 
-
+-- REGISTRAR NUEVO USUARIO --
 DELIMITER $$
 CREATE PROCEDURE spu_usuario_registrar 
 (
@@ -331,7 +353,7 @@ CREATE PROCEDURE spu_usuario_registrar
 IN _nombres 	VARCHAR(30),
 IN _apellidos 	VARCHAR(30),
 IN _dni		CHAR(8),
-IN _correo 		VARCHAR(40),
+IN _correo 	VARCHAR(40),
 IN _direccion	VARCHAR(50),
 IN _telefono	CHAR(9),
 IN _usuario VARCHAR(40),
@@ -355,44 +377,68 @@ END$$
 CALL spu_usuario_registrar ('Antonio','Torres Feijo','79461340','antonio@gmail.com','Chincha','987654321','anton10','123456','E');
 
 
+-- REGGISTRAR USUARIO POR IDPERSONA
+DELIMITER $$
+CREATE PROCEDURE spu_register_userid
+(
+	IN _idpersona INT,
+	IN _usuario	VARCHAR(100),
+	IN _claveacceso	VARCHAR(100),
+	IN _nivelacceso CHAR(1)
+)
+BEGIN
+INSERT INTO usuarios (idpersona, usuario, claveacceso, nivelacceso) VALUES
+	(_idpersona, _usuario, _claveacceso, _nivelacceso);
+END $$
+
+
 -- SPU  REGISTRAR EQUIPOS --
 
+-- SPU  REGISTRAR EQUIPOS --
 DELIMITER $$
 CREATE PROCEDURE spu_equipo_registrar
 (
 	IN _idtipoequipo	INT,
 	IN _idmarca		INT,
-	IN _descripcion		VARCHAR(100)
+	IN _descripcion		VARCHAR(100),
+	IN _numSerie 		VARCHAR(50)
 )
 BEGIN
-	INSERT INTO equipos (idtipoequipo, idmarca, descripcion)
-		VALUES (_idtipoequipo, _idmarca, _descripcion);
+	INSERT INTO equipos (idtipoequipo, idmarca, descripcion, numSerie)
+		VALUES (_idtipoequipo, _idmarca, _descripcion, _numSerie);
 END$$
 	
-CALL spu_equipo_registrar('1', '2', '8 canales full HD');
+CALL spu_equipo_registrar('1', '2', '8 canales full HD','5689SAD566ASD9AS63df');
+
+
 
 -- ACTUALIZAR EQUIPOS
-
 DELIMITER $$
 CREATE PROCEDURE spu_equipos_actualizar
 (
 	IN _idequipo	INT,
 	IN _idtipoequipo INT,
 	IN _idmarca	INT,
-	IN _descripción	VARCHAR(100)
+	IN _descripción	VARCHAR(100),
+	IN _numSerie  VARCHAR(50)
 )
 BEGIN 
 	UPDATE equipos SET
 		idtipoequipo = _idtipoequipo,
-		idmarca  = _idmarca
+		idmarca  = _idmarca,
+		descripcion = _descripcion,
+		numSerie = _numSerie
 	WHERE idequipo = _idequipo;
 END $$
-CALL spu_equipos_actualizar(2,1,6,'Teclado completo')
-				-- RECUPERAR EQUIPOS --
+CALL spu_equipos_actualizar(2,1,6,'Teclado completo','asd265968563Ddsa6')
+
+
+
+-- LISTAR EQUIPOS
 DELIMITER $$ 
 CREATE PROCEDURE spu_equipos_listar()
 BEGIN
-	SELECT idequipo , tipoequipo, marca ,descripcion
+	SELECT idequipo , tipoequipo, marca ,descripcion,numSerie
 	FROM  equipos
 	INNER JOIN tipoequipo ON tipoequipo.`idtipoequipo` = equipos.`idtipoequipo`
 	INNER JOIN marcas ON marcas.`idmarca` = equipos.`idmarca`
@@ -401,6 +447,7 @@ BEGIN
 END $$
 
 CALL spu_equipos_listar()
+
 
 
 
@@ -416,6 +463,8 @@ END $$
 
 CALL spu_tipoequip_recuperar()
 
+
+
 -- REGISTRAR TIPOS E
 DELIMITER $$
 CREATE PROCEDURE spu_tipoequipo_registrar
@@ -426,6 +475,7 @@ BEGIN
 INSERT INTO tipoequipo (tipoequipo)VALUES
 	(_tipoequipo);
 END $$
+
 
 -- ACTUALIZAR TIPOS E
 DELIMITER $$
@@ -442,6 +492,8 @@ END $$
 
 CALL spu_tipoequip_actualizar(1,'Teclado Génerico');
 
+
+
 -- OBTENER TIPOS E
 DELIMITER $$
 CREATE PROCEDURE spu_tipoequip_obtener
@@ -452,8 +504,8 @@ BEGIN
 	SELECT * FROM tipoequipo WHERE idtipoequipo = _idtipoequipo;
 END$$
 
--- ELIMINAR TIPO E
 
+-- ELIMINAR TIPO E
 DELIMITER $$
 CREATE PROCEDURE spu_tipoequip_eliminar
 (
@@ -463,6 +515,33 @@ BEGIN
 	UPDATE tipoequipo SET inactive_at = NOW()
 	WHERE idtipoequipo = _idtipoequipo;
 END $$
+
+
+-- SPU BUSCAR TIPO E
+DELIMITER $$
+CREATE PROCEDURE spu_buscar_tipoe(IN _tipoequipo VARCHAR(30))
+BEGIN
+SELECT
+	idtipoequipo,
+	tipoequipo
+FROM tipoequipo
+WHERE tipoequipo = _tipoequipo;
+END $$
+CALL spu_buscar_tipoe('pantalla lcd');
+
+
+-- ACTIVAR TIPO E--
+DELIMITER $$
+CREATE PROCEDURE spu_activar_tipo
+(
+	IN _idtipoequipo INT
+)
+BEGIN
+	UPDATE tipoequipo SET
+		inactive_at = NULL
+	WHERE idtipoequipo = _idtipoequipo;
+END $$
+CALL spu_activar_tipo(5)
 
 
 -- RECUPERAR MARCAS
@@ -476,6 +555,7 @@ END $$
 
 CALL spu_marcas_recuperar();
 
+
 -- REGISTRAR MARCA
 DELIMITER $$
 CREATE PROCEDURE spu_marca_registrar
@@ -487,9 +567,6 @@ BEGIN
 		(_marca);
 END $$
 
-
-ALTER TABLE marcas AUTO_INCREMENT = 1
-CALL spu_marca_registrar('Dahua')
 
 -- ACTUALIZAR MARCA 
 DELIMITER $$
@@ -503,6 +580,7 @@ BEGIN
 		marca = _marca
 	WHERE idmarca = _idmarca;
 END $$
+
 
 -- OBTENER MARCA
 DELIMITER $$
@@ -527,51 +605,7 @@ BEGIN
 	WHERE idmarca = _idmarca;
 END $$
 
-
--- LISTAR EQUIPOS
-DELIMITER $$
-CREATE PROCEDURE spu_equipo_listar()
-BEGIN
-SELECT idequipo,
-	tipoequipo,
-	marca,
-	descripcion
-FROM equipos
-	INNER JOIN tipoequipo ON tipoequipo.idtipoequipo = equipos.idtipoequipo
-	INNER JOIN marcas ON marcas.idmarca = equipos.idmarca
-	ORDER BY idequipo DESC;
-END $$
-
-CALL spu_equipo_listar()
-
-
-DELIMITER $$
-CREATE PROCEDURE ListarDescEquipo()
-BEGIN
-    SELECT
-        de.iddescEquipo AS idDesc_Equipo,
-        s.nombreservicio AS nombreServicio,
-        te.tipoequipo AS tipoequipo,
-        m.marca AS marca,
-        e.descripcion AS descripcion,
-        de.numSerie AS numSerie,
-        de.precio AS precio
-    FROM
-        desc_equipo de
-    INNER JOIN
-        equipos e ON de.idequipo = e.idequipo
-    INNER JOIN
-        tipoequipo te ON e.idtipoequipo = te.idtipoequipo
-    INNER JOIN
-        marcas m ON e.idmarca = m.idmarca
-    INNER JOIN
-        desc_servicio ds ON de.iddescServicio = ds.iddescServicio
-    INNER JOIN
-        servicios s ON ds.idservicio = s.idservicio;
-END $$
-
-CALL ListarDescEquipo();
-
+-- recuperar equipos --
 DELIMITER $$
 CREATE PROCEDURE spu_equipos_recuperar()
 BEGIN
@@ -582,6 +616,9 @@ BEGIN
 END $$
 
 CALL spu_equipos_recuperar()
+
+
+
 
 
 -- PROCEDIMINETOS CONTRATOS >>>>>>>>>>>>>>>

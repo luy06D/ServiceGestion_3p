@@ -318,6 +318,20 @@ $idusuario = $_SESSION['segurity']['idusuario'];
   </li>
 
   <li class="nav-item">
+    <a class="nav-link " href="../views/equipostabs.php">
+      <i class="bi bi-wrench"></i>
+      <span>Equipos</span>
+    </a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link " href="../views/usuariostabs.php">
+      <i class="bi bi-people"></i>
+      <span>Usuarios</span>
+    </a>
+  </li>
+
+  <!-- <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#components-nav-equipos" data-bs-toggle="collapse" href="#">
       <i class="bi bi-wrench"></i></i><span>Equipos</span><i class="bi bi-chevron-down ms-auto"></i>
     </a>
@@ -341,9 +355,9 @@ $idusuario = $_SESSION['segurity']['idusuario'];
       </li>
       
     </ul>
-  </li><!-- End Components Nav -->
+  </li> -->
 
-  <li class="nav-item">
+  <!-- <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
       <i class="bi bi-people"></i></i><span>Usuarios</span><i class="bi bi-chevron-down ms-auto"></i>
     </a>
@@ -359,7 +373,7 @@ $idusuario = $_SESSION['segurity']['idusuario'];
         </a>
       </li>
     </ul>
-  </li><!-- End Forms Nav -->
+  </li> -->
 
   <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">

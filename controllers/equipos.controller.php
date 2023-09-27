@@ -16,7 +16,8 @@ if(isset($_GET['op'])){
           <td>{$registro['idequipo']}</td>
           <td>{$registro['tipoequipo']}</td>
           <td>{$registro['marca']}</td>
-          <td>{$registro['descripcion']}</td>                    
+          <td>{$registro['descripcion']}</td> 
+          <td>{$registro['numSerie']}</td>                   
           
         </tr>
         ";
@@ -35,22 +36,17 @@ if(isset($_POST['op'])){
     
   $equipos = new Equipos();
 
-  // if($_POST['op'] == 'listarequipos'){
-  //   $data = $equipos->equipos_listar();
-  //   if($data){
-  //     echo json_encode($data);
-  //   }
-  // }
-
   if($_POST['op'] == 'registrar_equipos'){
 
     $data = [
       "idtipoequipo"  => $_POST['idtipoequipo'],
       "idmarca"       => $_POST['idmarca'],
-      "descripcion" => $_POST['descripcion']    
+      "descripcion"   => $_POST['descripcion'],
+      "numSerie"      => $_POST['numSerie']    
     ];
 
-    $equipos->equipo_registrar($data);
+    $response = $equipos->equipo_registrar($data);
+    echo json_encode($response);
   }
   
 

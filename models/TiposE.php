@@ -81,6 +81,38 @@ class TiposE extends Conexion{
         }
         return $respuesta;
     }
+
+    public function tipos_buscar($tipoequipo = ''){
+        $respuesta = [
+            "status"    => false,
+            "message"   => ""
+        ];
+        try{
+            $consulta = $this->conexion->prepare("CALL spu_buscar_tipoe(?)");
+            $respuesta["status"] = $consulta->execute(array($tipoequipo));
+
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }catch(Exception $e){
+            $respuesta["message"] = "No se ha podido completar la operación Código error: " .$e->getCode();
+        }
+        return $respuesta;
+    }
+
+    public function tipos_activar($idtipoequipo = 0){
+        $respuesta = [
+            "status"    => false,
+            "message"   => ""
+        ];
+        try{
+            $consulta = $this->conexion->prepare("CALL spu_activar_tipo(?)");
+            $respuesta["status"] = $consulta->execute(array($idtipoequipo));
+        }catch(Exception $e){
+            $respuesta["message"] = "No se ha podido completar la operación Código error: " .$e->getCode();
+        }
+        return $respuesta;
+    }
+
+    
 }
 
 ?>

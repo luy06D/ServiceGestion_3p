@@ -15,7 +15,7 @@ if(isset($_GET['op'])){
                         <td>{$registro['idtipoequipo']}</td>
                         <td>{$registro['tipoequipo']}</td>
                         <td>
-                            <a href='#' class='editar btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#modal-Tequipos' data-idtipoequipo ='{$registro['idtipoequipo']}'><i class='bi bi-pencil-square'></i></a>
+                            <a href='#' class='editar btn btn-warning btn-sm ' data-bs-toggle='modal' data-bs-target='#modal-Tequipos' data-idtipoequipo ='{$registro['idtipoequipo']}'><i class='bi bi-pencil-square'></i></a>
                             <a href='#' class='eliminar btn btn-danger btn-sm' data-idtipoequipo='{$registro['idtipoequipo']}'><i class='bi bi-trash'></i></a> 
                         </td>
                     </tr>
@@ -50,6 +50,15 @@ if(isset($_GET['op'])){
 
     if($_GET['op'] == 'eliminar_tiposE'){
         $tipose->tipos_eliminar($_GET['idtipoequipo']);
+    }
+
+    if($_GET['op'] == 'buscar_tiposE'){
+        $data = $tipose->tipos_buscar($_GET['tipoequipo']);
+        echo json_encode($data);
+    }
+
+    if($_GET['op'] == 'activar_tiposE'){
+        $tipose->tipos_activar($_GET['idtipoequipo']);
     }
 }
 

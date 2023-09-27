@@ -12,7 +12,7 @@ if(isset($_GET['operation'])){
     if($_GET['operation'] == 'destroy'){
         session_destroy();
         session_unset();
-        header('Location:../login.php');
+        header('Location:../index.php');
     }
 
 
