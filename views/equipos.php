@@ -8,7 +8,7 @@
 
 
 
-    <section class="section">
+    <section class="section mt-3">
       <div class="row"> <!-- row justify-content-center align-items-center --> 
         <div class="col-lg-6">
           <div class="card"> <!-- card mx-auto -->
@@ -191,21 +191,13 @@
           datosEnviar['op'] = 'actualizar_equipos';
           datosEnviar['idequipo'] = idequipo;
         }
-
-        Swal.fire({
-          title: '¿Está seguro de realizar la operación?',
-          icon: 'question',
-          showCancelButton: true,
-          confirmButtonText: 'Sí',
-          cancelButtonText: 'Cancelar',
-          confirmButtonColor: '#3F974F',
-          cancelButtonColor: '#3085d6',
-        }).then((result) => {
+        mostrarPregunta('Equipos','¿Está seguro de realizar la operación?')
+       .then((result) => {
           if (result.isConfirmed){
             if(tipoequip === '' || marcaid ==='' || descripcion==='' || numSerie === ''){
-              mostrarSweetAlert("Por favor, complete los campos","warning");
+              completeCampos();
             }else{
-                mostrarSweetAlert("Operación exitosa","success");
+              toastFinalizar("Operación exitosa");
                 $.ajax({
                   url: '../controllers/equipos.controller.php',
                   type: 'POST',

@@ -46,23 +46,30 @@ $idusuario = $_SESSION['segurity']['idusuario'];
 
 <body>
 
+  <!-- <style>
+    img{
+      width: 80px;
+      height: 80px;
+    }
+  </style> -->
+
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
-        <img src="" alt="">
-        <span class="d-none d-lg-block">3p tecnologia</span>
+        <!-- <img src="../img/3plogo.png" alt="logo 3p"> -->
+        <span class="d-none d-lg-block"><span style="color: red;">3<span style="color: #0193F2 ;">P</span><span> tecnología</span></span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-    <div class="search-bar">
+    <!-- <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
         <input type="text" name="query" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
       </form>
-    </div><!-- End Search Bar -->
+    </div> -->
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -281,7 +288,7 @@ $idusuario = $_SESSION['segurity']['idusuario'];
 <ul class="sidebar-nav" id="sidebar-nav">
 
   <li class="nav-item">
-    <a class="nav-link " href="../views/index.php">
+    <a class="nav-link collapsed" href="../views/index.php">
       <i class="bi bi-grid"></i>
       <span>Inicio</span>
     </a>
@@ -296,7 +303,7 @@ $idusuario = $_SESSION['segurity']['idusuario'];
   </li>End Dashboard Nav -->
 
   <li class="nav-item">
-    <a class="nav-link " href="../views/garantia.php">
+    <a class="nav-link collapsed" href="../views/garantia.php">
       <i class="bi bi-journal-text"></i>
       <span>Garantía</span>
     </a>
@@ -304,28 +311,28 @@ $idusuario = $_SESSION['segurity']['idusuario'];
 
   </li>
   <li class="nav-item">
-    <a class="nav-link " href="../views/contratos.php">
+    <a class="nav-link collapsed" href="../views/contratos.php">
     <i class="bi bi-file-earmark-text"></i>
       <span>Contratos</span>
     </a>
   </li>
 
   <li class="nav-item">
-    <a class="nav-link " href="../views/servicios.php">
+    <a class="nav-link collapsed" href="../views/servicios.php">
     <i class="bi bi-person-lines-fill"></i>
       <span>Servicios</span>
     </a>
   </li>
 
   <li class="nav-item">
-    <a class="nav-link " href="../views/equipostabs.php">
+    <a class="nav-link collapsed" href="../views/equipostabs.php">
       <i class="bi bi-wrench"></i>
       <span>Equipos</span>
     </a>
   </li>
 
   <li class="nav-item">
-    <a class="nav-link " href="../views/usuariostabs.php">
+    <a class="nav-link collapsed" href="../views/usuariostabs.php">
       <i class="bi bi-people"></i>
       <span>Usuarios</span>
     </a>
@@ -375,7 +382,7 @@ $idusuario = $_SESSION['segurity']['idusuario'];
     </ul>
   </li> -->
 
-  <li class="nav-item">
+  <!-- <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
       <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
     </a>
@@ -391,7 +398,7 @@ $idusuario = $_SESSION['segurity']['idusuario'];
         </a>
       </li>
     </ul>
-  </li><!-- End Tables Nav -->
+  </li>
 
   <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
@@ -414,7 +421,7 @@ $idusuario = $_SESSION['segurity']['idusuario'];
         </a>
       </li>
     </ul>
-  </li><!-- End Charts Nav -->
+  </li>
 
   <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
@@ -437,7 +444,7 @@ $idusuario = $_SESSION['segurity']['idusuario'];
         </a>
       </li>
     </ul>
-  </li><!-- End Icons Nav -->
+  </li> -->
 
   <li class="nav-heading">Componentes</li>
 

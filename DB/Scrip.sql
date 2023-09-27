@@ -1,8 +1,8 @@
 CREATE DATABASE DB_3P;
 USE DB_3P;
 
-
-
+SELECT * FROM personas
+SELECT * FROM clientes
 CREATE TABLE personas
 (
 idpersona 		INT AUTO_INCREMENT PRIMARY KEY,
@@ -138,7 +138,7 @@ CONSTRAINT fk6	FOREIGN KEY (idcontrato) REFERENCES contratos(idcontrato),
 CONSTRAINT fk7	FOREIGN KEY (idservicio) REFERENCES servicios(idservicio)
 )ENGINE=INNODB;
 
-
+ALTER TABLE desc_servicio MODIFY estadoservicio CHAR (1) NOT NULL DEFAULT 'N'
 INSERT INTO desc_servicio(idcontrato, idservicio, precioservicio, cantidad, estadoservicio)VALUES
 (1, 1, 6000, 2, 'P'),
 (2,2,8000,3,'N');

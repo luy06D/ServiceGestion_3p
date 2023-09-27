@@ -8,11 +8,11 @@
 
 
 
-    <section class="section">
+    <section class="section mt-3">
       <div class="row">
         
 
-        <div class="col-lg-8">
+        <div class="col-lg-6">
           
           <div class="card">
             <div class="card-body">
@@ -160,15 +160,6 @@
       })
     }
 
-    function mostrarSweetAlert(title, icon, text, timer = 1500) {
-      Swal.fire({
-        title: title,
-        icon: icon,
-        text: text,
-        showConfirmButton: false,
-        timer: timer
-      });
-    }
 
     function registrartiposE() {
       const tipoEquip = $("#tipoequipo").val().trim();
@@ -183,18 +174,11 @@
         datosEnviar['idtipoequipo'] = idtipoequipo;
       }
 
-      Swal.fire({
-        title: '¿Está seguro de realizar la operación?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'Sí',
-        cancelButtonText: 'Cancelar',
-        confirmButtonColor: '#3F974F',
-        cancelButtonColor: '#3085d6',
-      }).then((result) => {
+      mostrarPregunta('Equipos','¿Está seguro de realizar la operación?')
+      .then((result) => {
         if (result.isConfirmed) {
           if (tipoEquip === '') {
-            mostrarSweetAlert("Por favor, complete los campos", "warning");
+            toastFinalizar("Operación exitosa");
           } else {
             mostrarSweetAlert("Operación exitosa", "success");
             $.ajax({
@@ -207,7 +191,7 @@
                 $("#modal-Tequipos").modal('hide');
                 let resultado = JSON.parse(result);
                 if(resultado.status === false){
-                  mostrarSweetAlert("Este tipo ya esta registrado!","warning");
+                  errorRegistrado("Está marca ya fue registrado!");
                 }
               }
             })
@@ -234,7 +218,7 @@
             $("#tipoE").val(tipoequipos.tipoequipo);
 
           }else{
-            mostrarSweetAlert("No se encontró el dato requerido, vuelva intentarlo","warning");
+            errorRegistrado("No se encontró el dato requerido, vuelva intentarlo");
             $("#form-tipoequiposR")[0].reset();
           }
         },
@@ -245,16 +229,9 @@
     }
 
     function activar_tipo(){
-      Swal.fire({
-        title: '¿Está seguro de activar el registro?',
-        text: "Esta acción no se puede deshacer.",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Activar',
-        cancelButtonText: 'Cancelar',
-      }).then((result) => {
+
+      mostrarPreguntaActivar()
+      .then((result) => {
         if (result.isConfirmed) {
           $.ajax({
             url: '../controllers/tipose.controller.php',
@@ -274,16 +251,8 @@
     }
 
     function eliminartiposE(id) {
-      Swal.fire({
-        title: '¿Está seguro de eliminar el registro?',
-        text: "Esta acción no se puede deshacer.",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar',
-      }).then((result) => {
+      mostrarPreguntaEliminar()
+      .then((result) => {
         if (result.isConfirmed) {
           $.ajax({
             url: '../controllers/tipose.controller.php',
