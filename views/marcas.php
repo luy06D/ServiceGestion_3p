@@ -8,9 +8,9 @@
 
 
 
-  <div class="row">
+  <div class="row mt-3">
     
-    <div class="col-lg-8">
+    <div class="col-lg-6">
       
       
       <div class="card">
@@ -126,21 +126,13 @@
         datosEnviar['op'] = 'actualizar_marcas';
         datosEnviar['idmarca'] = idmarca;
       }
-
-      Swal.fire({
-        title: '¿Está seguro de realizar la operación?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'Sí',
-        cancelButtonText: 'Cancelar',
-        confirmButtonColor: '#3F974F',
-        cancelButtonColor: '#3085d6',
-      }).then((result) => {
+      mostrarPregunta('Equipos','¿Está seguro de realizar la operación?')
+      .then((result) => {
         if (result.isConfirmed) {
           if (marca === '') {
-            mostrarSweetAlert("Por favor, complete los campos", "warning");
+            completeCampos();
           } else {
-            toastFinalizar("Operación exitosa", "success");
+            toastFinalizar("Operación exitosa");
             $.ajax({
               url: '../controllers/marcas.controller.php',
               type: 'GET',
@@ -151,7 +143,7 @@
                 mostrarmarcas();
                 let resultado = JSON.parse(result);
                 if(resultado.status === false){
-                  mostrarSweetAlert("Esta marca ya esta registrada!","warning");
+                  errorRegistrado("Está marca ya fue registrado!");
                 }
               }
             })
@@ -161,16 +153,9 @@
     }
 
     function eliminarmarca(id) {
-      Swal.fire({
-        title: '¿Está seguro de eliminar el registro?',
-        text: "Esta acción no se puede deshacer.",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar',
-      }).then((result) => {
+
+      mostrarPreguntaEliminar()
+      .then((result) => {
         if (result.isConfirmed) {
           $.ajax({
             url: '../controllers/marcas.controller.php',

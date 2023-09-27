@@ -73,7 +73,7 @@
                       <div class="mb-3 col-lg-6">
                         <div class="input-group mb-3">
                           <span class="input-group-text" id="span-dni"><i class='bx bx-id-card'></i></span>
-                          <input type="number" class="form-control" placeholder="Número DNI" maxlength="8" id="dni">
+                          <input type="text" class="form-control" placeholder="Número DNI" maxlength="8" id="dni">
                         </div>  
                       </div>
 
@@ -521,6 +521,7 @@
           $("#tabla-contrato tbody").html(result);
           $("#tabla-contrato").DataTable({
             responsive: true,
+            searching: false,
             lengthMenu: [5,10],
             order: [[0, 'desc']],
             language:{
@@ -564,7 +565,8 @@
           $("#table-reporteContrato tbody").html(result);
           $("#table-reporteContrato").DataTable({
             responsive: true,
-            lengthMenu: [5,10],
+            searching: false,
+            lengthMenu: [10,15,20], // Oculta el menú de longitud
             order: [[0, 'desc']],
             language:{
               url: '../js/Spanish.json'
@@ -595,36 +597,17 @@
         'telefono'  : $("#telefono").val()
       };
 
-      Swal.fire({
-         title: '¿Está seguro de realizar la operación?',
-         icon: 'question',
-         showCancelButton: true,
-         confirmButtonText: 'Sí',
-         cancelButtonText: 'Cancelar',
-         confirmButtonColor: '#3F974F',
-         cancelButtonColor: '	#0d6efd'
-
-     }).then((result) => {
+      mostrarPregunta('Contratos','¿Está seguro de realizar la operación?')
+      .then((result) => {
       if(result.isConfirmed){
         if(nombres === '' || apellidos === '' || dni === ''||
            correo === ''|| direccion === '' || telefono === ''){
 
-            Swal.fire({
-               title: "Por favor, complete los campos",
-               icon: "warning",
-               confirmButtonColor: "#E43D2C",
-           });
+            completeCampos();
 
 
            }else{
-            Swal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: 'Operación exitosa',
-              showConfirmButton: false,
-              timer: 1500
-              })
-
+            toastFinalizar("Registrado correctamente");
               $.ajax({
                 url:'../controllers/contratos.controller.php',
                 type: 'POST',
@@ -635,7 +618,7 @@
 
                   $("#modal-registrar").modal('hide');
                   // Recargar la página actual
-                    window.location.reload();
+                    // window.location.reload();
 
                 }
               });
@@ -660,35 +643,17 @@
         'ruc'           : $("#ruc").val()
       };
 
-      Swal.fire({
-        title: '¿Está seguro de realizar la operación?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'Sí',
-        cancelButtonText: 'Cancelar',
-        confirmButtonColor: '#3F974F',
-        cancelButtonColor: '	#0d6efd'
-
-      }).then((result) => {
+      mostrarPregunta('Contratos','¿Está seguro de realizar la operación?')
+      .then((result) => {
       if(result.isConfirmed){
         if(rsocial === '' || ruc === '' ){
 
-            Swal.fire({
-              title: "Por favor, complete los campos",
-              icon: "warning",
-              confirmButtonColor: "#E43D2C",
-          });
-
+            
+          completeCampos();
 
           }else{
-            Swal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: 'Operación exitosa',
-              showConfirmButton: false,
-              timer: 1500
-              })
-
+            
+            toastFinalizar("Registrado correctamente");
               $.ajax({
                 url:'../controllers/contratos.controller.php',
                 type: 'POST',
@@ -699,7 +664,7 @@
 
                   $("#modal-registrar").modal('hide');
                   // Recargar la página actual
-                  window.location.reload();
+                  // window.location.reload();
 
                 }
               });
@@ -746,7 +711,7 @@
             completeCampos();
 
             }else{
-              MsjRegistro();
+              toastFinalizar("Contrato finalizado");
 
                 $.ajax({
                   url:'../controllers/contratos.controller.php',
@@ -797,7 +762,7 @@
     
 
     function cliente_buscar(){
-
+      //cronometrar 
       clearTimeout(searchTimer);
 
       searchTimer = setTimeout(function (){
@@ -859,7 +824,7 @@
 
       })
 
-      }, 500);
+      }, 100);
   
     }
 

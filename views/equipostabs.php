@@ -18,7 +18,7 @@
         <div class="col-lg-12">
 
           <div class="card">
-            <div class="card-body">
+            <div class="card-body mt-3">
               <!-- <h5 class="card-title">Bordered Tabs</h5> -->
 
               <!-- Bordered Tabs -->

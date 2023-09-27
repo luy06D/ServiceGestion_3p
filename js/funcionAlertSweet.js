@@ -39,18 +39,52 @@ function mostrarSweetAlert(title, icon, text, timer = 1500) {
     });
 
     }
-
-    // Mensaje de registro exitoso
-    function MsjRegistro(){
+    
+    // ERROR registrado
+    function errorRegistrado(titulo){
       Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Operación exitosa',
-        showConfirmButton: false,
-        timer: 1500
-        })
+        title: titulo,
+        icon: "warning",
+        confirmButtonColor: "#E43D2C",
+    });
 
     }
+
+    //Mostrar mensaje Eliminar
+    function mostrarPreguntaEliminar() {
+      return Swal.fire({
+        title: '¿Está seguro de eliminar el registro?',
+        text: "Esta acción no se puede deshacer.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+        footer: '3P Tecnologia'
+      }).then((result) => {
+          return result;
+      });
+    }
+
+    //Mostrar mensaje Activar
+
+    function mostrarPreguntaActivar() {
+      return Swal.fire({
+        title: '¿Está seguro de activar el registro?',
+        text: "Esta acción no se puede deshacer.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Activar',
+        cancelButtonText: 'Cancelar',
+        footer: '3P Tecnologia'
+      }).then((result) => {
+          return result;
+      });
+    }
+
 
     // Toast finalizar contrato
     function toastFinalizar(mensaje){
@@ -72,13 +106,4 @@ function mostrarSweetAlert(title, icon, text, timer = 1500) {
       })
     }
 
-
-
-  Swal.fire({
-    title: title,
-    icon: icon,
-    text: text,
-    showConfirmButton: false,
-    timer: timer
-  });
 
