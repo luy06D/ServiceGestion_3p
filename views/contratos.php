@@ -794,6 +794,8 @@
 
     }
 
+    
+
     function cliente_buscar(){
 
       clearTimeout(searchTimer);
@@ -899,6 +901,11 @@
 
 
     });
+
+
+    
+
+
 
     $("#btnFinalizar").click(finalizarContrato);
     $("#btnContrato").click(registrarContrato);

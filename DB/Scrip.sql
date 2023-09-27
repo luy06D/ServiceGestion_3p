@@ -836,7 +836,10 @@ BEGIN
 
 END $$
 
-CALL spu_filtroC_cliente(2);
+CALL spu_filtroC_cliente(1);
+
+
+
 
 
 
@@ -860,6 +863,83 @@ END $$
 -- Habilita el programador de eventos
 SHOW VARIABLES LIKE 'event_scheduler';
 SET GLOBAL event_scheduler = ON;
+
+
+DELIMITER $$
+CREATE PROCEDURE spu_garantia_listar()
+BEGIN
+SELECT  idgarantia, servicios.nombreservicio, CONCAT(personas.apellidos, ' ', personas.nombres) AS Tecnico, fechaAveria, fechaEjecucion, problemadetectado, solucion, estadogarantia, inSitu
+FROM garantia
+INNER JOIN desc_servicio ON desc_servicio.iddescServicio = garantia.iddescServicio
+INNER JOIN servicios ON servicios.idservicio = desc_servicio.idservicio
+INNER JOIN usuarios ON usuarios.idusuario = garantia.idsoporteTecnico
+INNER JOIN personas ON personas.idpersona = usuarios.idusuario
+ORDER BY idgarantia DESC;
+END$$
+
+CALL spu_garantia_listar
+
+SELECT * FROM usuarios
+ALTER TABLE garantia MODIFY estadogarantia CHAR(1) NOT NULL DEFAULT 'N'
+
+DELIMITER $$ 
+CREATE PROCEDURE spu_registrar_garantia
+(
+IN _iddescServicio INT,
+IN _idSoporteTecnico INT,
+IN _fechaAveria	DATE,
+IN _fechaEjecucion DATE,
+IN _problemadetectado VARCHAR(150),
+IN _solucion VARCHAR(150),
+IN _inSitu VARCHAR(50)
+)
+BEGIN 
+
+	INSERT INTO garantia (iddescServicio, idSoporteTecnico, fechaAveria, fechaEjecucion, problemadetectado, solucion, inSitu)VALUES
+	(_iddescServicio, _idSoporteTecnico, _fechaAveria, _fechaEjecucion, _problemadetectado, _solucion, _inSitu);
+END$$
+
+CALL spu_registrar_garantia()
+
+
+
+
+
+DELIMITER $$
+CREATE PROCEDURE spu_clientes_garantia(IN _search VARCHAR(100))
+BEGIN 
+	SELECT
+		CLI.idcliente,
+	    COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) AS clientes
+	FROM clientes CLI
+	LEFT JOIN personas PE ON CLI.idpersona = PE.idpersona
+	LEFT JOIN empresas EM ON CLI.idempresa = EM.idempresa
+	WHERE COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) LIKE CONCAT('%', _search, '%');
+END$$
+
+
+DELIMITER $$
+CREATE PROCEDURE spu_filtroG_cliente(IN _idcliente INT)
+BEGIN 
+
+	SELECT 
+	 COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) AS clientes,
+		SE.nombreservicio, CONCAT(PE.nombres, ' ', PE.apellidos)AS Tecnico,
+		GA.fechaAveria,GA.fechaEjecucion , GA.problemadetectado,  GA.solucion, GA.inSitu
+	FROM garantia GA
+	INNER JOIN desc_servicio DE ON DE.iddescServicio = GA.iddescServicio
+	INNER JOIN servicios SE ON SE.idservicio = DE.idservicio
+	INNER JOIN contratos CO ON CO.idcontrato = DE.idcontrato
+	INNER JOIN clientes CLI ON CLI.idcliente = CO.idcliente
+	LEFT JOIN personas PE ON PE.idpersona = CLI.idpersona
+	LEFT JOIN empresas EM ON EM.idempresa = CLI.idempresa
+	WHERE CLI.idcliente = _idcliente;
+
+END $$
+
+CALL spu_filtroG_cliente(1)
+
+SELECT * FROM garantia
 
 
 
