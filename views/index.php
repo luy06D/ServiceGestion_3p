@@ -1,5 +1,3 @@
-
-  
 <?php include '../principal/cabezera.php' ?>
 
 <!-- DataTable -->

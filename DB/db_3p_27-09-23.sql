@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v12.5.1 (64 bit)
-MySQL - 10.4.25-MariaDB : Database - db_3p
+MySQL - 10.4.28-MariaDB : Database - db_3p
 *********************************************************************
 */
 
@@ -12,7 +12,7 @@ MySQL - 10.4.25-MariaDB : Database - db_3p
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`db_3p` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`db_3p` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
 
 USE `db_3p`;
 
@@ -32,9 +32,17 @@ CREATE TABLE `clientes` (
   KEY `fk3` (`idempresa`),
   CONSTRAINT `fk2` FOREIGN KEY (`idpersona`) REFERENCES `personas` (`idpersona`),
   CONSTRAINT `fk3` FOREIGN KEY (`idempresa`) REFERENCES `empresas` (`idempresa`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `clientes` */
+
+insert  into `clientes`(`idcliente`,`idpersona`,`idempresa`,`create_at`,`update_at`,`inactive_at`) values 
+(1,7,NULL,'2023-09-27 08:04:46',NULL,NULL),
+(2,8,NULL,'2023-09-27 08:15:34',NULL,NULL),
+(3,NULL,1,'2023-09-27 08:50:02',NULL,NULL),
+(4,NULL,2,'2023-09-27 09:33:02',NULL,NULL),
+(5,NULL,3,'2023-09-27 09:33:38',NULL,NULL),
+(6,9,NULL,'2023-09-27 09:37:33',NULL,NULL);
 
 /*Table structure for table `contratos` */
 
@@ -54,9 +62,16 @@ CREATE TABLE `contratos` (
   KEY `fk5` (`idusuario`),
   CONSTRAINT `fk4` FOREIGN KEY (`idcliente`) REFERENCES `clientes` (`idcliente`),
   CONSTRAINT `fk5` FOREIGN KEY (`idusuario`) REFERENCES `usuarios` (`idusuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `contratos` */
+
+insert  into `contratos`(`idcontrato`,`idusuario`,`idcliente`,`fechacontrato`,`fechainicio`,`fechacierre`,`observacion`,`garantia`) values 
+(1,1,1,'2023-09-27 08:09:00','2023-09-30','2023-09-27','prueba','3 meses'),
+(2,1,1,'2023-09-27 08:10:30','2023-09-30','2023-09-27','prueba','2meses'),
+(3,1,1,'2023-09-27 08:11:52','2023-10-01','2023-09-27','prueba','1 mes'),
+(4,1,2,'2023-09-27 08:16:05','2023-09-29',NULL,'prueba','2 meses'),
+(5,1,2,'2023-09-27 08:18:18','2023-09-27',NULL,'prueba','3 meses');
 
 /*Table structure for table `desc_equipo` */
 
@@ -75,7 +90,7 @@ CREATE TABLE `desc_equipo` (
   KEY `fk13` (`idequipo`),
   CONSTRAINT `fk12` FOREIGN KEY (`iddescServicio`) REFERENCES `desc_servicio` (`iddescServicio`),
   CONSTRAINT `fk13` FOREIGN KEY (`idequipo`) REFERENCES `equipos` (`idequipo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `desc_equipo` */
 
@@ -89,7 +104,7 @@ CREATE TABLE `desc_servicio` (
   `idservicio` int(11) NOT NULL,
   `precioservicio` decimal(7,2) NOT NULL,
   `cantidad` smallint(6) NOT NULL,
-  `estadoservicio` char(1) NOT NULL,
+  `estadoservicio` char(1) NOT NULL DEFAULT 'N',
   `create_at` datetime NOT NULL DEFAULT current_timestamp(),
   `update_at` datetime DEFAULT NULL,
   `inactive_at` datetime DEFAULT NULL,
@@ -98,9 +113,16 @@ CREATE TABLE `desc_servicio` (
   KEY `fk7` (`idservicio`),
   CONSTRAINT `fk6` FOREIGN KEY (`idcontrato`) REFERENCES `contratos` (`idcontrato`),
   CONSTRAINT `fk7` FOREIGN KEY (`idservicio`) REFERENCES `servicios` (`idservicio`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `desc_servicio` */
+
+insert  into `desc_servicio`(`iddescServicio`,`idcontrato`,`idservicio`,`precioservicio`,`cantidad`,`estadoservicio`,`create_at`,`update_at`,`inactive_at`) values 
+(1,1,2,1000.00,2,'F','2023-09-27 08:09:00',NULL,NULL),
+(2,2,1,500.00,5,'F','2023-09-27 08:10:30',NULL,NULL),
+(3,3,3,400.00,1,'F','2023-09-27 08:11:52',NULL,NULL),
+(4,4,1,600.00,6,'N','2023-09-27 08:16:05',NULL,NULL),
+(5,5,2,500.00,1,'P','2023-09-27 08:18:18',NULL,NULL);
 
 /*Table structure for table `empresas` */
 
@@ -115,9 +137,14 @@ CREATE TABLE `empresas` (
   `inactive_at` datetime DEFAULT NULL,
   PRIMARY KEY (`idempresa`),
   UNIQUE KEY `uk3` (`ruc`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `empresas` */
+
+insert  into `empresas`(`idempresa`,`razonsocial`,`ruc`,`create_at`,`update_at`,`inactive_at`) values 
+(1,'Senati','20563987412','2023-09-27 08:50:02',NULL,NULL),
+(2,'Avicola vania','20134658965','2023-09-27 09:33:02',NULL,NULL),
+(3,'Mineria Milpo','20569874251','2023-09-27 09:33:38',NULL,NULL);
 
 /*Table structure for table `equipos` */
 
@@ -137,7 +164,7 @@ CREATE TABLE `equipos` (
   KEY `fk11` (`idmarca`),
   CONSTRAINT `fk10` FOREIGN KEY (`idtipoequipo`) REFERENCES `tipoequipo` (`idtipoequipo`),
   CONSTRAINT `fk11` FOREIGN KEY (`idmarca`) REFERENCES `marcas` (`idmarca`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `equipos` */
 
@@ -147,7 +174,10 @@ insert  into `equipos`(`idequipo`,`idtipoequipo`,`idmarca`,`descripcion`,`create
 (3,3,3,'model2023','2023-09-26 00:01:40',NULL,NULL,'TGOP2136549875Fkq'),
 (4,4,4,'model25','2023-09-26 10:24:57',NULL,NULL,'jl5469332asd455'),
 (5,5,8,'model26','2023-09-26 20:09:46',NULL,NULL,'hgs4562368as12'),
-(6,3,3,'modele23','2023-09-26 23:04:18',NULL,NULL,'klPO123659755as');
+(6,3,3,'modele23','2023-09-26 23:04:18',NULL,NULL,'klPO123659755as'),
+(7,1,2,'model23','2023-09-27 09:42:39',NULL,NULL,'JHASD2656246563fj'),
+(8,11,6,'model26','2023-09-27 09:45:46',NULL,NULL,'asdsadSDP26215232'),
+(9,6,12,'model23','2023-09-27 09:48:37',NULL,NULL,'2aasdasASFA');
 
 /*Table structure for table `garantia` */
 
@@ -168,7 +198,7 @@ CREATE TABLE `garantia` (
   KEY `fk9` (`idSoporteTecnico`),
   CONSTRAINT `fk8` FOREIGN KEY (`iddescServicio`) REFERENCES `desc_servicio` (`iddescServicio`),
   CONSTRAINT `fk9` FOREIGN KEY (`idSoporteTecnico`) REFERENCES `usuarios` (`idusuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `garantia` */
 
@@ -184,7 +214,7 @@ CREATE TABLE `marcas` (
   `inactive_at` datetime DEFAULT NULL,
   PRIMARY KEY (`idmarca`),
   UNIQUE KEY `uk6` (`marca`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `marcas` */
 
@@ -202,7 +232,7 @@ insert  into `marcas`(`idmarca`,`marca`,`create_at`,`update_at`,`inactive_at`) v
 (11,'Marca','2023-09-26 10:12:21',NULL,NULL),
 (12,'Marca2','2023-09-26 22:33:44',NULL,NULL),
 (13,'Lenovo','2023-09-26 23:31:28',NULL,NULL),
-(14,'Sony','2023-09-26 23:38:19',NULL,NULL);
+(14,'Sony','2023-09-26 23:38:19',NULL,'2023-09-27 10:03:02');
 
 /*Table structure for table `personas` */
 
@@ -221,7 +251,7 @@ CREATE TABLE `personas` (
   `inactive_at` datetime DEFAULT NULL,
   PRIMARY KEY (`idpersona`),
   UNIQUE KEY `uk1` (`dni`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `personas` */
 
@@ -231,7 +261,10 @@ insert  into `personas`(`idpersona`,`nombres`,`apellidos`,`dni`,`correo`,`direcc
 (3,'Edu','Quiroz','72680725',NULL,'CP Guayabo','959282307','2023-09-25 23:28:20',NULL,NULL),
 (4,'Jean','Mateo','65985421',NULL,'Chincha','956854123','2023-09-25 23:28:20',NULL,NULL),
 (5,'Luis','Cusi','75412365',NULL,'El carmen','965874521','2023-09-25 23:28:20',NULL,NULL),
-(6,'Juan','Almeyda Torres','21457836','juantorres@gmail.com','Lima','956456871','2023-09-26 00:03:33',NULL,NULL);
+(6,'Juan','Almeyda Torres','21457836','juantorres@gmail.com','Lima','956456871','2023-09-26 00:03:33',NULL,NULL),
+(7,'Jose ','Torres Sanchez','21563497','juants@gmail.com','Chincha','956874123','2023-09-27 08:04:46',NULL,NULL),
+(8,'Pedro','Saravia Anchante','21748536','pedroanchante@gmail.com','Sunampe','958632147','2023-09-27 08:15:34',NULL,NULL),
+(9,'Rosa','Magallanes Porres','21563971','rosamp@hotmail.com','Chincha','956842137','2023-09-27 09:37:33',NULL,NULL);
 
 /*Table structure for table `servicios` */
 
@@ -247,9 +280,26 @@ CREATE TABLE `servicios` (
   `inactive_at` datetime DEFAULT NULL,
   PRIMARY KEY (`idservicio`),
   UNIQUE KEY `uk4` (`tiposervicio`,`nombreservicio`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `servicios` */
+
+insert  into `servicios`(`idservicio`,`tiposervicio`,`nombreservicio`,`precioestimado`,`create_at`,`update_at`,`inactive_at`) values 
+(1,'instalaciones','instalacion de camaras',5000.00,'2023-09-27 08:08:21',NULL,'2023-09-27 08:31:14'),
+(2,'instalacion','instalacion de servidores',6000.00,'2023-09-27 08:08:21',NULL,'2023-09-27 08:31:16'),
+(3,'Mantenimiento','mantenimiento de servidores',7000.00,'2023-09-27 08:08:21',NULL,'2023-09-27 08:31:18'),
+(4,'Mantenimiento de computadoras','instalación de recursos',100.00,'2023-09-27 08:27:07',NULL,'2023-09-27 08:31:21'),
+(5,'Gestión de mantenimiento','Instalación ',200.00,'2023-09-27 08:32:47',NULL,NULL),
+(6,'Gestión de mantenimiento','configuración ',100.00,'2023-09-27 08:33:17',NULL,NULL),
+(7,'Gestión de mantenimiento','mantenimiento preventivo',300.00,'2023-09-27 08:33:40',NULL,NULL),
+(8,'Gestión de mantenimiento','mantenimiento correctivo',200.00,'2023-09-27 08:33:56',NULL,NULL),
+(9,'Gestión de mantenimiento','soporte de hardware y software',300.00,'2023-09-27 08:34:21',NULL,NULL),
+(10,'Desarrollo y posicionamiento','sistema web',500.00,'2023-09-27 08:35:00',NULL,NULL),
+(11,'Desarrollo y posicionamiento','sistema de escritorio',500.00,'2023-09-27 08:35:17',NULL,NULL),
+(12,'Desarrollo y posicionamiento','pagina web',500.00,'2023-09-27 08:35:30',NULL,NULL),
+(13,'Desarrollo y posicionamiento','aplicación movil',1000.00,'2023-09-27 08:35:52',NULL,NULL),
+(14,'Redes y seguridad','seguridad perimetral',1500.00,'2023-09-27 08:36:25',NULL,NULL),
+(15,'Consultoria','plan de sistema de información',600.00,'2023-09-27 08:36:56',NULL,NULL);
 
 /*Table structure for table `tipoequipo` */
 
@@ -263,7 +313,7 @@ CREATE TABLE `tipoequipo` (
   `inactive_at` datetime DEFAULT NULL,
   PRIMARY KEY (`idtipoequipo`),
   UNIQUE KEY `uk5` (`tipoequipo`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `tipoequipo` */
 
@@ -280,7 +330,7 @@ insert  into `tipoequipo`(`idtipoequipo`,`tipoequipo`,`create_at`,`update_at`,`i
 (10,'Placas','2023-09-26 10:04:26',NULL,NULL),
 (11,'Mouse','2023-09-26 10:11:21',NULL,NULL),
 (12,'Impresora','2023-09-26 22:42:19',NULL,NULL),
-(13,'Ploter','2023-09-26 22:43:34',NULL,NULL);
+(13,'Ploter','2023-09-26 22:43:34',NULL,'2023-09-27 08:03:39');
 
 /*Table structure for table `usuarios` */
 
@@ -299,7 +349,7 @@ CREATE TABLE `usuarios` (
   UNIQUE KEY `uk2` (`idpersona`),
   UNIQUE KEY `uk` (`usuario`),
   CONSTRAINT `fk1` FOREIGN KEY (`idpersona`) REFERENCES `personas` (`idpersona`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `usuarios` */
 
@@ -316,7 +366,7 @@ insert  into `usuarios`(`idusuario`,`idpersona`,`usuario`,`claveacceso`,`nivelac
 
 DELIMITER $$
 
-/*!50106 CREATE DEFINER=`root`@`localhost` EVENT `actualizarEstadoProceso` ON SCHEDULE EVERY 1 DAY STARTS '2023-09-25 23:35:46' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN 
+/*!50106 CREATE DEFINER=`root`@`localhost` EVENT `actualizarEstadoProceso` ON SCHEDULE EVERY 1 DAY STARTS '2023-09-27 08:22:21' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN 
 	UPDATE desc_servicio DS
 	INNER JOIN contratos CO ON DS.idcontrato = CO.idcontrato	
 	SET DS.estadoservicio = 'P'
@@ -382,19 +432,16 @@ DELIMITER ;
 DELIMITER $$
 
 /*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_clientesEmp_registrar`(
--- param empresa
 IN _razonsocial VARCHAR(30),
 IN _ruc    CHAR(11)
 )
 BEGIN 
-
 	DECLARE g_idempresa INT;
 	
 	INSERT INTO empresas (razonsocial, ruc) VALUES
 						(_razonsocial, _ruc);
 	
 	SELECT LAST_INSERT_ID() INTO g_idempresa;
-
 	INSERT INTO clientes (idempresa) VALUES
 			(g_idempresa);
 END */$$
@@ -407,7 +454,6 @@ DELIMITER ;
 DELIMITER $$
 
 /*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_clientesPer_registrar`(
--- param persona
 IN _nombres VARCHAR(30),
 IN _apellidos VARCHAR(30),
 IN _dni  CHAR(9),
@@ -416,17 +462,32 @@ IN _direccion VARCHAR(60),
 IN _telefono  CHAR(9)
 )
 BEGIN 
-
 	DECLARE g_idpersona INT;
 	
 	INSERT INTO personas (nombres, apellidos, dni , correo, direccion, telefono) VALUES
 						(_nombres, _apellidos, _dni, _correo, _direccion, _telefono);
 	
 	SELECT LAST_INSERT_ID() INTO g_idpersona;
-
 	INSERT INTO clientes (idpersona) VALUES
 			(g_idpersona);
+END */$$
+DELIMITER ;
 
+/* Procedure structure for procedure `spu_clientes_buscar` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `spu_clientes_buscar` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_clientes_buscar`(IN _search VARCHAR(100))
+BEGIN 
+	SELECT
+		CLI.idcliente,
+	    COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) AS clientes
+	FROM clientes CLI
+	LEFT JOIN personas PE ON CLI.idpersona = PE.idpersona
+	LEFT JOIN empresas EM ON CLI.idempresa = EM.idempresa
+	WHERE COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) LIKE CONCAT('%', _search, '%');
 END */$$
 DELIMITER ;
 
@@ -438,7 +499,6 @@ DELIMITER $$
 
 /*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_contratos_listar`()
 BEGIN
-
 	SELECT CO.idcontrato,
 	 COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) AS clientes,
 	 DATE(CO.fechacontrato) AS fechacontrato,
@@ -448,7 +508,6 @@ BEGIN
 	INNER JOIN clientes CLI ON CLI.idcliente = CO.idcliente
 	LEFT JOIN personas PE ON PE.idpersona = CLI.idpersona
 	LEFT JOIN empresas EM ON EM.idempresa = CLI.idempresa;
-
 END */$$
 DELIMITER ;
 
@@ -459,14 +518,11 @@ DELIMITER ;
 DELIMITER $$
 
 /*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_contrato_registrar`(
--- params contratos
 IN _idusuario INT,
 IN _idcliente INT,
 IN _fechainicio DATE,
 IN _observacion VARCHAR(150),
 IN _garantia VARCHAR(20),
-
--- params desc_servicio
 IN _idservicio INT,
 IN _precioservicio DECIMAL(7,2),
 IN _cantidad SMALLINT
@@ -494,7 +550,6 @@ DELIMITER $$
 
 /*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_detalleContratos_listar`(IN _idcontrato INT)
 BEGIN
-
 	SELECT 
 	 COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) AS clientes,
 	 DATE(CO.fechacontrato) AS fechacontrato, SE.tiposervicio,
@@ -507,7 +562,6 @@ BEGIN
 	LEFT JOIN personas PE ON PE.idpersona = CLI.idpersona
 	LEFT JOIN empresas EM ON EM.idempresa = CLI.idempresa
 	WHERE CO.idcontrato = _idcontrato;
-
 END */$$
 DELIMITER ;
 
@@ -581,6 +635,31 @@ BEGIN
 END */$$
 DELIMITER ;
 
+/* Procedure structure for procedure `spu_filtroC_cliente` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `spu_filtroC_cliente` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_filtroC_cliente`(IN _idcliente INT)
+BEGIN 
+
+	SELECT 
+	 COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) AS clientes,
+	 DATE(CO.fechacontrato) AS fechacontrato, SE.tiposervicio,
+	  SE.nombreservicio, CO.observacion,
+	 DS.precioservicio, CO.fechainicio, CO.garantia
+	FROM desc_servicio DS
+	INNER JOIN servicios SE ON SE.idservicio = DS.idservicio
+	INNER JOIN contratos CO ON CO.idcontrato = DS.idcontrato
+	INNER JOIN clientes CLI ON CLI.idcliente = CO.idcliente
+	LEFT JOIN personas PE ON PE.idpersona = CLI.idpersona
+	LEFT JOIN empresas EM ON EM.idempresa = CLI.idempresa
+	WHERE CLI.idcliente = _idcliente;
+
+END */$$
+DELIMITER ;
+
 /* Procedure structure for procedure `spu_finalizarContrato` */
 
 /*!50003 DROP PROCEDURE IF EXISTS  `spu_finalizarContrato` */;
@@ -609,15 +688,12 @@ DELIMITER $$
 
 /*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_getClientes`()
 BEGIN 
-
 	SELECT
 		CLI.idcliente,
 	    COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) AS clientes
 	FROM clientes CLI
 	LEFT JOIN personas PE ON CLI.idpersona = PE.idpersona
 	LEFT JOIN empresas EM ON CLI.idempresa = EM.idempresa;
-
-
 END */$$
 DELIMITER ;
 
@@ -631,7 +707,6 @@ DELIMITER $$
 BEGIN 
 	SELECT idservicio, nombreservicio
 	FROM servicios;
-
 END */$$
 DELIMITER ;
 
@@ -804,7 +879,6 @@ BEGIN
 	tiposervicio = _tiposervicio,
 	nombreservicio = _nombreservicio,
 	precioestimado = _precioestimado
-
 WHERE idservicio = _idservicio;
 END */$$
 DELIMITER ;
@@ -916,7 +990,6 @@ DELIMITER ;
 DELIMITER $$
 
 /*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_usuario_registrar`(
-
 IN _nombres 	VARCHAR(30),
 IN _apellidos 	VARCHAR(30),
 IN _dni		CHAR(8),
@@ -938,7 +1011,6 @@ BEGIN
 	
 	INSERT INTO usuarios (idpersona , usuario, claveacceso, nivelacceso) VALUES
 			(g_idpersona, _usuario, _claveacceso, _nivelacceso);	
-
 END */$$
 DELIMITER ;
 
