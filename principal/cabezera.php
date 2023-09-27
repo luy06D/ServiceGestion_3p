@@ -26,9 +26,11 @@ $idusuario = $_SESSION['segurity']['idusuario'];
   <link href="./img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
+  <!-- <link href="https://fonts.gstatic.com" rel="preconnect"> -->
+  <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet"> -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Croissant+One&family=EB+Garamond&family=Inclusive+Sans&family=Mooli&display=swap" rel="stylesheet">
   <!-- Vendor CSS Files -->
   <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="../vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -46,12 +48,7 @@ $idusuario = $_SESSION['segurity']['idusuario'];
 
 <body>
 
-  <!-- <style>
-    img{
-      width: 80px;
-      height: 80px;
-    }
-  </style> -->
+
 
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
@@ -282,188 +279,187 @@ $idusuario = $_SESSION['segurity']['idusuario'];
 
   </header><!-- End Header -->
 
-    <!-- ======= Sidebar ======= -->
-    <aside id="sidebar" class="sidebar">
+      <!-- ======= Sidebar ======= -->
+      <aside id="sidebar" class="sidebar">
 
-<ul class="sidebar-nav" id="sidebar-nav">
+    <ul class="sidebar-nav" id="sidebar-nav">
 
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="../views/index.php">
-      <i class="bi bi-grid"></i>
-      <span>Inicio</span>
-    </a>
-  </li><!-- End Dashboard Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="../views/index.php">
+          <i class="bi bi-grid"></i>
+          <span>Inicio</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
 
-  <!-- <li class="nav-item">
-    <a class="nav-link " href="../views/equipos.php">
-      <i class="bi bi-wrench"></i>
-      <span>Equipos</span>
-    </a>
+      <!-- <li class="nav-item">
+        <a class="nav-link " href="../views/equipos.php">
+          <i class="bi bi-wrench"></i>
+          <span>Equipos</span>
+        </a>
 
-  </li>End Dashboard Nav -->
+      </li>End Dashboard Nav -->
 
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="../views/garantia.php">
-      <i class="bi bi-journal-text"></i>
-      <span>Garantía</span>
-    </a>
-  </li><!-- End Dashboard Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="../views/garantia.php">
+          <i class="bi bi-journal-text"></i>
+          <span>Garantía</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
 
-  </li>
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="../views/contratos.php">
-    <i class="bi bi-file-earmark-text"></i>
-      <span>Contratos</span>
-    </a>
-  </li>
-
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="../views/servicios.php">
-    <i class="bi bi-person-lines-fill"></i>
-      <span>Servicios</span>
-    </a>
-  </li>
-
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="../views/equipostabs.php">
-      <i class="bi bi-wrench"></i>
-      <span>Equipos</span>
-    </a>
-  </li>
-
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="../views/usuariostabs.php">
-      <i class="bi bi-people"></i>
-      <span>Usuarios</span>
-    </a>
-  </li>
-
-  <!-- <li class="nav-item">
-    <a class="nav-link collapsed" data-bs-target="#components-nav-equipos" data-bs-toggle="collapse" href="#">
-      <i class="bi bi-wrench"></i></i><span>Equipos</span><i class="bi bi-chevron-down ms-auto"></i>
-    </a>
-    <ul id="components-nav-equipos" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-      <li>
-          <a class="nav-link " href="../views/equipos.php">
-            <i class="bi bi-plus-circle"></i>
-            <span>Equipos</span>
-          </a>
       </li>
-      <li>
-          <a class="nav-link " href="../views/marcas.php">
-            <i class="bi bi-plus-circle"></i>
-            <span>Marcas</span>
-          </a>
-      </li>
-      <li>
-        <a class="nav-link " href="../views/tipoequipos.php">
-          <i class="bi bi-circle"></i><span>Tipos</span>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="../views/contratos.php">
+        <i class="bi bi-file-earmark-text"></i>
+          <span>Contratos</span>
         </a>
       </li>
-      
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="../views/servicios.php">
+        <i class="bi bi-person-lines-fill"></i>
+          <span>Servicios</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="../views/equipostabs.php">
+          <i class="bi bi-wrench"></i>
+          <span>Equipos</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="../views/usuariostabs.php">
+          <i class="bi bi-people"></i>
+          <span>Usuarios</span>
+        </a>
+      </li>
+
+      <!-- <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav-equipos" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-wrench"></i></i><span>Equipos</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav-equipos" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+              <a class="nav-link " href="../views/equipos.php">
+                <i class="bi bi-plus-circle"></i>
+                <span>Equipos</span>
+              </a>
+          </li>
+          <li>
+              <a class="nav-link " href="../views/marcas.php">
+                <i class="bi bi-plus-circle"></i>
+                <span>Marcas</span>
+              </a>
+          </li>
+          <li>
+            <a class="nav-link " href="../views/tipoequipos.php">
+              <i class="bi bi-circle"></i><span>Tipos</span>
+            </a>
+          </li>
+          
+        </ul>
+      </li> -->
+
+      <!-- <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-people"></i></i><span>Usuarios</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="../views/usuariosRegistros.php">
+              <i class="bi bi-circle"></i><span>Registrar</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-layouts.html">
+              <i class="bi bi-circle"></i><span>Permisos</span>
+            </a>
+          </li>
+        </ul>
+      </li> -->
+
+      <!-- <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="tables-general.html">
+              <i class="bi bi-circle"></i><span>General Tables</span>
+            </a>
+          </li>
+          <li>
+            <a href="tables-data.html">
+              <i class="bi bi-circle"></i><span>Data Tables</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="charts-chartjs.html">
+              <i class="bi bi-circle"></i><span>Chart.js</span>
+            </a>
+          </li>
+          <li>
+            <a href="charts-apexcharts.html">
+              <i class="bi bi-circle"></i><span>ApexCharts</span>
+            </a>
+          </li>
+          <li>
+            <a href="charts-echarts.html">
+              <i class="bi bi-circle"></i><span>ECharts</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-gem"></i><span>Icons</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="icons-bootstrap.html">
+              <i class="bi bi-circle"></i><span>Bootstrap Icons</span>
+            </a>
+          </li>
+          <li>
+            <a href="icons-remix.html">
+              <i class="bi bi-circle"></i><span>Remix Icons</span>
+            </a>
+          </li>
+          <li>
+            <a href="icons-boxicons.html">
+              <i class="bi bi-circle"></i><span>Boxicons</span>
+            </a>
+          </li>
+        </ul>
+      </li> -->
+
+      <li class="nav-heading">Componentes</li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="../views/perfilusuario.php">
+          <i class="bi bi-person"></i>
+          <span>Perfil</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="../controllers/usuarios.controller.php?operation=destroy">
+          <i class="bi bi-box-arrow-left"></i>
+          <span>Salir</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+
     </ul>
-  </li> -->
 
-  <!-- <li class="nav-item">
-    <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-      <i class="bi bi-people"></i></i><span>Usuarios</span><i class="bi bi-chevron-down ms-auto"></i>
-    </a>
-    <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-      <li>
-        <a href="../views/usuariosRegistros.php">
-          <i class="bi bi-circle"></i><span>Registrar</span>
-        </a>
-      </li>
-      <li>
-        <a href="forms-layouts.html">
-          <i class="bi bi-circle"></i><span>Permisos</span>
-        </a>
-      </li>
-    </ul>
-  </li> -->
-
-  <!-- <li class="nav-item">
-    <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-      <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
-    </a>
-    <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-      <li>
-        <a href="tables-general.html">
-          <i class="bi bi-circle"></i><span>General Tables</span>
-        </a>
-      </li>
-      <li>
-        <a href="tables-data.html">
-          <i class="bi bi-circle"></i><span>Data Tables</span>
-        </a>
-      </li>
-    </ul>
-  </li>
-
-  <li class="nav-item">
-    <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-      <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
-    </a>
-    <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-      <li>
-        <a href="charts-chartjs.html">
-          <i class="bi bi-circle"></i><span>Chart.js</span>
-        </a>
-      </li>
-      <li>
-        <a href="charts-apexcharts.html">
-          <i class="bi bi-circle"></i><span>ApexCharts</span>
-        </a>
-      </li>
-      <li>
-        <a href="charts-echarts.html">
-          <i class="bi bi-circle"></i><span>ECharts</span>
-        </a>
-      </li>
-    </ul>
-  </li>
-
-  <li class="nav-item">
-    <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-      <i class="bi bi-gem"></i><span>Icons</span><i class="bi bi-chevron-down ms-auto"></i>
-    </a>
-    <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-      <li>
-        <a href="icons-bootstrap.html">
-          <i class="bi bi-circle"></i><span>Bootstrap Icons</span>
-        </a>
-      </li>
-      <li>
-        <a href="icons-remix.html">
-          <i class="bi bi-circle"></i><span>Remix Icons</span>
-        </a>
-      </li>
-      <li>
-        <a href="icons-boxicons.html">
-          <i class="bi bi-circle"></i><span>Boxicons</span>
-        </a>
-      </li>
-    </ul>
-  </li> -->
-
-  <li class="nav-heading">Componentes</li>
-
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="../views/perfilusuario.php">
-      <i class="bi bi-person"></i>
-      <span>Perfil</span>
-    </a>
-  </li><!-- End Profile Page Nav -->
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="../controllers/usuarios.controller.php?operation=destroy">
-      <i class="bi bi-box-arrow-left"></i>
-      <span>Salir</span>
-    </a>
-  </li><!-- End Profile Page Nav -->
-
-</ul>
-
-</aside><!-- End Sidebar-->
-
+    </aside><!-- End Sidebar-->
 
 
