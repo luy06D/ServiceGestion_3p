@@ -742,7 +742,7 @@ BEGIN
 
 END$$
 
-CALL spu_detalleContratos_listar(5);
+CALL spu_detalleContratos_listar(2);
 
 -- FINALIZAR EL CONTRATO
 
@@ -777,6 +777,30 @@ BEGIN
 END$$
 
 CALL spu_clientes_buscar("fa");
+
+
+-- FILTRO DE CONTRATO POR CLIENTE 
+DELIMITER $$
+CREATE PROCEDURE spu_filtroC_cliente(IN _idcliente INT)
+BEGIN 
+
+	SELECT 
+	 COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) AS clientes,
+	 DATE(CO.fechacontrato) AS fechacontrato, SE.tiposervicio,
+	  SE.nombreservicio, CO.observacion,
+	 DS.precioservicio, CO.fechainicio, CO.garantia
+	FROM desc_servicio DS
+	INNER JOIN servicios SE ON SE.idservicio = DS.idservicio
+	INNER JOIN contratos CO ON CO.idcontrato = DS.idcontrato
+	INNER JOIN clientes CLI ON CLI.idcliente = CO.idcliente
+	LEFT JOIN personas PE ON PE.idpersona = CLI.idpersona
+	LEFT JOIN empresas EM ON EM.idempresa = CLI.idempresa
+	WHERE CLI.idcliente = _idcliente;
+
+END $$
+
+CALL spu_filtroC_cliente(2);
+
 
 
 

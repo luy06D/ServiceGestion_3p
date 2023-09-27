@@ -166,6 +166,19 @@ public function clientes_buscar($search = ""){
     }
 }
 
+public function filtroC_cliente($idcliente = 0){
+    try{
+        $query = $this->conexion->prepare("CALL spu_filtroC_cliente(?)");
+        $query->execute(array($idcliente));
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+        
+    }
+    catch(Exception $err){
+        die($err->getMessage());
+    }
+}
+
+
 
 
 }

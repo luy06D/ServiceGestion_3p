@@ -109,6 +109,31 @@ if(isset($_GET['op'])){
         }    
     }
 
+    if($_GET['op'] == 'filtroC_cliente'){
+        $data = $contrato->filtroC_cliente($_GET['idcliente']);
+
+        if($data){
+            foreach($data as $registro){
+                echo "
+            <tr>
+                <td>{$registro['clientes']}</td>
+                <td>{$registro['fechacontrato']}</td>
+                <td>{$registro['tiposervicio']}</td>
+                <td>{$registro['nombreservicio']}</td>
+                <td>{$registro['observacion']}</td>                    
+                <td>{$registro['precioservicio']}</td>   
+                <td>{$registro['fechainicio']}</td>    
+                <td>{$registro['garantia']}</td>                    
+        </tr>                
+                
+            </tr>
+                
+                ";
+            }
+
+        }    
+    }
+
     if($_GET['op'] == 'detalleContrato_listar'){
         $data = $contrato->detalleContratos_listar($_GET['idcontrato']);
 
@@ -120,6 +145,8 @@ if(isset($_GET['op'])){
 
         echo json_encode($data);
     }
+
+
 
 
 }

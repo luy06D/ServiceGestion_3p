@@ -107,130 +107,235 @@
         </div>
     </div>
 
+    <div class="card">
+            <div class="card-body mt-4">
+              <!-- <h5 class="card-title">Bor</h5> -->
 
-    <button type="button" id="abrir-modal-registro" class="btn btn-primary btn-md mb-3 shadow-lg" data-bs-toggle="modal" data-bs-target="#modal-registrar">
-        <i class="bi bi-plus-circle"></i>  Nuevo cliente
-    </button>
-    <button type="button" id="" class="btn btn-primary btn-md mb-3 shadow-lg" data-bs-toggle="modal" data-bs-target="#modal-buscar">
-        <i class="bi bi-plus-circle"></i>  Buscar
-    </button>
+              <!-- Borde -->
+              <ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-home" type="button" role="tab" aria-controls="home" aria-selected="true">Registro</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Filtro</button>
+                </li>              
+              </ul>
+              <div class="tab-content pt-2" id="borderedTabContent">
+                <div class="tab-pane fade show active" id="bordered-home" role="tabpanel" aria-labelledby="home-tab">
+                  
+                <!-- INICIO DEL CONTENIDO DEL REGISTRO  -->
+
+                <div class="">
+                                 
+                  <button type="button" id="abrir-modal-registro" class="btn btn-primary btn-md mb-3 mt-3 shadow-lg" data-bs-toggle="modal" data-bs-target="#modal-registrar">
+                      <i class="bi bi-plus-circle"></i>  Nuevo cliente
+                  </button>
 
 
+                  <section class="section">
+                    <div class="row">
+                        <div class="col-lg-12  col-sm-12"> <!-- Primera columna -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Registro de contrato</h5>
+                                    <!-- Formulario Registrar contratos -->
+                                    <form class="row g-3" id="form-contratos">
+                                        <!-- Contenido del formulario -->
+                                        <!-- <div class="col-md-6">
+                                        <label for="inputState" class="form-label">Cliente</label>
+                                        <select id="idcliente" class="form-select">
+                                          <option>Seleccione</option>
+                                          
+                                        </select>
+                                        </div> -->
+                                        <div class="col-md-4">
+                                          <label for="cliente" class="form-label">Cliente</label>
+                                          <input type="text"  class="form-control" id="cliente">
+                                        </div>
+                                        <!-- Campo oculto para almacenar el ID del cliente -->
+                                        <input type="hidden" id="cliente-id" name="cliente-id">
 
-    <section class="section">
-      <div class="row">
-          <div class="col-lg-6 col-md-12 col-sm-12"> <!-- Primera columna -->
-              <div class="card">
-                  <div class="card-body">
-                      <h5 class="card-title">Registro de contrato</h5>
-                      <!-- Formulario Registrar contratos -->
-                      <form class="row g-3" id="form-contratos">
-                          <!-- Contenido del formulario -->
-                          <div class="col-md-6">
-                          <label for="inputState" class="form-label">Cliente</label>
-                          <select id="idcliente" class="form-select">
-                            <option>Seleccione</option>
-                            
-                          </select>
-                          </div>            
-                          <div class="col-md-6">
-                            <label for="fechainicio" class="form-label">Fecha inicio</label>
-                            <input type="date" class="form-control" id="fechainicio">
-                          </div>
-                          <div class="col-md-6">
-                            <label for="inputPassword5" class="form-label">Garantia</label>
-                            <input type="text" class="form-control" id="garantia">
-                          </div>
-                          <div class="col-md-6">
-                            <label for="inputPassword5" class="form-label">prueba</label>
-                            <input type="text"  class="form-control" id="prueba">
-                          </div>
-                          <!-- Campo oculto para almacenar el ID del cliente -->
-                              <input type="hidden" id="cliente-id" name="cliente-id">
-                          <div class="col-md-6">
-                            <label for="observacion" class="form-label">Observación</label>
-                            <textarea class="form-control" id="observacion" rows="3"></textarea>
-                          </div>
-                         
-                          <h5 class="card-title">Detalles </h5>
-                          <div class="col-md-6">
-                              <label for="lsServicios" class="form-label">Servicio</label>
-                              <select id="lsServicios" class="form-select">
-                                <option>Seleccione</option>
-                                
-                              </select>
-                          </div> 
-                          <div class="col-md-6">
-                            <label for="precio" class="form-label">Precio</label>
-                            <input type="number" class="form-control" id="precio">
-                          </div>
-                          <div class="col-md-6">
-                            <label for="cantidad" class="form-label">Cantidad</label>
-                            <input type="number" class="form-control" id="cantidad">
-                          </div>
-                          <div class="">
-                            <button type="button" id="btnContrato" class="btn btn-primary shadow-lg">Registrar</button>
-                            <button type="reset" class="btn btn-secondary shadow-lg">Limpiar</button>
-                          </div>
+                                        <div class="col-md-4">
+                                          <label for="fechainicio" class="form-label">Fecha inicio</label>
+                                          <input type="date" class="form-control" id="fechainicio">
+                                        </div>
+                                        <div class="col-md-4">
+                                          <label for="inputPassword5" class="form-label">Garantia</label>
+                                          <input type="text" class="form-control" id="garantia">
+                                        </div>                                              
+                                        <div class="col-md-6">
+                                          <label for="observacion" class="form-label">Observación</label>
+                                          <textarea class="form-control" id="observacion" rows="3"></textarea>
+                                        </div>
+                                      
+                                        <h5 class="card-title">Detalles </h5>
+                                        <div class="col-md-4">
+                                            <label for="lsServicios" class="form-label">Servicio</label>
+                                            <select id="lsServicios" class="form-select">
+                                              <option>Seleccione</option>
+                                              
+                                            </select>
+                                        </div> 
+                                        <div class="col-md-4">
+                                          <label for="precio" class="form-label">Precio</label>
+                                          <input type="number" class="form-control" id="precio">
+                                        </div>
+                                        <div class="col-md-4">
+                                          <label for="cantidad" class="form-label">Cantidad</label>
+                                          <input type="number" class="form-control" id="cantidad">
+                                        </div>
+                                        <div class="">
+                                          <button type="button" id="btnContrato" class="btn btn-primary shadow-lg">Registrar</button>
+                                          <button type="reset" class="btn btn-secondary shadow-lg">Limpiar</button>
+                                        </div>
 
-                      </form>
-                  </div>
-              </div>
-          </div>
-       
-          <div class="col-lg-6 col-md-12 col-sm-12"> <!-- Segunda columna -->
-              <div class="card">
-                  <div class="card-body">
-                      <h5 class="card-title">Lista de Contratos</h5>
-                      <!-- Tabla contratos -->
-                      <form class="row g-3">
-                          <!-- Contenido de la tabla -->
-                          <table id="tabla-contrato" class="table table-hover" style="width:100%">
-                        <thead class="table-light">
-                          <tr>
-                            <th>#</th>
-                            <th>Clientes</th>
-                            <th>Fecha Contrato</th>
-                            <th id="cierre_fecha">Fecha Cierre</th>
-                            <th>Fecha Inicio</th>
-                            <th>Garantia</th> 
-                            <th>Estado</th>
-                            <th>Finalizar</th>
-                          </tr>
-                        </thead>
-
-                        <tbody>
-
-                        </tbody>
-                      </table>
-                      </form>
-                  </div>
-              </div>
-          </div>
-      </div>
-         <!-- Modal buscar cliente -->        
-         <div class="modal fade" id="modal-buscar" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header" id="" >
-                        <h5 class="modal-title card-title" id="">Buscar cliente</h5>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    
+                  
                     </div>
-                    <div class="modal-body">
-                    <div class="input-group flex-nowrap mb-2">
-                      <span class="input-group-text" id=""><i class="bi bi-search"></i></span>
-                      <input type="text" class="form-control" id="b-cliente" placeholder="Buscar aqui......." aria-label="Username" aria-describedby="addon-wrapping" autocomplete="off">
-                    </div>
-                    <div class="list-group mt-4" id="clientes_buscados">
+                      <!-- Modal buscar cliente -->        
+                      <div class="modal fade" id="modal-buscar" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md" role="document">
+                              <div class="modal-content">
+                                  <div class="modal-header" id="" >
+                                      <h5 class="modal-title card-title" id="">Buscar cliente</h5>
+                                  </div>
+                                  <div class="modal-body">
+                                  <div class="input-group flex-nowrap mb-2">
+                                    <span class="input-group-text" id=""><i class="bi bi-search"></i></span>
+                                    <input type="text" class="form-control" id="b-cliente" placeholder="Buscar aqui......." aria-label="Username" aria-describedby="addon-wrapping" autocomplete="off">
+                                  </div>
+                                  <div class="list-group mt-4" id="clientes_buscados">
 
-                    </div>
-                    <div class="modal-footer">           
-                        
-                        <button type="button" class="btn btn-secondary shadow-lg" data-bs-dismiss="modal">Cerrar</button>
-                    </div>
-                  </div>
+                                  </div>
+                                  <div class="modal-footer">           
+                                      
+                                      <button type="button" class="btn btn-secondary shadow-lg" data-bs-dismiss="modal">Cerrar</button>
+                                  </div>
+                                </div>
+                          </div>
+                      </div>
+                  </section>
+
+                            <div class="col-lg-12 col-sm-12"> <!-- Segunda columna -->
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Lista de Contratos</h5>
+                                        <!-- Tabla contratos -->
+                                        <form class="row g-3">
+                                            <!-- Contenido de la tabla -->
+                                            <table id="tabla-contrato" class="table table-hover" style="width:100%">
+                                          <thead class="table-light">
+                                            <tr>
+                                              <th>#</th>
+                                              <th>Clientes</th>
+                                              <th>Fecha Contrato</th>
+                                              <th id="cierre_fecha">Fecha Cierre</th>
+                                              <th>Fecha Inicio</th>
+                                              <th>Garantia</th> 
+                                              <th>Estado</th>
+                                              <th>Finalizar</th>
+                                            </tr>
+                                          </thead>
+
+                                          <tbody>
+
+                                          </tbody>
+                                        </table>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                </div>
+
+                <!-- FIN DEL CONTENIDO REGISTRO  -->
+
+
+                </div>
+                <div class="tab-pane fade" id="bordered-profile" role="tabpanel" aria-labelledby="profile-tab">
+                  <!-- INICIO CONTENIDO FILTRO CONTRATOS  -->
+
+                  <div class="row mt-3">
+                        <div class="col-lg-12  col-sm-12"> <!-- Primera columna -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Filtro de contratos</h5>
+                                    <!-- Formulario filtro contratos -->
+                                    <form class="row g-3" id="form-filtroContrato">
+
+                                        <div class=" col-md-4 col-lg-3">                                        
+                                                                                                                    
+                                            <select class="form-select" id="cliente-ls" aria-label="Default select example">
+                                                <option selected>Seleccione</option>
+                                                <option value="2">Jean mateo</option>                                           
+                                            </select>
+                                                                   
+                                        </div>
+                                        <div class=" col-md-4 col-lg-3">                                            
+                                            <div class="input-group ">                                                
+                                                <span class="input-group-text" id="basic-addon1"><i class='bx bx-calendar' ></i></span>
+                                                
+                                                <input type="date" class="form-control"  id="fechainicio">
+                                                
+                                            </div>
+                                        </div>
+
+                                        <div class=" col-md-4 col-lg-3">
+                                            <div class="input-group  ">
+                                                <span class="input-group-text" id="basic-addon1"><i class='bx bx-calendar' ></i></span>
+                                                <input type="date" class="form-control"  id="fechafin">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 ">
+                                  <div class="">
+                                    <button id="btnfiltro" class="btn btn-primary btn-md " type="button"><i class="bi bi-funnel-fill"></i></button>
+                                    <button id="exportar" class="btn btn-danger" type="button"><i class="bi bi-file-earmark-pdf"></i></button>                                    
+                                  </div>
+                                </div>                                   
+                                    </form>
+                                </div>
+                            </div>
+                                <div class="row mt-3">
+                                  <div class="col-lg-12">
+                                      <table class="table table-hover" style="width: 100%;"  id="table-reporteContrato">
+                                          <thead class="table-light">
+                                              <tr>
+                                                  <th>Cliente</th>
+                                                  <th>fecha contrato</th>
+                                                  <th>tipo servicio</th>
+                                                  <th>nombre servicio</th>
+                                                  <th>observacion</th>                                
+                                                  <th>precio</th>
+                                                  <th>fecha inicio</th>
+                                                  <th>Garantia</th>      
+
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                          <!-- DATOS ASINCRONOS  -->
+                                          </tbody>
+                                      </table>
+                                  </div>
+                              </div>
+                        </div>
+
+
+
+
+
+                  <!-- FIN CONTENIDO FILTRO CONTRATOS  -->
+                </div>
+  
+              </div><!-- FIN DEL TABS -->
+
             </div>
-        </div>
-</section>
+    </div>
+
+
+
 </main>
 
 <section>
@@ -333,12 +438,12 @@
     function obtenerFechaActual() {
         const today = new Date();
         const year = today.getFullYear();
-        const month = String(today.getMonth() + 1).padStart(2, '0'); // Agrega 1 porque los meses comienzan desde 0
+        const month = String(today.getMonth() + 1).padStart(2, '0'); 
         const day = String(today.getDate()).padStart(2, '0');
         return `${year}-${month}-${day}`;
     }
 
-    // Establecer la fecha actual como valor predeterminado para el input
+    // Establecer la fecha actual al input
     $(document).ready(function() {
         const fechaActual = obtenerFechaActual();
         $("#finalizada").val(fechaActual);
@@ -439,6 +544,31 @@
                   }
                 }
             ]
+          });
+        }
+      })
+    }
+
+
+    function filtroC_cliente(){
+      $.ajax({
+        url: '../controllers/contratos.controller.php',
+        type: 'GET',
+        data: {
+          'op': 'filtroC_cliente',
+          'idcliente' : $("#cliente-ls").val()
+        },
+        success: function (result){
+          var table = $("#table-reporteContrato").DataTable();
+          table.destroy();
+          $("#table-reporteContrato tbody").html(result);
+          $("#table-reporteContrato").DataTable({
+            responsive: true,
+            lengthMenu: [5,10],
+            order: [[0, 'desc']],
+            language:{
+              url: '../js/Spanish.json'
+            },
           });
         }
       })
@@ -582,7 +712,7 @@
 
     function registrarContrato(){
 
-        const cliente = $("#idcliente").val().trim();
+        const cliente = $("#cliente-id").val().trim();
         const fechaI = $("#fechainicio").val().trim();
         // const fechaC = $("#fechacierre").val().trim();
         const observacion = $("#observacion").val().trim();
@@ -596,7 +726,7 @@
         let sendData = {
           'op'              : 'registrar_contrato',
           'idusuario'       : idUsuario,
-          'idcliente'       : $("#idcliente").val(),
+          'idcliente'       : $("#cliente-id").val(),
           'fechainicio'     : $("#fechainicio").val(),
           // 'fechacierre'     : $("#fechacierre").val(),
           'observacion'     : $("#observacion").val(),
@@ -711,7 +841,7 @@
 
             console.log(idcliente);
 
-            $("#prueba").val(selecCliente);
+            $("#cliente").val(selecCliente);
             $("#cliente-id").val(idcliente);
             
 
@@ -730,11 +860,6 @@
       }, 500);
   
     }
-
-
-
-
-
 
 
     $("#tabla-contrato tbody").on("click", ".finalizar2", function(){            
@@ -756,7 +881,7 @@
 
     });
 
-   $("#garantia").click(function(){
+   $("#cliente").click(function(){
     $("#modal-buscar").modal('show');
 
    });
@@ -782,6 +907,7 @@
     
 
     contratosListar();
+    $("#btnfiltro").click(filtroC_cliente);
 
   });
 
