@@ -32,21 +32,12 @@ CREATE TABLE `clientes` (
   KEY `fk3` (`idempresa`),
   CONSTRAINT `fk2` FOREIGN KEY (`idpersona`) REFERENCES `personas` (`idpersona`),
   CONSTRAINT `fk3` FOREIGN KEY (`idempresa`) REFERENCES `empresas` (`idempresa`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `clientes` */
 
 insert  into `clientes`(`idcliente`,`idpersona`,`idempresa`,`create_at`,`update_at`,`inactive_at`) values 
-(1,NULL,2,'2023-09-14 11:03:25',NULL,NULL),
-(2,4,NULL,'2023-09-14 11:03:48',NULL,NULL),
-(3,6,NULL,'2023-09-14 12:40:08',NULL,NULL),
-(4,NULL,4,'2023-09-14 12:47:42',NULL,NULL),
-(5,7,NULL,'2023-09-14 14:28:07',NULL,NULL),
-(6,NULL,5,'2023-09-14 14:33:54',NULL,NULL),
-(7,NULL,6,'2023-09-14 14:52:18',NULL,NULL),
-(8,8,NULL,'2023-09-18 18:48:58',NULL,NULL),
-(9,NULL,8,'2023-09-18 18:57:12',NULL,NULL),
-(10,NULL,9,'2023-09-24 18:58:10',NULL,NULL);
+(1,4,NULL,'2023-09-28 10:58:45',NULL,NULL);
 
 /*Table structure for table `contratos` */
 
@@ -66,25 +57,13 @@ CREATE TABLE `contratos` (
   KEY `fk5` (`idusuario`),
   CONSTRAINT `fk4` FOREIGN KEY (`idcliente`) REFERENCES `clientes` (`idcliente`),
   CONSTRAINT `fk5` FOREIGN KEY (`idusuario`) REFERENCES `usuarios` (`idusuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `contratos` */
 
 insert  into `contratos`(`idcontrato`,`idusuario`,`idcliente`,`fechacontrato`,`fechainicio`,`fechacierre`,`observacion`,`garantia`) values 
-(1,1,2,'2023-09-14 11:11:28','0000-00-00','2023-09-24','nada que decir','1 mes'),
-(2,2,1,'2023-09-14 11:11:28','0000-00-00','2023-09-23','nada que decir','2 semanas'),
-(4,1,2,'2023-09-14 17:40:02','2023-09-14','2023-09-23','Prueba de procedimiento','2 meses'),
-(5,1,2,'2023-09-20 19:41:30','2023-09-14','2023-09-23','Prueba2 de procedimiento','1 meses'),
-(6,1,2,'2023-09-20 19:41:46','2023-09-14',NULL,'Prueba2 de procedimiento','1 meses'),
-(7,1,2,'2023-09-20 19:43:01','2023-09-14','2023-09-24','Prueba2 de procedimiento','1 meses'),
-(8,2,3,'2023-09-21 16:49:36','2023-09-25','0000-00-00','Prueba desde el modulo','1 mes'),
-(9,2,7,'2023-09-21 17:11:44','2023-09-30','0000-00-00','Prueba de nuevo xd','1 mes'),
-(10,1,2,'2023-09-21 17:20:28','2023-09-25','2023-09-24','Falla','1 meses'),
-(11,1,2,'2023-09-21 17:30:37','2023-09-30','0000-00-00','Prueba controller','1 mes'),
-(12,2,6,'2023-09-21 17:38:13','2023-09-28','0000-00-00','Prueba definitiva','2 meses'),
-(13,2,8,'2023-09-24 00:34:14','2023-09-24','2023-09-24','Prueba del evento estado','1 mes'),
-(14,2,4,'2023-09-24 00:46:36','2023-09-24','2023-09-25','Prueba 2 del evento actualizar estado proceso','2 semanas'),
-(15,2,10,'2023-09-24 18:59:11','2023-09-25',NULL,'Prueba de modulo contrato','1 semanas');
+(3,1,1,'2023-09-28 10:59:34','0000-00-00',NULL,'nada que decir','1 mes'),
+(4,2,1,'2023-09-28 10:59:34','0000-00-00',NULL,'nada que decir','2 semanas');
 
 /*Table structure for table `desc_equipo` */
 
@@ -100,13 +79,9 @@ CREATE TABLE `desc_equipo` (
   KEY `fk13` (`idequipo`),
   CONSTRAINT `fk12` FOREIGN KEY (`iddescServicio`) REFERENCES `desc_servicio` (`iddescServicio`),
   CONSTRAINT `fk13` FOREIGN KEY (`idequipo`) REFERENCES `equipos` (`idequipo`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `desc_equipo` */
-
-insert  into `desc_equipo`(`iddescEquipo`,`idequipo`,`iddescServicio`,`precio`) values 
-(1,1,2,350.00),
-(2,2,2,200.00);
 
 /*Table structure for table `desc_servicio` */
 
@@ -127,21 +102,13 @@ CREATE TABLE `desc_servicio` (
   KEY `fk7` (`idservicio`),
   CONSTRAINT `fk6` FOREIGN KEY (`idcontrato`) REFERENCES `contratos` (`idcontrato`),
   CONSTRAINT `fk7` FOREIGN KEY (`idservicio`) REFERENCES `servicios` (`idservicio`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `desc_servicio` */
 
 insert  into `desc_servicio`(`iddescServicio`,`idcontrato`,`idservicio`,`precioservicio`,`cantidad`,`estadoservicio`,`create_at`,`update_at`,`inactive_at`) values 
-(1,1,1,6000.00,2,'F','2023-09-14 11:17:34',NULL,NULL),
-(2,2,2,8000.00,3,'F','2023-09-14 11:17:34',NULL,NULL),
-(3,4,3,300.00,3,'F','2023-09-14 17:40:02',NULL,NULL),
-(4,7,3,300.00,5,'F','2023-09-20 19:43:01',NULL,NULL),
-(5,10,1,200.00,5,'F','2023-09-21 17:20:28',NULL,NULL),
-(6,11,2,600.00,5,'N','2023-09-21 17:30:37',NULL,NULL),
-(7,12,3,300.00,4,'N','2023-09-21 17:38:14',NULL,NULL),
-(8,13,1,200.00,3,'F','2023-09-24 00:34:14',NULL,NULL),
-(9,14,3,200.00,2,'F','2023-09-24 00:46:36',NULL,NULL),
-(10,15,1,200.00,3,'N','2023-09-24 18:59:11',NULL,NULL);
+(3,3,1,6000.00,2,'P','2023-09-28 11:13:08',NULL,NULL),
+(4,4,2,8000.00,3,'N','2023-09-28 11:13:08',NULL,NULL);
 
 /*Table structure for table `empresas` */
 
@@ -156,19 +123,14 @@ CREATE TABLE `empresas` (
   `inactive_at` datetime DEFAULT NULL,
   PRIMARY KEY (`idempresa`),
   UNIQUE KEY `uk3` (`ruc`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `empresas` */
 
 insert  into `empresas`(`idempresa`,`razonsocial`,`ruc`,`create_at`,`update_at`,`inactive_at`) values 
-(1,'ninguna','20124569854','2023-09-14 11:00:45',NULL,NULL),
-(2,'ninguna','20354126874','2023-09-14 11:00:45',NULL,NULL),
-(3,'ninguna','10234568985','2023-09-14 11:00:45',NULL,NULL),
-(4,'Avicola vania','11323235454','2023-09-14 12:47:42',NULL,NULL),
-(5,'Minera Viña Vieja','11435445453','2023-09-14 14:33:54',NULL,NULL),
-(6,'La del Valle','11435445400','2023-09-14 14:52:18',NULL,NULL),
-(8,'Minera new','11234343423','2023-09-18 18:57:12',NULL,NULL),
-(9,'prueba cliente','56565767878','2023-09-24 18:58:10',NULL,NULL);
+(1,'ninguna','20124569854','2023-09-28 10:58:38',NULL,NULL),
+(2,'ninguna','20354126874','2023-09-28 10:58:38',NULL,NULL),
+(3,'ninguna','10234568985','2023-09-28 10:58:38',NULL,NULL);
 
 /*Table structure for table `equipos` */
 
@@ -205,20 +167,20 @@ CREATE TABLE `garantia` (
   `fechaEjecucion` date NOT NULL,
   `problemadetectado` varchar(150) DEFAULT NULL,
   `solucion` varchar(150) DEFAULT NULL,
-  `estadogarantia` char(1) NOT NULL,
+  `estadogarantia` char(1) NOT NULL DEFAULT 'N',
   `inSitu` varchar(50) NOT NULL,
   PRIMARY KEY (`idgarantia`),
   KEY `fk8` (`iddescServicio`),
   KEY `fk9` (`idSoporteTecnico`),
   CONSTRAINT `fk8` FOREIGN KEY (`iddescServicio`) REFERENCES `desc_servicio` (`iddescServicio`),
   CONSTRAINT `fk9` FOREIGN KEY (`idSoporteTecnico`) REFERENCES `usuarios` (`idusuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `garantia` */
 
 insert  into `garantia`(`idgarantia`,`iddescServicio`,`idSoporteTecnico`,`fechaAveria`,`fechaEjecucion`,`problemadetectado`,`solucion`,`estadogarantia`,`inSitu`) values 
-(1,1,2,'0000-00-00','0000-00-00',NULL,NULL,'P','Local del cliente'),
-(2,2,1,'0000-00-00','0000-00-00',NULL,NULL,'P','Local del cliente');
+(3,3,2,'0000-00-00','0000-00-00',NULL,NULL,'P','Local del cliente'),
+(4,4,1,'0000-00-00','0000-00-00',NULL,NULL,'P','Local del cliente');
 
 /*Table structure for table `marcas` */
 
@@ -237,9 +199,9 @@ CREATE TABLE `marcas` (
 /*Data for the table `marcas` */
 
 insert  into `marcas`(`idmarca`,`marca`,`create_at`,`update_at`,`inactive_at`) values 
-(1,'TP Link','2023-09-14 11:30:30',NULL,NULL),
-(2,'Dell','2023-09-14 11:30:30',NULL,NULL),
-(3,'HP','2023-09-14 11:30:30',NULL,NULL);
+(1,'TP Link','2023-09-28 11:14:46',NULL,NULL),
+(2,'Dell','2023-09-28 11:14:46',NULL,NULL),
+(3,'HP','2023-09-28 11:14:46',NULL,NULL);
 
 /*Table structure for table `personas` */
 
@@ -258,19 +220,16 @@ CREATE TABLE `personas` (
   `inactive_at` datetime DEFAULT NULL,
   PRIMARY KEY (`idpersona`),
   UNIQUE KEY `uk1` (`dni`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `personas` */
 
 insert  into `personas`(`idpersona`,`nombres`,`apellidos`,`dni`,`correo`,`direccion`,`telefono`,`create_at`,`update_at`,`inactive_at`) values 
-(1,'Gonzalo','Garcia','75112365',NULL,'El carmen','962874521','2023-09-14 11:00:19',NULL,NULL),
-(2,'Camilo','Caceres','75412375',NULL,'El carmen','965874561','2023-09-14 11:00:19',NULL,NULL),
-(3,'Edu','Quiroz','72680725',NULL,'CP Guayabo','959282307','2023-09-14 11:00:19',NULL,NULL),
-(4,'Jean','Mateo','65985421',NULL,'Chincha','956854123','2023-09-14 11:00:19',NULL,NULL),
-(5,'Luis','Cusi','75412365',NULL,'El carmen','965874521','2023-09-14 11:00:19',NULL,NULL),
-(6,'Lucio','Herrera','76576825','Llucio02@gmail.com','Chincha Alta','965654565','2023-09-14 12:40:08',NULL,NULL),
-(7,'Fabrizio','Barrios','78776567','barri@gmail.com','Chincha Alta','976766754','2023-09-14 14:28:07',NULL,NULL),
-(8,'Maritza ','Gonzales Salazar','76768787','mari@gmail.com','El carmen-upis','978787678','2023-09-18 18:48:58',NULL,NULL);
+(1,'Gonzalo','Garcia','75112365',NULL,'El carmen','962874521','2023-09-28 10:58:13',NULL,NULL),
+(2,'Camilo','Caceres','75412375',NULL,'El carmen','965874561','2023-09-28 10:58:13',NULL,NULL),
+(3,'Edu','Quiroz','72680725',NULL,'CP Guayabo','959282307','2023-09-28 10:58:13',NULL,NULL),
+(4,'Jean','Mateo','65985421',NULL,'Chincha','956854123','2023-09-28 10:58:13',NULL,NULL),
+(5,'Luis','Cusi','75412365',NULL,'El carmen','965874521','2023-09-28 10:58:13',NULL,NULL);
 
 /*Table structure for table `servicios` */
 
@@ -278,22 +237,24 @@ DROP TABLE IF EXISTS `servicios`;
 
 CREATE TABLE `servicios` (
   `idservicio` int(11) NOT NULL AUTO_INCREMENT,
-  `tiposervicio` varchar(50) NOT NULL,
+  `idtiposervicio` int(11) NOT NULL,
   `nombreservicio` varchar(50) NOT NULL,
   `precioestimado` decimal(7,2) NOT NULL,
   `create_at` datetime NOT NULL DEFAULT current_timestamp(),
   `update_at` datetime DEFAULT NULL,
   `inactive_at` datetime DEFAULT NULL,
   PRIMARY KEY (`idservicio`),
-  UNIQUE KEY `uk4` (`tiposervicio`,`nombreservicio`)
+  UNIQUE KEY `uk4` (`nombreservicio`),
+  KEY `fk_idt_ser` (`idtiposervicio`),
+  CONSTRAINT `fk_idt_ser` FOREIGN KEY (`idtiposervicio`) REFERENCES `tiposervicios` (`idtiposervicio`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `servicios` */
 
-insert  into `servicios`(`idservicio`,`tiposervicio`,`nombreservicio`,`precioestimado`,`create_at`,`update_at`,`inactive_at`) values 
-(1,'instalaciones','instalacion de camaras',5000.00,'2023-09-14 11:13:31',NULL,NULL),
-(2,'instalacion','instalacion de servidores',6000.00,'2023-09-14 11:13:31',NULL,NULL),
-(3,'Mantenimiento','mantenimiento de servidores',7000.00,'2023-09-14 11:13:31',NULL,NULL);
+insert  into `servicios`(`idservicio`,`idtiposervicio`,`nombreservicio`,`precioestimado`,`create_at`,`update_at`,`inactive_at`) values 
+(1,1,'Instalación',5000.00,'2023-09-28 11:09:25',NULL,NULL),
+(2,1,'Configuración',6000.00,'2023-09-28 11:09:25',NULL,NULL),
+(3,1,'Mantenimiento Preventivo',7000.00,'2023-09-28 11:09:25',NULL,NULL);
 
 /*Table structure for table `tipoequipo` */
 
@@ -312,11 +273,31 @@ CREATE TABLE `tipoequipo` (
 /*Data for the table `tipoequipo` */
 
 insert  into `tipoequipo`(`idtipoequipo`,`tipoequipo`,`create_at`,`update_at`,`inactive_at`) values 
-(1,'Teclado','2023-09-14 11:28:15',NULL,NULL),
-(2,'Router','2023-09-14 11:28:15',NULL,NULL),
-(3,'Monitor','2023-09-14 11:28:15',NULL,NULL),
-(4,'Mouse','2023-09-14 11:28:15',NULL,NULL),
-(5,'Camaras','2023-09-14 11:28:15',NULL,NULL);
+(1,'Teclado','2023-09-28 11:14:31',NULL,NULL),
+(2,'Router','2023-09-28 11:14:31',NULL,NULL),
+(3,'Monitor','2023-09-28 11:14:31',NULL,NULL),
+(4,'Mouse','2023-09-28 11:14:31',NULL,NULL),
+(5,'Camaras','2023-09-28 11:14:31',NULL,NULL);
+
+/*Table structure for table `tiposervicios` */
+
+DROP TABLE IF EXISTS `tiposervicios`;
+
+CREATE TABLE `tiposervicios` (
+  `idtiposervicio` int(11) NOT NULL AUTO_INCREMENT,
+  `tiposervicio` varchar(50) NOT NULL,
+  PRIMARY KEY (`idtiposervicio`),
+  UNIQUE KEY `uk_tiposervicio` (`tiposervicio`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/*Data for the table `tiposervicios` */
+
+insert  into `tiposervicios`(`idtiposervicio`,`tiposervicio`) values 
+(5,'Consultoria'),
+(2,'Desarrollo y Posicionamiento'),
+(1,'Gestión y Mantenimiento'),
+(4,'Redes y Seguridad'),
+(3,'Servidores');
 
 /*Table structure for table `usuarios` */
 
@@ -340,8 +321,8 @@ CREATE TABLE `usuarios` (
 /*Data for the table `usuarios` */
 
 insert  into `usuarios`(`idusuario`,`idpersona`,`usuario`,`claveacceso`,`nivelacceso`,`create_at`,`update_at`,`inactive_at`) values 
-(1,3,'eduqcc08','$2y$10$DMiAVrfaIrsnJw7ec1mTR.ayjupqmYOHIQw.sBfhtSrzhdUctkla6','A','2023-09-14 11:00:40',NULL,NULL),
-(2,1,'gonzalo','$2y$10$HlTVamHz3CWx0.LqOIbvCeeE3lsIudvfW80Bebr6YoRjRUiVrogQW','E','2023-09-14 11:00:40',NULL,NULL);
+(1,3,'eduqcc08','123456','A','2023-09-28 10:58:27',NULL,NULL),
+(2,1,'gonzalo','123456','E','2023-09-28 10:58:27',NULL,NULL);
 
 /*!50106 set global event_scheduler = 1*/;
 
@@ -351,43 +332,62 @@ insert  into `usuarios`(`idusuario`,`idpersona`,`usuario`,`claveacceso`,`nivelac
 
 DELIMITER $$
 
-/*!50106 CREATE DEFINER=`root`@`localhost` EVENT `actualizarEstadoProceso` ON SCHEDULE EVERY 1 DAY STARTS '2023-09-24 00:54:49' ON COMPLETION NOT PRESERVE ENABLE DO begin 
-	update desc_servicio DS
-	inner join contratos CO on DS.idcontrato = CO.idcontrato	
-	set DS.estadoservicio = 'P'
-	where CO.fechainicio = curdate();
+/*!50106 CREATE DEFINER=`root`@`localhost` EVENT `actualizarEstadoProceso` ON SCHEDULE EVERY 1 DAY STARTS '2023-09-28 11:17:43' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN 
+	UPDATE desc_servicio DS
+	INNER JOIN contratos CO ON DS.idcontrato = CO.idcontrato	
+	SET DS.estadoservicio = 'P'
+	WHERE CO.fechainicio = CURDATE();
 
-end */$$
+END */$$
 DELIMITER ;
 
-/* Procedure structure for procedure `ListarDescEquipo` */
+/* Procedure structure for procedure `spu_activar_tipo` */
 
-/*!50003 DROP PROCEDURE IF EXISTS  `ListarDescEquipo` */;
+/*!50003 DROP PROCEDURE IF EXISTS  `spu_activar_tipo` */;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `ListarDescEquipo`()
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_activar_tipo`(
+	IN _idtipoequipo INT
+)
 BEGIN
-    SELECT
-        de.iddescEquipo AS idDesc_Equipo,
-        s.nombreservicio AS nombreServicio,
-        te.tipoequipo AS tipoequipo,
-        m.marca AS marca,
-        e.descripcion AS descripcion,
-        de.numSerie AS numSerie,
-        de.precio AS precio
-    FROM
-        desc_equipo de
-    INNER JOIN
-        equipos e ON de.idequipo = e.idequipo
-    INNER JOIN
-        tipoequipo te ON e.idtipoequipo = te.idtipoequipo
-    INNER JOIN
-        marcas m ON e.idmarca = m.idmarca
-    INNER JOIN
-        desc_servicio ds ON de.iddescServicio = ds.iddescServicio
-    INNER JOIN
-        servicios s ON ds.idservicio = s.idservicio;
+	UPDATE tipoequipo SET
+		inactive_at = NULL
+	WHERE idtipoequipo = _idtipoequipo;
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `spu_buscar_persona` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `spu_buscar_persona` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_buscar_persona`(IN _dni CHAR(8))
+BEGIN
+SELECT
+	idpersona,
+	nombres,
+	apellidos
+	
+FROM personas
+WHERE dni = _dni;
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `spu_buscar_tipoe` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `spu_buscar_tipoe` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_buscar_tipoe`(IN _tipoequipo VARCHAR(30))
+BEGIN
+SELECT
+	idtipoequipo,
+	tipoequipo
+FROM tipoequipo
+WHERE tipoequipo = _tipoequipo;
 END */$$
 DELIMITER ;
 
@@ -443,6 +443,42 @@ BEGIN
 	INSERT INTO clientes (idpersona) VALUES
 			(g_idpersona);
 
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `spu_clientes_buscar` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `spu_clientes_buscar` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_clientes_buscar`(IN _search VARCHAR(100))
+BEGIN 
+	SELECT
+		CLI.idcliente,
+	    COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) AS clientes
+	FROM clientes CLI
+	LEFT JOIN personas PE ON CLI.idpersona = PE.idpersona
+	LEFT JOIN empresas EM ON CLI.idempresa = EM.idempresa
+	WHERE COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) LIKE CONCAT('%', _search, '%');
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `spu_clientes_garantia` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `spu_clientes_garantia` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_clientes_garantia`(IN _search VARCHAR(100))
+BEGIN 
+	SELECT
+		CLI.idcliente,
+	    COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) AS clientes
+	FROM clientes CLI
+	LEFT JOIN personas PE ON CLI.idpersona = PE.idpersona
+	LEFT JOIN empresas EM ON CLI.idempresa = EM.idempresa
+	WHERE COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) LIKE CONCAT('%', _search, '%');
 END */$$
 DELIMITER ;
 
@@ -508,7 +544,7 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_detalleContratos_listar`(in _idcontrato INT)
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_detalleContratos_listar`(IN _idcontrato INT)
 BEGIN
 
 	SELECT 
@@ -517,12 +553,12 @@ BEGIN
 	  SE.nombreservicio, CO.observacion,
 	 DS.precioservicio, CO.fechainicio, CO.garantia
 	FROM desc_servicio DS
-	inner join servicios SE on SE.idservicio = DS.idservicio
+	INNER JOIN servicios SE ON SE.idservicio = DS.idservicio
 	INNER JOIN contratos CO ON CO.idcontrato = DS.idcontrato
 	INNER JOIN clientes CLI ON CLI.idcliente = CO.idcliente
 	LEFT JOIN personas PE ON PE.idpersona = CLI.idpersona
 	LEFT JOIN empresas EM ON EM.idempresa = CLI.idempresa
-	where CO.idcontrato = _idcontrato;
+	WHERE CO.idcontrato = _idcontrato;
 
 END */$$
 DELIMITER ;
@@ -537,12 +573,15 @@ DELIMITER $$
 	IN _idequipo	INT,
 	IN _idtipoequipo INT,
 	IN _idmarca	INT,
-	IN _descripción	VARCHAR(100)
+	IN _descripción	VARCHAR(100),
+	IN _numSerie  VARCHAR(50)
 )
 BEGIN 
 	UPDATE equipos SET
 		idtipoequipo = _idtipoequipo,
-		idmarca  = _idmarca
+		idmarca  = _idmarca,
+		descripcion = _descripcion,
+		numSerie = _numSerie
 	WHERE idequipo = _idequipo;
 END */$$
 DELIMITER ;
@@ -555,7 +594,7 @@ DELIMITER $$
 
 /*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_equipos_listar`()
 BEGIN
-	SELECT idequipo , tipoequipo, marca ,descripcion
+	SELECT idequipo , tipoequipo, marca ,descripcion,numSerie
 	FROM  equipos
 	INNER JOIN tipoequipo ON tipoequipo.`idtipoequipo` = equipos.`idtipoequipo`
 	INNER JOIN marcas ON marcas.`idmarca` = equipos.`idmarca`
@@ -579,25 +618,6 @@ BEGIN
 END */$$
 DELIMITER ;
 
-/* Procedure structure for procedure `spu_equipo_listar` */
-
-/*!50003 DROP PROCEDURE IF EXISTS  `spu_equipo_listar` */;
-
-DELIMITER $$
-
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_equipo_listar`()
-BEGIN
-SELECT idequipo,
-	tipoequipo,
-	marca,
-	descripcion
-FROM equipos
-	INNER JOIN tipoequipo ON tipoequipo.idtipoequipo = equipos.idtipoequipo
-	INNER JOIN marcas ON marcas.idmarca = equipos.idmarca
-	ORDER BY idequipo DESC;
-END */$$
-DELIMITER ;
-
 /* Procedure structure for procedure `spu_equipo_registrar` */
 
 /*!50003 DROP PROCEDURE IF EXISTS  `spu_equipo_registrar` */;
@@ -607,11 +627,62 @@ DELIMITER $$
 /*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_equipo_registrar`(
 	IN _idtipoequipo	INT,
 	IN _idmarca		INT,
-	IN _descripcion		VARCHAR(100)
+	IN _descripcion		VARCHAR(100),
+	IN _numSerie 		VARCHAR(50)
 )
 BEGIN
-	INSERT INTO equipos (idtipoequipo, idmarca, descripcion)
-		VALUES (_idtipoequipo, _idmarca, _descripcion);
+	INSERT INTO equipos (idtipoequipo, idmarca, descripcion, numSerie)
+		VALUES (_idtipoequipo, _idmarca, _descripcion, _numSerie);
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `spu_filtroC_cliente` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `spu_filtroC_cliente` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_filtroC_cliente`(IN _idcliente INT)
+BEGIN 
+
+	SELECT 
+	 COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) AS clientes,
+	 DATE(CO.fechacontrato) AS fechacontrato, SE.tiposervicio,
+	  SE.nombreservicio, CO.observacion,
+	 DS.precioservicio, CO.fechainicio, CO.garantia
+	FROM desc_servicio DS
+	INNER JOIN servicios SE ON SE.idservicio = DS.idservicio
+	INNER JOIN contratos CO ON CO.idcontrato = DS.idcontrato
+	INNER JOIN clientes CLI ON CLI.idcliente = CO.idcliente
+	LEFT JOIN personas PE ON PE.idpersona = CLI.idpersona
+	LEFT JOIN empresas EM ON EM.idempresa = CLI.idempresa
+	WHERE CLI.idcliente = _idcliente;
+
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `spu_filtroG_cliente` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `spu_filtroG_cliente` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_filtroG_cliente`(IN _idcliente INT)
+BEGIN 
+
+	SELECT 
+	 COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) AS clientes,
+		SE.nombreservicio, CONCAT(PE.nombres, ' ', PE.apellidos)AS Tecnico,
+		GA.fechaAveria,GA.fechaEjecucion , GA.problemadetectado,  GA.solucion, GA.inSitu
+	FROM garantia GA
+	INNER JOIN desc_servicio DE ON DE.iddescServicio = GA.iddescServicio
+	INNER JOIN servicios SE ON SE.idservicio = DE.idservicio
+	INNER JOIN contratos CO ON CO.idcontrato = DE.idcontrato
+	INNER JOIN clientes CLI ON CLI.idcliente = CO.idcliente
+	LEFT JOIN personas PE ON PE.idpersona = CLI.idpersona
+	LEFT JOIN empresas EM ON EM.idempresa = CLI.idempresa
+	WHERE CLI.idcliente = _idcliente;
+
 END */$$
 DELIMITER ;
 
@@ -635,6 +706,24 @@ BEGIN
 END */$$
 DELIMITER ;
 
+/* Procedure structure for procedure `spu_garantia_listar` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `spu_garantia_listar` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_garantia_listar`()
+BEGIN
+SELECT  idgarantia, servicios.nombreservicio, CONCAT(personas.apellidos, ' ', personas.nombres) AS Tecnico, fechaAveria, fechaEjecucion, problemadetectado, solucion, estadogarantia, inSitu
+FROM garantia
+INNER JOIN desc_servicio ON desc_servicio.iddescServicio = garantia.iddescServicio
+INNER JOIN servicios ON servicios.idservicio = desc_servicio.idservicio
+INNER JOIN usuarios ON usuarios.idusuario = garantia.idsoporteTecnico
+INNER JOIN personas ON personas.idpersona = usuarios.idusuario
+ORDER BY idgarantia DESC;
+END */$$
+DELIMITER ;
+
 /* Procedure structure for procedure `spu_getClientes` */
 
 /*!50003 DROP PROCEDURE IF EXISTS  `spu_getClientes` */;
@@ -646,7 +735,7 @@ BEGIN
 
 	SELECT
 		CLI.idcliente,
-	    COALESCE(EM.razonsocial, concat(PE.nombres , ' ' , PE.apellidos)) AS clientes
+	    COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) AS clientes
 	FROM clientes CLI
 	LEFT JOIN personas PE ON CLI.idpersona = PE.idpersona
 	LEFT JOIN empresas EM ON CLI.idempresa = EM.idempresa;
@@ -662,11 +751,11 @@ DELIMITER ;
 DELIMITER $$
 
 /*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_getServicios`()
-begin 
-	select idservicio, nombreservicio
-	from servicios;
+BEGIN 
+	SELECT idservicio, nombreservicio
+	FROM servicios;
 
-end */$$
+END */$$
 DELIMITER ;
 
 /* Procedure structure for procedure `spu_marcas_recuperar` */
@@ -741,6 +830,46 @@ DELIMITER $$
 BEGIN
 	INSERT INTO marcas (marca) VALUES
 		(_marca);
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `spu_register_userid` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `spu_register_userid` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_register_userid`(
+	IN _idpersona INT,
+	IN _usuario	VARCHAR(100),
+	IN _claveacceso	VARCHAR(100),
+	IN _nivelacceso CHAR(1)
+)
+BEGIN
+INSERT INTO usuarios (idpersona, usuario, claveacceso, nivelacceso) VALUES
+	(_idpersona, _usuario, _claveacceso, _nivelacceso);
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `spu_registrar_garantia` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `spu_registrar_garantia` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_registrar_garantia`(
+IN _iddescServicio INT,
+IN _idSoporteTecnico INT,
+IN _fechaAveria	DATE,
+IN _fechaEjecucion DATE,
+IN _problemadetectado VARCHAR(150),
+IN _solucion VARCHAR(150),
+IN _inSitu VARCHAR(50)
+)
+BEGIN 
+
+	INSERT INTO garantia (iddescServicio, idSoporteTecnico, fechaAveria, fechaEjecucion, problemadetectado, solucion, inSitu)VALUES
+	(_iddescServicio, _idSoporteTecnico, _fechaAveria, _fechaEjecucion, _problemadetectado, _solucion, _inSitu);
 END */$$
 DELIMITER ;
 
@@ -907,15 +1036,21 @@ DELIMITER ;
 DELIMITER $$
 
 /*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `spu_user_login`(IN _usuario VARCHAR(30))
-BEGIN 
-
-	SELECT 	usuarios.idusuario, 
-		personas.apellidos, personas.nombres,
-		usuarios.usuario, usuarios.claveacceso
-
-	FROM usuarios
-	INNER JOIN personas ON personas.idpersona = usuarios.idpersona
-	WHERE usuario = _usuario;
+BEGIN
+  SELECT
+    usuarios.idusuario,
+    personas.apellidos,
+    personas.nombres,
+    usuarios.usuario,
+    usuarios.claveacceso,
+    personas.correo,
+    personas.dni,
+    personas.direccion,
+    personas.telefono,
+    personas.idpersona
+  FROM usuarios
+  INNER JOIN personas ON personas.idpersona = usuarios.idpersona
+  WHERE usuario = _usuario;
 END */$$
 DELIMITER ;
 
@@ -930,7 +1065,7 @@ DELIMITER $$
 IN _nombres 	VARCHAR(30),
 IN _apellidos 	VARCHAR(30),
 IN _dni		CHAR(8),
-IN _correo 		VARCHAR(40),
+IN _correo 	VARCHAR(40),
 IN _direccion	VARCHAR(50),
 IN _telefono	CHAR(9),
 IN _usuario VARCHAR(40),

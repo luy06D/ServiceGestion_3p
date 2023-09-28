@@ -1,8 +1,6 @@
 CREATE DATABASE DB_3P;
 USE DB_3P;
 
-SELECT * FROM personas
-SELECT * FROM clientes
 CREATE TABLE personas
 (
 idpersona 		INT AUTO_INCREMENT PRIMARY KEY,
@@ -24,7 +22,7 @@ INSERT INTO personas(nombres, apellidos, dni, direccion, telefono)VALUES
 ('Camilo','Caceres','75412375','El carmen','965874561'),
 ('Edu','Quiroz','72680725','CP Guayabo','959282307'),
 ('Jean','Mateo','65985421','Chincha','956854123'),
-('Luis','Cusi','75412365','El carmen','965874521')
+('Luis','Cusi','75412365','El carmen','965874521');
 
 
 CREATE TABLE usuarios
@@ -44,8 +42,8 @@ CONSTRAINT uk2 UNIQUE(usuario, idpersona)
 
 INSERT INTO usuarios(idpersona, usuario, claveacceso, nivelacceso)VALUES
 (3, 'eduqcc08', '123456', 'A'),
-(1, 'gonzalo','123456', 'E')
-()
+(1, 'gonzalo','123456', 'E');
+
 
 CREATE TABLE empresas
 (
@@ -63,7 +61,7 @@ CONSTRAINT uk3 UNIQUE (ruc)
 INSERT INTO empresas(razonsocial, ruc)VALUES
 ('ninguna', '20124569854'),
 ('ninguna','20354126874'),
-('ninguna', '10234568985')
+('ninguna', '10234568985');
 
 CREATE TABLE clientes
 (
@@ -99,28 +97,43 @@ CONSTRAINT fk5	FOREIGN KEY (idusuario) REFERENCES usuarios(idusuario)
 )ENGINE = INNODB;
 
 INSERT INTO contratos(idusuario, idcliente, fechainicio, observacion, garantia)VALUES
-(1, 2, '15-09-2023', 'nada que decir', '1 mes'),
-(2,1,'18-09-2023', 'nada que decir', '2 semanas')
+(1, 1, '15-09-2023', 'nada que decir', '1 mes'),
+(2,1,'18-09-2023', 'nada que decir', '2 semanas');
 
+CREATE TABLE tiposervicios
+(
+idtiposervicio	INT AUTO_INCREMENT PRIMARY KEY,
+tiposervicio	VARCHAR(50) NOT NULL,
+
+CONSTRAINT uk_tiposervicio UNIQUE (tiposervicio)
+)ENGINE = INNODB;
+
+INSERT INTO tiposervicios(tiposervicio) VALUES
+		('Gestión y Mantenimiento'),
+		('Desarrollo y Posicionamiento'),
+		('Servidores'),
+		('Redes y Seguridad'),
+		('Consultoria');
+		
 
 CREATE TABLE servicios
 (
 idservicio	INT AUTO_INCREMENT PRIMARY KEY,
-tiposervicio	VARCHAR(50) NOT NULL,
+idtiposervicio	INT NOT NULL,
 nombreservicio	VARCHAR(50) NOT NULL,
 precioestimado DECIMAL(7,2) NOT NULL,
 create_at	DATETIME	NOT NULL DEFAULT NOW(),
 update_at	DATETIME	NULL,
 inactive_at	DATETIME NULL,
-
-CONSTRAINT uk4 UNIQUE (tiposervicio, nombreservicio)
+CONSTRAINT uk4 UNIQUE (nombreservicio),
+CONSTRAINT fk_idt_ser FOREIGN KEY (idtiposervicio) REFERENCES tiposervicios (idtiposervicio)
 
 )ENGINE=INNODB;
 
-INSERT INTO servicios(tiposervicio, nombreservicio, precioestimado)VALUES
-('instalaciones', 'instalacion de camaras', 5000),
-('instalacion','instalacion de servidores',6000),
-('Mantenimiento', 'mantenimiento de servidores',7000)
+INSERT INTO servicios(idtiposervicio, nombreservicio, precioestimado)VALUES
+(1, 'Instalación', 5000),
+(1,'Configuración',6000),
+(1, 'Mantenimiento Preventivo',7000);
 
 CREATE TABLE desc_servicio
 (
@@ -140,8 +153,9 @@ CONSTRAINT fk7	FOREIGN KEY (idservicio) REFERENCES servicios(idservicio)
 
 ALTER TABLE desc_servicio MODIFY estadoservicio CHAR (1) NOT NULL DEFAULT 'N'
 INSERT INTO desc_servicio(idcontrato, idservicio, precioservicio, cantidad, estadoservicio)VALUES
-(1, 1, 6000, 2, 'P'),
-(2,2,8000,3,'N');
+(3, 1, 6000, 2, 'P'),
+(4,2,8000,3,'N');
+
 
 CREATE TABLE garantia
 (
@@ -160,8 +174,8 @@ CONSTRAINT fk9	FOREIGN KEY (idSoporteTecnico) REFERENCES usuarios(idusuario)
 )ENGINE = INNODB;
 
 INSERT INTO garantia(iddescServicio, idSoporteTecnico, fechaAveria, fechaEjecucion, estadogarantia, inSitu)VALUES
-(1, 2, '10-09-2023', '16-09-2023', 'P', 'Local del cliente'),
-(2,1,'10-09-2023', '16-09-2023', 'P', 'Local del cliente')
+(3, 2, '10-09-2023', '16-09-2023', 'P', 'Local del cliente'),
+(4,1,'10-09-2023', '16-09-2023', 'P', 'Local del cliente');
 
 
 CREATE TABLE tipoequipo
@@ -180,7 +194,7 @@ INSERT INTO tipoequipo(tipoequipo)VALUES
 ('Router'),
 ('Monitor'),
 ('Mouse'),
-('Camaras')
+('Camaras');
 
 CREATE TABLE marcas
 (
@@ -196,7 +210,7 @@ CONSTRAINT uk6 UNIQUE (marca)
 INSERT INTO marcas(marca)VALUES
 ('TP Link'),
 ('Dell'),
-('HP')
+('HP');
 
 
 CREATE TABLE equipos
@@ -215,8 +229,6 @@ INSERT INTO equipos(idtipoequipo, idmarca, descripcion)VALUES
 (2,3,'nada que decir');
 
 ALTER TABLE equipos ADD numSerie VARCHAR(50) NOT NULL;
-
-
 
 CREATE TABLE desc_equipo
 (
@@ -839,6 +851,10 @@ END $$
 CALL spu_filtroC_cliente(1);
 
 
+-- MOSTRAR TIPOS DE SERVICIO
+
+
+SELECT * FROM servicios
 
 
 
@@ -880,7 +896,7 @@ END$$
 CALL spu_garantia_listar
 
 SELECT * FROM usuarios
-ALTER TABLE garantia MODIFY estadogarantia CHAR(1) NOT NULL DEFAULT 'N'
+ALTER TABLE garantia MODIFY estadogarantia CHAR(1) NOT NULL DEFAULT 'N';
 
 DELIMITER $$ 
 CREATE PROCEDURE spu_registrar_garantia

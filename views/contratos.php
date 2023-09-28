@@ -163,19 +163,23 @@
                                           <label for="inputPassword5" class="form-label">Garantia</label>
                                           <input type="text" class="form-control" id="garantia">
                                         </div>                                              
-                                        <div class="col-md-6">
-                                          <label for="observacion" class="form-label">Observación</label>
-                                          <textarea class="form-control" id="observacion" rows="3"></textarea>
-                                        </div>
+                                      
                                       
                                         <h5 class="card-title">Detalles </h5>
+                                        <div class="col-md-4">
+                                            <label for="" class="form-label">Tipo Servicio</label>
+                                            <select id="" class="form-select">
+                                              <option>Seleccione</option>
+                                              
+                                            </select>
+                                        </div> 
                                         <div class="col-md-4">
                                             <label for="lsServicios" class="form-label">Servicio</label>
                                             <select id="lsServicios" class="form-select">
                                               <option>Seleccione</option>
                                               
                                             </select>
-                                        </div> 
+                                        </div>
                                         <div class="col-md-4">
                                           <label for="precio" class="form-label">Precio</label>
                                           <input type="number" class="form-control" id="precio">
@@ -183,7 +187,12 @@
                                         <div class="col-md-4">
                                           <label for="cantidad" class="form-label">Cantidad</label>
                                           <input type="number" class="form-control" id="cantidad">
+                                        </div>                                       
+                                        <div class="col-md-6">
+                                          <label for="observacion" class="form-label">Observación</label>
+                                          <textarea class="form-control" id="observacion" rows="3"></textarea>
                                         </div>
+                                   
                                         <div class="">
                                           <button type="button" id="btnContrato" class="btn btn-primary shadow-lg">Registrar</button>
                                           <button type="reset" class="btn btn-secondary shadow-lg">Limpiar</button>
@@ -269,8 +278,7 @@
                                         <div class=" col-md-4 col-lg-3">                                        
                                                                                                                     
                                             <select class="form-select" id="cliente-ls" aria-label="Default select example">
-                                                <option selected>Seleccione</option>
-                                                <option value="2">Jean mateo</option>                                           
+                                                <option selected>Seleccione</option>                                                                                 
                                             </select>
                                                                    
                                         </div>
@@ -711,7 +719,7 @@
             completeCampos();
 
             }else{
-              toastFinalizar("Contrato finalizado");
+              toastFinalizar("Contrato registrado correctamente");
 
                 $.ajax({
                   url:'../controllers/contratos.controller.php',
