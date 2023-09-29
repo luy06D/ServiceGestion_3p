@@ -34,7 +34,7 @@ class Servicios extends Conexion{
             $consulta = $this->access->prepare("CALL spu_servicios_registrar(?,?,?)");
             $respuesta["status"] = $consulta->execute(array(
 
-                $data["tiposervicio"],
+                $data["idtiposervicio"],
                 $data["nombreservicio"],
                 $data["precioestimado"]
             ));
@@ -64,7 +64,7 @@ class Servicios extends Conexion{
             $consulta = $this->access->prepare("CALL spu_servicios_update(?,?,?,?)");
             $consulta->execute(array(
                 $data['idservicio'],
-                $data['tiposervicio'],
+                $data['idtiposervicio'],
                 $data['nombreservicio'],
                 $data['precioestimado']
                 
@@ -82,5 +82,19 @@ class Servicios extends Conexion{
     }catch(Exception $e){
         die($e->getMessage());
        }
+    }
+
+    public function getTipoServicios(){
+
+        try{
+            $query = $this->access->prepare("CALL spu_tipo_select()");
+            $query->execute();
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+    
+        }
+        catch(Exception $e){
+            die($e->getMessage());
+        }
+    
     }
 }

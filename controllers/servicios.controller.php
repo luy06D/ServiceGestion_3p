@@ -38,7 +38,7 @@ if(isset($_GET['operacion'])){
     if($_GET['operacion'] == 'RegistrarServicio'){
 
         $datos = [
-            "tiposervicio"        => $_GET['tiposervicio'], 
+            "idtiposervicio"        => $_GET['idtiposervicio'], 
             "nombreservicio"        => $_GET['nombreservicio'],   
             "precioestimado"      => $_GET['precioestimado']
         ];
@@ -52,7 +52,7 @@ if(isset($_GET['operacion'])){
     if($_GET['operacion'] == 'Update'){
         $datos = [
             "idservicio"  => $_GET['idservicio'],
-            "tiposervicio"  => $_GET['tiposervicio'],
+            "idtiposervicio"  => $_GET['idtiposervicio'],
             "nombreservicio"  => $_GET['nombreservicio'],
             "precioestimado"  => $_GET['precioestimado']
 
@@ -65,4 +65,16 @@ if(isset($_GET['operacion'])){
     }
 
 
+
+
+}
+
+if(isset($_POST['operacion'])){
+
+    $servicios = new Servicios();
+
+    if($_POST['operacion'] == 'getServicios'){
+
+        echo json_encode($servicios->getTipoServicios());
+    }
 }

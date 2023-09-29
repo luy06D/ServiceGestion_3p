@@ -256,8 +256,9 @@ INSERT INTO desc_equipo(idequipo, iddescServicio, numSerie, precio)VALUES
 DELIMITER $$
 CREATE PROCEDURE spu_servicios_listar()
 BEGIN
-SELECT idservicio, tiposervicio, nombreservicio, precioestimado
+SELECT idservicio, tiposervicios.tiposervicio AS tiposervicio , nombreservicio, precioestimado
  FROM servicios
+INNER JOIN tiposervicios ON tiposervicios.idtiposervicio = servicios.idtiposervicio 
  WHERE inactive_at IS NULL;
  END$$
 
@@ -267,40 +268,44 @@ CALL spu_servicios_listar
 DELIMITER $$
 CREATE PROCEDURE spu_servicios_registrar
 (
-IN _tiposervicio VARCHAR(50),
+IN _idtiposervicio INT,
 IN _nombreservicio VARCHAR(50),
 IN _precioestimado DECIMAL(7,2)
 )
 BEGIN 
-	INSERT INTO servicios (tiposervicio, nombreservicio, precioestimado)VALUES
-	(_tiposervicio, _nombreservicio, _precioestimado);
+	INSERT INTO servicios (idtiposervicio, nombreservicio, precioestimado)VALUES
+	(_idtiposervicio, _nombreservicio, _precioestimado);
 END$$
 	
-	CALL spu_servicios_registrar('Reparacion', 'reparacion de pc', 50)
+	CALL spu_servicios_registrar(1, 'reparacion de pc', 50)
 	
 	
 DELIMITER$$
 CREATE PROCEDURE spu_servicios_obtener
 (IN _idservicio INT)
 BEGIN 
-SELECT tiposervicio, nombreservicio, precioestimado
+SELECT tiposervicios.tiposervicio AS tiposervicio, nombreservicio, precioestimado
 FROM servicios
+INNER JOIN tiposervicios ON tiposervicios.idtiposervicio = servicios.idtiposervicio
 WHERE idservicio = _idservicio;
 END$$
 
-CALL spu_servicios_obtener(4)
+
+
+CALL spu_servicios_obtener(2)
+
 
 DELIMITER $$
 CREATE PROCEDURE spu_servicios_update
 (
 IN _idservicio INT,
-IN _tiposervicio VARCHAR(50),
+IN _idtiposervicio INT,
 IN _nombreservicio VARCHAR(50),
 IN _precioestimado DECIMAL(7,2)
 )
 BEGIN
 	UPDATE servicios SET
-	tiposervicio = _tiposervicio,
+	idtiposervicio = _idtiposervicio,
 	nombreservicio = _nombreservicio,
 	precioestimado = _precioestimado
 	
@@ -316,8 +321,17 @@ BEGIN
 			WHERE idservicio = _idservicio;
 END$$
 
+DELIMITER $$
+CREATE PROCEDURE spu_tipo_select()
+BEGIN
+SELECT * FROM tiposervicios
+ORDER BY idtiposervicio;
+END$$
+
+
 	
-CALL spu_servicios_update(6, 'Reparacion', 'Reparacion de Laptop', 30)
+CALL spu_servicios_update(2, 1, 'Reparacion de Laptop', 30)
+SELECT * FROM usuarios
 
 
 -- SPU BUSCAR PERSONAS --
@@ -385,8 +399,6 @@ BEGIN
 			(g_idpersona, _usuario, _claveacceso, _nivelacceso);	
 
 END$$
-
-CALL spu_usuario_registrar ('Antonio','Torres Feijo','79461340','antonio@gmail.com','Chincha','987654321','anton10','123456','E');
 
 
 -- REGGISTRAR USUARIO POR IDPERSONA

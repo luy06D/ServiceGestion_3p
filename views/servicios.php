@@ -1,4 +1,4 @@
-<?php include '../principal/cabezera.php' ?>
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
   <!-- DataTable -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
@@ -56,9 +56,12 @@
         <form action="" id="form-servicios">
           <div class="col-lg-12">
             <div class="input-group mt-4">
-              <label class="input-group-text" for="inputGroupSelect02"><i class='bx bx-cart-add'></i></label>
-              <input type="text" placeholder="Tipo de Servicio" class="form-control" id="tipos">
-            </div>
+
+            <select id="tipos" class="form-select">
+              <option value=""></option>
+              
+            </select>
+          </div>
           </div>
           <div class="col-lg-12">
             <div class="input-group mt-4">
@@ -132,7 +135,7 @@
   const PrecioE = document.querySelector("#precioe").value.trim();
 
   let datosEnviar = {
-    'tiposervicio': $("#tipos").val(),
+    'idtiposervicio': $("#tipos").val(),
     'nombreservicio': $("#nombres").val(),
     'precioestimado': $("#precioe").val(),
   };
@@ -179,6 +182,29 @@
     }
   });
 }
+
+function mostrartipo(){
+
+                const lsServicio = document.querySelector("#tipos");
+                const parameters = new URLSearchParams();
+                parameters.append("operacion", "getServicios");
+
+                fetch("../controllers/servicios.controller.php", {
+                method: 'POST',
+                body: parameters
+                })
+                .then(response => response.json())
+                .then(data => {
+                lsServicio.innerHTML = "<option value=''>Seleccione </option>";
+                data.forEach(element => {
+                    const optionTag = document.createElement("option");
+                    optionTag.value = element.idtiposervicio
+                    optionTag.text = element.tiposervicio;
+                    lsServicio.appendChild(optionTag);
+                    
+                });
+                });
+      }
 
 
   function mostrarDatos(id) {
@@ -238,7 +264,7 @@
       idservicio = $(this).data("idservicio");
       eliminar(idservicio);
     });
-
+    mostrartipo();
     ListarServicio();
     $("#Registrar").click(registrarServicios);
   });
