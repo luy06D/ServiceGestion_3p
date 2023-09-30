@@ -17,13 +17,15 @@ inactive_at		DATETIME		NULL,
 CONSTRAINT uk1	UNIQUE (dni)
 )ENGINE=INNODB;
 
+ALTER TABLE personas MODIFY direccion VARCHAR(50) NOT NULL
+ALTER TABLE personas MODIFY telefono CHAR(9) NOT NULL
 INSERT INTO personas(nombres, apellidos, dni, direccion, telefono)VALUES
 ('Gonzalo','Garcia','75112365','El carmen','962874521'),
 ('Camilo','Caceres','75412375','El carmen','965874561'),
 ('Edu','Quiroz','72680725','CP Guayabo','959282307'),
 ('Jean','Mateo','65985421','Chincha','956854123'),
 ('Luis','Cusi','75412365','El carmen','965874521');
-
+SELECT * FROM personas
 
 CREATE TABLE usuarios
 (
@@ -331,7 +333,7 @@ END$$
 
 	
 CALL spu_servicios_update(2, 1, 'Reparacion de Laptop', 30)
-SELECT * FROM usuarios
+
 
 
 -- SPU BUSCAR PERSONAS --
@@ -370,7 +372,7 @@ BEGIN
   WHERE usuario = _usuario;
 END$$
 
-
+ 
 -- REGISTRAR NUEVO USUARIO --
 DELIMITER $$
 CREATE PROCEDURE spu_usuario_registrar 
