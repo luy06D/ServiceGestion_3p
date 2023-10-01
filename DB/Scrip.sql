@@ -726,12 +726,16 @@ CALL spu_getClientes();
 
 -- GET SERVICIOS 
 DELIMITER $$
-CREATE PROCEDURE spu_getServicios()
+CREATE PROCEDURE spu_getServicios(IN _idtiposervicio VARCHAR(50))
 BEGIN 
-	SELECT idservicio, nombreservicio
-	FROM servicios;
+	SELECT SE.idservicio, SE.nombreservicio
+	FROM servicios SE
+	INNER JOIN tiposervicios TS ON TS.idtiposervicio = SE.idtiposervicio
+	WHERE TS.idtiposervicio = _idtiposervicio;
 
 END $$ 
+
+CALL spu_getServicios(1);
 
 
 -- REGISTRAR CONTRATO
@@ -842,18 +846,19 @@ END$$
 CALL spu_clientes_buscar("fa");
 
 
+
 -- FILTRO DE CONTRATO POR CLIENTE 
 DELIMITER $$
 CREATE PROCEDURE spu_filtroC_cliente(IN _idcliente INT)
 BEGIN 
 
 	SELECT 
-	 COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) AS clientes,
-	 DATE(CO.fechacontrato) AS fechacontrato, SE.tiposervicio,
-	  SE.nombreservicio, CO.observacion,
-	 DS.precioservicio, CO.fechainicio, CO.garantia
+	 DS.iddescServicio, COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) AS clientes,
+	DS.estadoservicio, DATE(CO.fechacontrato) AS fechacontrato,CO.fechainicio, CO.fechacierre ,
+	TS.tiposervicio, SE.nombreservicio, DS.precioservicio,DS.cantidad, CO.garantia
 	FROM desc_servicio DS
 	INNER JOIN servicios SE ON SE.idservicio = DS.idservicio
+	INNER JOIN tiposervicios TS ON TS.idtiposervicio = SE.idtiposervicio
 	INNER JOIN contratos CO ON CO.idcontrato = DS.idcontrato
 	INNER JOIN clientes CLI ON CLI.idcliente = CO.idcliente
 	LEFT JOIN personas PE ON PE.idpersona = CLI.idpersona
@@ -864,14 +869,81 @@ END $$
 
 CALL spu_filtroC_cliente(1);
 
+SELECT * FROM desc_servicio
 
--- MOSTRAR TIPOS DE SERVICIO
+-- FILTRO DE CONTRATO POR FECHAS
+
+DELIMITER $$
+CREATE PROCEDURE spu_filtroC_fechas
+(
+IN _fechaI DATE,
+IN _fechaF DATE
+)
+BEGIN 
+
+		SELECT 
+	 DS.iddescServicio, COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) AS clientes,
+	DS.estadoservicio, DATE(CO.fechacontrato) AS fechacontrato,CO.fechainicio, CO.fechacierre ,
+	TS.tiposervicio, SE.nombreservicio, DS.precioservicio,DS.cantidad, CO.garantia
+	FROM desc_servicio DS
+	INNER JOIN servicios SE ON SE.idservicio = DS.idservicio
+	INNER JOIN tiposervicios TS ON TS.idtiposervicio = SE.idtiposervicio
+	INNER JOIN contratos CO ON CO.idcontrato = DS.idcontrato
+	INNER JOIN clientes CLI ON CLI.idcliente = CO.idcliente
+	LEFT JOIN personas PE ON PE.idpersona = CLI.idpersona
+	LEFT JOIN empresas EM ON EM.idempresa = CLI.idempresa
+	WHERE  DATE(CO.fechacontrato) BETWEEN _fechaI AND _fechaF;
+
+END $$
+
+CALL spu_filtroC_fechas('2023-10-03','2023-10-30');
 
 
-SELECT * FROM servicios
+-- FILTRO DE CONTRATO POR CLIENTE & FECHAS
+
+DELIMITER $$
+CREATE PROCEDURE spu_filtroC_fechaCliente
+(
+IN _idcliente INT,
+IN _fechaI DATE,
+IN _fechaF DATE
+)
+BEGIN 
+
+	SELECT 
+	DS.iddescServicio, COALESCE(EM.razonsocial, CONCAT(PE.nombres , ' ' , PE.apellidos)) AS clientes,
+	DS.estadoservicio, DATE(CO.fechacontrato) AS fechacontrato,CO.fechainicio, CO.fechacierre ,
+	TS.tiposervicio, SE.nombreservicio, DS.precioservicio,DS.cantidad, CO.garantia
+	FROM desc_servicio DS
+	INNER JOIN servicios SE ON SE.idservicio = DS.idservicio
+	INNER JOIN tiposervicios TS ON TS.idtiposervicio = SE.idtiposervicio
+	INNER JOIN contratos CO ON CO.idcontrato = DS.idcontrato
+	INNER JOIN clientes CLI ON CLI.idcliente = CO.idcliente
+	LEFT JOIN personas PE ON PE.idpersona = CLI.idpersona
+	LEFT JOIN empresas EM ON EM.idempresa = CLI.idempresa
+	WHERE CLI.idcliente = _idcliente AND DATE(CO.fechacontrato) BETWEEN _fechaI AND _fechaF;
+
+END $$
+
+CALL spu_filtroC_fechaCliente(2,'2023-09-10','2023-10-30');
 
 
+-- CLIENTE QUE MAS SERVICIOS A SOLICITADO
 
+DELIMITER $$
+CREATE PROCEDURE spu_cliente_solicitado()
+BEGIN 
+		SELECT 
+			 COALESCE(EM.razonsocial, CONCAT(PE.nombres, ' ', PE.apellidos)) AS cliente
+		FROM 
+			 contratos CO
+			 INNER JOIN clientes CLI ON CLI.idcliente = CO.idcliente
+			 LEFT JOIN personas PE ON PE.idpersona = CLI.idpersona
+			 LEFT JOIN empresas EM ON EM.idempresa = CLI.idempresa
+			 GROUP BY CLI.idcliente
+			 ORDER BY COUNT(CO.idcontrato) DESC
+		    LIMIT 1;
+END $$
 
 
 -- EVENTO PARA ACTUALIZAR ESTADO A PROCESO
@@ -933,7 +1005,7 @@ CALL spu_registrar_garantia()
 
 
 
-
+SELECT * FROM servicios
 
 DELIMITER $$
 CREATE PROCEDURE spu_clientes_garantia(IN _search VARCHAR(100))

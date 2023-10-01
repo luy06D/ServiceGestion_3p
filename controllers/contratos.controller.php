@@ -69,9 +69,18 @@ if(isset($_POST['op'])){
     }
 
         
+        
     if($_POST['op'] == 'getServicios'){
 
-        echo json_encode($contrato->getServicios());
+        $data  = $contrato->getServicios($_POST['idtiposervicio']);
+        echo json_encode($data);
+    }
+
+
+    
+    if($_POST['op'] == 'getTipoServicios'){
+
+        echo json_encode($contrato->getTipoServicios());
     }
 
 }
@@ -117,13 +126,15 @@ if(isset($_GET['op'])){
                 echo "
             <tr>
                 <td>{$registro['clientes']}</td>
+                <td>{$registro['estadoservicio']}</td>
                 <td>{$registro['fechacontrato']}</td>
-                <td>{$registro['tiposervicio']}</td>
-                <td>{$registro['nombreservicio']}</td>
-                <td>{$registro['observacion']}</td>                    
-                <td>{$registro['precioservicio']}</td>   
-                <td>{$registro['fechainicio']}</td>    
-                <td>{$registro['garantia']}</td>                    
+                <td>{$registro['fechainicio']}</td>
+                <td>{$registro['fechacierre']}</td>
+                <td>{$registro['tiposervicio']}</td>                    
+                <td>{$registro['nombreservicio']}</td>   
+                <td>{$registro['precioservicio']}</td>    
+                <td>{$registro['cantidad']}</td>                    
+                <td>{$registro['garantia']}</td>                   
         </tr>                
                 
             </tr>
@@ -133,6 +144,64 @@ if(isset($_GET['op'])){
 
         }    
     }
+
+    if($_GET['op'] == 'filtroC_fechas'){
+        $data = $contrato->filtroC_fechas($_GET['fechaI'], $_GET['fechaF']);
+
+        if($data){
+            foreach($data as $registro){
+                echo "
+            <tr>                
+                <td>{$registro['clientes']}</td>
+                <td>{$registro['estadoservicio']}</td>
+                <td>{$registro['fechacontrato']}</td>
+                <td>{$registro['fechainicio']}</td>
+                <td>{$registro['fechacierre']}</td>
+                <td>{$registro['tiposervicio']}</td>                    
+                <td>{$registro['nombreservicio']}</td>   
+                <td>{$registro['precioservicio']}</td>    
+                <td>{$registro['cantidad']}</td>                    
+                <td>{$registro['garantia']}</td>                             
+        </tr>                
+                
+            </tr>
+                
+                ";
+            }
+
+        }    
+    }
+
+    
+    if($_GET['op'] == 'filtroC_fechaCliente'){
+        $data = $contrato->filtroC_fechaCliente($_GET['idcliente'], $_GET['fechaI'], $_GET['fechaF']);
+
+        if($data){
+            foreach($data as $registro){
+                echo "
+            <tr>                
+                <td>{$registro['clientes']}</td>
+                <td>{$registro['estadoservicio']}</td>
+                <td>{$registro['fechacontrato']}</td>
+                <td>{$registro['fechainicio']}</td>
+                <td>{$registro['fechacierre']}</td>
+                <td>{$registro['tiposervicio']}</td>                    
+                <td>{$registro['nombreservicio']}</td>   
+                <td>{$registro['precioservicio']}</td>    
+                <td>{$registro['cantidad']}</td>                    
+                <td>{$registro['garantia']}</td>                        
+        </tr>                
+                
+            </tr>
+                
+                ";
+            }
+
+        }    
+    }
+
+
+
 
     if($_GET['op'] == 'detalleContrato_listar'){
         $data = $contrato->detalleContratos_listar($_GET['idcontrato']);

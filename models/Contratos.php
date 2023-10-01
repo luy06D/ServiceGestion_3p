@@ -114,10 +114,26 @@ public function getClientes(){
 }
 
 
-public function getServicios(){
+
+public function getServicios($idtiposervicio = 0){
 
     try{
-        $query = $this->conexion->prepare("CALL spu_getServicios()");
+        $query = $this->conexion->prepare("CALL spu_getServicios(?)");
+        $query->execute(array($idtiposervicio));
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+    catch(Exception $e){
+        die($e->getMessage());
+    }
+
+}
+
+
+public function getTipoServicios(){
+
+    try{
+        $query = $this->conexion->prepare("SELECT * FROM tiposervicios");
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -177,6 +193,33 @@ public function filtroC_cliente($idcliente = 0){
         die($err->getMessage());
     }
 }
+
+
+public function filtroC_fechas($fechaI = "", $fechaF = "" ){
+    try{
+        $query = $this->conexion->prepare("CALL spu_filtroC_fechas(?,?)");
+        $query->execute(array($fechaI, $fechaF));
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+        
+    }
+    catch(Exception $err){
+        die($err->getMessage());
+    }
+}
+
+public function filtroC_fechaCliente($idcliente = 0 , $fechaI = "", $fechaF = "" ){
+    try{
+        $query = $this->conexion->prepare("CALL spu_filtroC_fechaCliente(?,?,?)");
+        $query->execute(array($idcliente, $fechaI, $fechaF));
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+        
+    }
+    catch(Exception $err){
+        die($err->getMessage());
+    }
+}
+
+
 
 
 

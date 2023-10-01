@@ -123,8 +123,10 @@
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-people"></i>
                     </div>
-                    <div class="ps-3">
-                      <h6>Juan Rosas</h6>
+                    <div class="ps-3" id="solicitado">
+                      <div>
+                        
+                      </div>
                       <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
 
                     </div>
@@ -691,7 +693,22 @@
         })
       }
 
+      function cliente_solicitado(){
+        $.ajax({
+          url: '../controllers/inicio.controller.php',
+          type: 'POST',
+          data: {'op': 'getSolicitado'},
+          success: function (result){
+
+            $("#solicitado div").html(result);   
+        
+          }
+        })
+
+      }
+
       contratosListar();
+      cliente_solicitado();
     })
   </script>
 
